@@ -763,7 +763,6 @@ var app = new Vue({
         this.getMessages();
         this.getUser();
         this.getMethods();
-	this.getUsersMethods();
     },
     methods: {
         cleanMethods: function () {
@@ -821,27 +820,25 @@ var app = new Vue({
             this.user.methods = data.user.methods;
             this.user.transports = data.user.transports;
         },
-        getUsersMethods: function () {         
-            $.ajax({
-                url: "/manager/users_methods",
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                   this.users_methods=data;                  		
-                }.bind(this),
-                error: function (xhr, status, err) {
-                    Materialize.toast(err, 3000, 'red darken-1');
-                    console.error("/manager/users_methods", status, err.toString());
-                }.bind(this)
-            });
-        },
         getMethods: function () {
             $.ajax({
                 url: "/api/methods",
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
-                    this.setMethods(data);
+                    $.ajax({
+                        url: "/manager/users_methods",
+                        dataType: 'json',
+                        cache: false,
+                        success: function (users_methods) {
+                            this.users_methods=users_methods;
+                            this.setMethods(data);
+                        }.bind(this),
+                        error: function (xhr, status, err) {
+                            Materialize.toast(err, 3000, 'red darken-1');
+                            console.error("/manager/users_methods", status, err.toString());
+                        }.bind(this)
+                    });
                 }.bind(this),
                 error: function (xhr, status, err) {
                     Materialize.toast(err, 3000, 'red darken-1');
