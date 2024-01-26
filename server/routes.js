@@ -186,6 +186,20 @@ function routing() {
             relUrl: 'users/'+req.session.passport.user.uid+'/methods/'+req.params.method+'/activate/' + getHash(req),
         });
     });
+    
+    router.post('/api/:method/activate/confirm/:activation_code', isUser, function(req, res) {
+        request_otp_api(req, res, {
+            method: 'POST',
+            relUrl: 'users/' + req.session.passport.user.uid + '/methods/' + req.params.method + '/activate/' + req.params.activation_code + '/' + getHash(req),
+        });
+    });
+    
+    router.post('/api/admin/:method/activate/confirm/:activation_code/:uid', isManager, function(req, res) {
+        request_otp_api(req, res, {
+            method: 'POST',
+            relUrl: 'protected/users/' + req.params.uid + '/methods/' + req.params.method + '/activate/' + req.params.activation_code, bearerAuth: true
+        });
+    });
 
     router.put('/api/:method/deactivate', isUser, function(req, res) {
         request_otp_api(req, res, {
@@ -223,9 +237,13 @@ function routing() {
     });
 
     router.post('/api/generate/:method', isUser, function(req, res) {
+        var uri = 'users/'+ req.session.passport.user.uid + '/methods/' + req.params.method + '/secret/' + getHash(req);
+        if(req.query.require_method_validation === 'true') {
+            uri += '?require_method_validation=true';
+        }
         request_otp_api(req, res, {
             method: 'POST',
-            relUrl: 'users/'+ req.session.passport.user.uid + '/methods/' + req.params.method + '/secret/' + getHash(req),
+            relUrl: uri,
         });
     });
 
@@ -284,9 +302,13 @@ function routing() {
     });
 
     router.post('/api/admin/generate/:method/:uid', isManager, function(req, res) {
+        var uri = 'protected/users/'+ req.params.uid + '/methods/' + req.params.method + '/secret/';
+        if(req.query.require_method_validation === 'true') {
+            uri += '?require_method_validation=true';
+        }
         request_otp_api(req, res, {
             method: 'POST',
-            relUrl: 'protected/users/'+ req.params.uid + '/methods/' + req.params.method + '/secret/', bearerAuth: true,
+            relUrl: uri, bearerAuth: true,
         });
     });
 

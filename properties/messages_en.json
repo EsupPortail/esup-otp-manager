@@ -18,7 +18,9 @@
       "totp": {
         "name": "Timed password (TOTP)",
         "description": "This method generate 6 numerals codes",
-        "howTo": "Push 'Generate QrCode ', then scan the code using your Esup Auth app or Google Authenticator app or enter the code directly into your TOTP application"
+        "howTo": "Scan the code using your Esup Auth app or Google Authenticator app or enter the code directly into your TOTP application",
+        "howToActivate": "Then, to validate the TOTP activation, enter below the 6-digit code displayed on your application",
+        "enter_code": "Enter the 6-digit code"
       },
       "random_code": {
         "name": "One time password",
@@ -68,6 +70,7 @@
     "action":{
       "connection" : "Login",
       "activate" : "Activate",
+      "validate": "Validate",
       "deactivate" : "Deactivate",
       "verify" : "Verify",
       "save" : "Save",

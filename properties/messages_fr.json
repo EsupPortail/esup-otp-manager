@@ -18,7 +18,9 @@
       "totp": {
         "name": "Code temporel (TOTP)",
         "description": "Méthode permettant de générer des codes uniques de 6 chiffres.",
-        "howTo": "Appuyez sur le bouton 'Générer un QrCode', puis scannez le code à l'aide de votre application mobile Esup Auth ou Google Authentificator ou entrez le code directement dans votre application TOTP favori"
+        "howTo": "Scannez le code à l'aide de votre application mobile Esup Auth ou Google Authentificator ou entrez le code directement dans votre application TOTP favori",
+        "howToActivate": "Ensuite, pour valider l'activation du TOTP, saisissez ci-dessous le code à 6 chiffres affiché sur votre application",
+        "enter_code": "Saisissez le code de 6 chiffres"
       },
       "random_code": {
         "name": "Code par SMS",
@@ -69,6 +71,7 @@
     "action":{
       "connection" : "Se connecter",
       "activate" : "Activer",
+      "validate": "Valider",
       "deactivate" : "Désactiver",
       "verify" : "Vérifier",
       "save" : "Enregistrer",

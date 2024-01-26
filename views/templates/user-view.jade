@@ -11,7 +11,7 @@ script#user-view(type='text/x-template').
     <div class="Toggle"></div>
     </div>
     <div v-if="user.methods[method.name].active || user.methods[method.name].activationCode">
-    <component :is=method.name v-bind:methods=methods v-bind:generate_totp=generateTotpConfirm v-bind:generate_bypass=generateBypassConfirm v-bind:get_user=get_user v-bind:messages=messages v-bind:user=user v-bind:user.sync=user v-bind:switch_push_event=switchPushEvent></component>
+    <component :is=method.name v-bind:methods=methods v-bind:generate_totp=generateTotpConfirm v-bind:generate_bypass=generateBypassConfirm v-bind:get_user=get_user v-bind:messages=messages v-bind:user=user v-bind:user.sync=user v-bind:switch_push_event=switchPushEvent v-bind:formatApiUrl=formatApiUrl></component>
     </div>
     <div class="divider"></div>
     </li>

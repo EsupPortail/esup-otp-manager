@@ -88,103 +88,122 @@ var BypassMethod = Vue.extend({
     template: '#bypass-method'
 });
 
-var TotpMethod = Vue.extend({
+const TotpMethod = Vue.extend({
     props: {
         'user': Object,
         'generate_totp': Function,
         'activate': Function,
         'deactivate': Function,
         'messages': Object,
+        'formatApiUrl': Function,
+    },
+    methods: {
+        validate: function() {
+            const totpCode = this.user.methods.totp.validation_code;
+            this.user.methods.totp.validation_code = '';
+            $.ajax({
+                method: "POST",
+                url: this.formatApiUrl("totp/activate/confirm/" + totpCode),
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    if (data.code != "Ok") {
+                        Materialize.toast('Erreur, veuillez réessayer.', 3000, 'red darken-1');
+                    } else {
+                        this.user.methods.totp.active = true;
+                        this.user.methods.totp.qrCode = '';
+                        this.user.methods.totp.message = '';
+                        Materialize.toast('Code validé', 3000, 'green darken-1');
+                    }
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    console.error("/api/totp/activate/confirm", status, err.toString());
+                }.bind(this)
+            });
+        }
     },
     template: '#totp-method'
 });
 
-function randomCodeMethod(isManagerDashboard) {
-    const urlPrefix = '/api/' + (isManagerDashboard ? 'admin/' : '');
-    function urlSufix(context) {
-        return isManagerDashboard ? '/' + context.user.uid : '';
-    }
-    return Vue.extend({
-        props: {
-            'user': Object,
-            'messages': Object,
-            'activate': Function,
-            'deactivate': Function,
-        },
-        methods: {
-            saveTransport: function(transport) {
-                var new_transport = document.getElementById(transport + '-input').value;
-                var reg;
-                if (transport == 'sms') reg = new RegExp("^0[6-7]([-. ]?[0-9]{2}){4}$");
-                else reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-                if (reg.test(new_transport)) {
-                    var oldTransport = this.user.transports[transport];
-                    this.user.transports[transport]= new_transport;
-                    document.getElementById(transport + '-input').value = '';
-                    $.ajax({
-                        method: 'PUT',
-                        url: urlPrefix + 'transport/' + transport + '/' + new_transport + urlSufix(this),
-                        dataType: 'json',
-                        cache: false,
-                        success: function(data) {
-                            if (data.code != "Ok") {
-                                this.user.transports[transport]= oldTransport;
-                                document.getElementById(transport + '-input').value = oldTransport;
-                                Materialize.toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
-                            }else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
-                        }.bind(this),
-                        error: function(xhr, status, err) {
-                            this.user.transports[transport]= oldTransport;
-                            document.getElementById(transport + '-input').value = oldTransport;
-                            Materialize.toast(err, 3000, 'red darken-1');
-                            console.error('/api/transport/' + transport + '/' + new_transport, status, err.toString());
-                        }.bind(this)
-                    });
-                }else Materialize.toast('Format invalide.', 3000, 'red darken-1');
-            },
-            deleteTransport: function(transport) {
+const RandomCodeMethod = Vue.extend({
+    props: {
+        'user': Object,
+        'messages': Object,
+        'activate': Function,
+        'deactivate': Function,
+        'formatApiUrl': Function,
+    },
+    methods: {
+        saveTransport: function(transport) {
+            var new_transport = document.getElementById(transport + '-input').value;
+            var reg;
+            if (transport == 'sms') reg = new RegExp("^0[6-7]([-. ]?[0-9]{2}){4}$");
+            else reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+            if (reg.test(new_transport)) {
                 var oldTransport = this.user.transports[transport];
-                this.user.transports[transport]= null;
+                this.user.transports[transport]= new_transport;
+                document.getElementById(transport + '-input').value = '';
                 $.ajax({
-                    method: 'DELETE',
-                    url: urlPrefix + 'transport/' + transport + urlSufix(this),
+                    method: 'PUT',
+                    url: this.formatApiUrl('transport/' + transport + '/' + new_transport),
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
-                        if (data.code != "Ok") this.user.transports[transport]= oldTransport;
+                        if (data.code != "Ok") {
+                            this.user.transports[transport]= oldTransport;
+                            document.getElementById(transport + '-input').value = oldTransport;
+                            Materialize.toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                        }else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
                     }.bind(this),
                     error: function(xhr, status, err) {
                         this.user.transports[transport]= oldTransport;
+                        document.getElementById(transport + '-input').value = oldTransport;
                         Materialize.toast(err, 3000, 'red darken-1');
-                        console.error("/data/deactivate.json", status, err.toString());
+                        console.error('/api/transport/' + transport + '/' + new_transport, status, err.toString());
                     }.bind(this)
                 });
-            },
-            testTransport: function(transport) {
-                $.ajax({
-                    url: urlPrefix + 'transport/' + transport + '/test' + urlSufix(this),
-                    dataType: 'json',
-                    cache: false,
-                    success: function(data) {
-                        if (data.code != "Ok") Materialize.toast(data.message, 3000, 'red darken-1');
-                        else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
-                    }.bind(this),
-                    error: function(xhr, status, err) {
-                        Materialize.toast(err, 3000, 'red darken-1');
-                        console.error('/api/transport/' + transport + '/test', status, err.toString());
-                    }.bind(this)
-                });
-            },
+            }else Materialize.toast('Format invalide.', 3000, 'red darken-1');
         },
-        template: '#random_code-method'
-    });
-}
+        deleteTransport: function(transport) {
+            var oldTransport = this.user.transports[transport];
+            this.user.transports[transport]= null;
+            $.ajax({
+                method: 'DELETE',
+                url: this.formatApiUrl('transport/' + transport),
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    if (data.code != "Ok") this.user.transports[transport]= oldTransport;
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    this.user.transports[transport]= oldTransport;
+                    Materialize.toast(err, 3000, 'red darken-1');
+                    console.error("/data/deactivate.json", status, err.toString());
+                }.bind(this)
+            });
+        },
+        testTransport: function(transport) {
+            $.ajax({
+                url: this.formatApiUrl('transport/' + transport + '/test'),
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    if (data.code != "Ok") Materialize.toast(data.message, 3000, 'red darken-1');
+                    else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    Materialize.toast(err, 3000, 'red darken-1');
+                    console.error('/api/transport/' + transport + '/test', status, err.toString());
+                }.bind(this)
+            });
+        },
+    },
+    template: '#random_code-method'
+});
 
-function randomCodeMailMethod(isManagerDashboard) {
-    return randomCodeMethod(isManagerDashboard).extend({
-        template: '#random_code_mail-method'
-    });
-}
+const RandomCodeMailMethod = RandomCodeMethod.extend({
+    template: '#random_code_mail-method'
+});
 
 var Esupnfc = Vue.extend({
 template:'#esupnfc-method'
@@ -202,14 +221,17 @@ var UserDashboard = Vue.extend({
         "push": PushMethod,
         "totp": TotpMethod,
         "bypass": BypassMethod,
-        "random_code": randomCodeMethod(false),
-        "random_code_mail": randomCodeMailMethod(false),
+        "random_code": RandomCodeMethod,
+        "random_code_mail": RandomCodeMailMethod,
 	"esupnfc":Esupnfc
     },
     template: "#user-dashboard",
     created: function () {
     },
     methods: {
+        formatApiUrl: function(url) {
+            return '/api/' + url;
+        },
         activate: function (method) {
             switch (method) {
                 case 'push':
@@ -228,10 +250,7 @@ var UserDashboard = Vue.extend({
                     this.standardActivate(method);
                     break;
                 case 'totp':
-                    this.standardActivate(method);
-		    this.generateTotp(function () {
-                            this.user.methods.totp.active = false;                           
-                        });
+                    this.generateTotp();
                     break;
                 case 'esupnfc':
                     this.standardActivate(method);
@@ -327,11 +346,12 @@ var UserDashboard = Vue.extend({
         generateTotp: function (onError) {
             $.ajax({
                 method: "POST",
-                url: "/api/generate/totp",
+                url: "/api/generate/totp?require_method_validation=true",
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
                     if (data.code == "Ok") {
+                        this.user.methods.totp.active = true;
                         this.user.methods.totp.message = data.message;
                         this.user.methods.totp.qrCode = data.qrCode;
                         this.user.methods.totp.uid = data.uid;
@@ -359,8 +379,8 @@ var UserView = Vue.extend({
         "push": PushMethod,
         "totp": TotpMethod,
         "bypass": BypassMethod,
-        "random_code": randomCodeMethod(true),
-        "random_code_mail": randomCodeMailMethod(true),
+        "random_code": RandomCodeMethod,
+        "random_code_mail": RandomCodeMailMethod,
 	"esupnfc":Esupnfc
     },
     data: function () {
@@ -370,6 +390,9 @@ var UserView = Vue.extend({
     },
     template: '#user-view',
     methods: {
+        formatApiUrl: function(url) {
+            return '/api/admin/' + url + '/' + this.user.uid;
+        },
         activate: function (method) {
             switch (method) {
                 case 'push':
@@ -388,10 +411,7 @@ var UserView = Vue.extend({
                     this.standardActivate(method);
                     break;
                 case 'totp':
-                    this.standardActivate(method);
-		    this.generateTotp(function () {
-                            this.user.methods.totp.active = false;
-                        });
+                    this.generateTotp();
                     break;
                 case 'esupnfc':
                     this.standardActivate(method);
@@ -492,11 +512,12 @@ var UserView = Vue.extend({
         generateTotp: function (onError) {
             $.ajax({
                 method: "POST",
-                url: "/api/admin/generate/totp/" + this.user.uid,
+                url: "/api/admin/generate/totp/" + this.user.uid + "?require_method_validation=true",
                 dataType: 'json',
                 cache: false,
                 success: function (data) {
                     if (data.code == "Ok") {
+                        this.user.methods.totp.active = true;
                         this.user.methods.totp.message = data.message;
                         this.user.methods.totp.qrCode = data.qrCode;
                         this.user.methods.totp.uid = data.uid;
