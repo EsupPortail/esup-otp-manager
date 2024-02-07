@@ -222,6 +222,20 @@ function routing() {
         });
     });
 
+    router.get('/api/transport/:transport/:new_transport/test', isUser, function(req, res) {
+        request_otp_api(req, res, {
+            method: 'GET',
+            relUrl: 'users/' + req.session.passport.user.uid + '/transports/' + req.params.transport + '/' + req.params.new_transport + '/test/' + getHash(req),
+        });
+    });
+
+    router.get('/api/admin/transport/:transport/:new_transport/test/:uid', isManager, function(req, res) {
+        request_otp_api(req, res, {
+            method: 'GET',
+            relUrl: 'protected/users/' + req.params.uid + '/transports/' + req.params.transport + '/' + req.params.new_transport + '/test', bearerAuth: true,
+        });
+    });
+
     router.delete('/api/transport/:transport/', isUser, function(req, res) {
         request_otp_api(req, res, {
             method: 'DELETE',

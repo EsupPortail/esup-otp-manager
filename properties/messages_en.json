@@ -24,7 +24,18 @@
       },
       "random_code": {
         "name": "One time password",
-        "description": "Method to generate random codes valid for some time"
+        "description": "Method to generate random codes valid for some time",
+        "verify_code": {
+          "sms": {
+            "pre": "A code has been sent to you by SMS to the number",
+            "post": "Please enter the code received to validate this number"
+          },
+          "mail": {
+            "pre": "A code has been sent to you by email to the address",
+            "post": "Please enter the code received to validate this email address"
+          },
+          "wrong": "Incorrect code."
+        }
       },
       "random_code_mail": {
         "name": "One time password by mail",

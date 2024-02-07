@@ -140,26 +140,55 @@ const RandomCodeMethod = Vue.extend({
             if (transport == 'sms') reg = new RegExp("^0[6-7]([-. ]?[0-9]{2}){4}$");
             else reg = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
             if (reg.test(new_transport)) {
-                var oldTransport = this.user.transports[transport];
-                this.user.transports[transport]= new_transport;
-                document.getElementById(transport + '-input').value = '';
                 $.ajax({
-                    method: 'PUT',
-                    url: this.formatApiUrl('transport/' + transport + '/' + new_transport),
+                    method: 'GET',
+                    url: this.formatApiUrl('transport/' + transport + '/' + new_transport + "/test"),
                     dataType: 'json',
                     cache: false,
                     success: function(data) {
                         if (data.code != "Ok") {
-                            this.user.transports[transport]= oldTransport;
-                            document.getElementById(transport + '-input').value = oldTransport;
                             Materialize.toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
-                        }else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
+                        }else {
+                            const expected = data.otp;
+                            
+                            const verifyCodeMessages = this.messages.api.methods.random_code.verify_code;
+                            
+                            const defaultPromptMessage = verifyCodeMessages[transport].pre + " " + new_transport + ". " + verifyCodeMessages[transport].post;
+
+                            const verifyRandomCode = promptMessage => {
+                                const input = prompt(promptMessage); // plutôt utiliser modal + input ?
+                                if (input == expected) { // if good code
+                                    $.ajax({
+                                        method: 'PUT',
+                                        url: this.formatApiUrl('transport/' + transport + '/' + new_transport),
+                                        dataType: 'json',
+                                        cache: false,
+                                        success: function(data) {
+                                            if (data.code != "Ok") {
+                                                Materialize.toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                                            } else {
+                                                // equivalent to "this.user.transports[transport] = new_transport;", but allows new reactive property to be added dynamically
+                                                Vue.set(this.user.transports, transport, new_transport);
+                                                document.getElementById(transport + '-input').value = '';
+                                                Materialize.toast('Transport vérifié', 3000, 'green darken-1');
+                                            }
+                                        }.bind(this),
+                                        error: function(xhr, status, err) {
+                                            Materialize.toast(err, 3000, 'red darken-1');
+                                            console.error('/api/transport/' + transport + '/' + new_transport, status, err.toString());
+                                        }.bind(this)
+                                    });
+                                } else if (input !== null) { // if wrong code
+                                    verifyRandomCode(verifyCodeMessages.wrong + " " + defaultPromptMessage);
+                                }
+                            }
+
+                            verifyRandomCode(defaultPromptMessage);
+                        }
                     }.bind(this),
                     error: function(xhr, status, err) {
-                        this.user.transports[transport]= oldTransport;
-                        document.getElementById(transport + '-input').value = oldTransport;
                         Materialize.toast(err, 3000, 'red darken-1');
-                        console.error('/api/transport/' + transport + '/' + new_transport, status, err.toString());
+                        console.error('/api/transport/' + transport + '/' + new_transport + "/test", status, err.toString());
                     }.bind(this)
                 });
             }else Materialize.toast('Format invalide.', 3000, 'red darken-1');

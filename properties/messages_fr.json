@@ -24,7 +24,18 @@
       },
       "random_code": {
         "name": "Code par SMS",
-        "description": "Méthode permettant de s'authentifier à partir d'un code aléatoire à usage unique envoyé par SMS."
+        "description": "Méthode permettant de s'authentifier à partir d'un code aléatoire à usage unique envoyé par SMS.",
+        "verify_code": {
+          "sms": {
+            "pre": "Un code vous a été envoyé par SMS au numéro",
+            "post": "Veuillez indiquer le code reçu pour valider ce numéro"
+          },
+          "mail": {
+            "pre": "Un code vous a été envoyé par email à l'adresse",
+            "post": "Veuillez indiquer le code reçu pour valider cette adresse email"
+          },
+          "wrong": "Code incorrect."
+        }
       },
       "random_code_mail": {
         "name": "Code par Courriel",
