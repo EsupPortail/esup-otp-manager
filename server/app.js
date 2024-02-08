@@ -17,6 +17,7 @@ var sockets = require('./sockets');
 
 // view engine setup
 app.set('views', path.join(__dirname + '/..', 'views'));
+app.engine('jade', require('pug').__express); // to avoid renaming all .jade to .pug
 app.set('view engine', 'jade');
 app.set('trust proxy', properties.esup.trustedProxies);
 

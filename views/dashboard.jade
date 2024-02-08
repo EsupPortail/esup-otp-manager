@@ -1,18 +1,18 @@
-extends layout
+extends layout.jade
 
 block content
 
-    include templates/user-dashboard
-    include templates/push-method
-    include templates/bypass-method
-    include templates/totp-method
-    include templates/random_code-method
-    include templates/random_code_mail-method
-    include templates/manager-dashboard
-    include templates/user-view
-    include templates/admin-dashboard
-    include templates/home
-    include templates/esupnfc-method
+    include templates/user-dashboard.jade
+    include templates/push-method.jade
+    include templates/bypass-method.jade
+    include templates/totp-method.jade
+    include templates/random_code-method.jade
+    include templates/random_code_mail-method.jade
+    include templates/manager-dashboard.jade
+    include templates/user-view.jade
+    include templates/admin-dashboard.jade
+    include templates/home.jade
+    include templates/esupnfc-method.jade
     #app.container
         header(v-if="messages.api")
             nav#target.top-nav
