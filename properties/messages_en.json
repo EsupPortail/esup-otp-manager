@@ -83,7 +83,6 @@
       "activate" : "Activate",
       "validate": "Validate",
       "deactivate" : "Deactivate",
-      "verify" : "Verify",
       "save" : "Save",
       "modify" : "Modify",
       "remove" : "Remove",

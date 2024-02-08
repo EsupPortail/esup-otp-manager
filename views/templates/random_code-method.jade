@@ -7,18 +7,19 @@ script#random_code-method(type='text/x-template').
     <img src="images/sms.svg">
     </div>
     <div class="col s10 m9" style="text-align: justify;">
-    <div class="row" style="margin-bottom: 0;" v-if="user.transports.sms">
+    <div class="row" v-if="user.transports.sms">
     <p class="col s7">{{user.transports.sms}}</p>
-    <a class="waves-effect waves-light btn col s5 teal darken-1" v-on:click="testTransport('sms')">{{messages.api.action.verify}}<i class="material-icons right">sms</i></a>
     </div>
-    <div class="row input-field" style="margin-bottom: 0;">
-    <div class="col s7">
-    <input type="text" id="sms-input">
+    <form @submit.prevent="saveTransport('sms')" class="row" style="margin-bottom: 0;">
+    <div class="input-field col s7">
+    <input type="tel" id="sms-input" required />
     <label for="sms-input">{{messages.api.transports.sms}}</label>
     </div>
-    <a class="waves-effect waves-light btn col s5" v-on:click="saveTransport('sms')" v-if="user.transports.sms">{{messages.api.action.modify}}<i class="material-icons right">mode_edit</i></a>
-    <a class="waves-effect waves-light btn col s5" v-on:click="saveTransport('sms')" v-else>{{messages.api.action.save}}<i class="material-icons right">save</i></a>
-    </div>
+    <button type="submit"class="waves-effect waves-light btn col s5">
+    <span v-if="user.transports.sms">{{messages.api.action.modify}}<i class="material-icons right">mode_edit</i></span>
+    <span v-else>{{messages.api.action.save}}<i class="material-icons right">save</i></span>
+    </button>
+    </form>
     <div class="row" style="margin-bottom: 0;" v-if="user.transports.sms">
     <a class="waves-effect waves-light btn col s12  red darken-1" v-on:click="deleteTransport('sms')">{{messages.api.action.remove}}<i class="material-icons right">cancel</i></a>
     </div>
@@ -34,18 +35,19 @@ script#random_code-method(type='text/x-template').
     <img src="images/mail.svg">
     </div>
     <div class="col s10 m9" style="text-align: justify;">
-    <div class="row" style="margin-bottom: 0;" v-if="user.transports.mail">
+    <div class="row" v-if="user.transports.mail">
     <p class="col s7">{{user.transports.mail}}</p>
-    <a class="waves-effect waves-light btn col s5 teal darken-1" v-on:click="testTransport('mail')">{{messages.api.action.verify}}<i class="material-icons right">email</i></a>
     </div>
-    <div class="row input-field" style="margin-bottom: 0;">
-    <div class="col s7">
-    <input type="text" id="mail-input">
+    <form @submit.prevent="saveTransport('mail')" class="row" style="margin-bottom: 0;">
+    <div class="input-field col s7">
+    <input type="email" id="mail-input" required />
     <label for="mail-input">{{messages.api.transports.mail}}</label>
     </div>
-    <a class="waves-effect waves-light btn col s5" v-on:click="saveTransport('mail')" v-if="user.transports.mail">{{messages.api.action.modify}}<i class="material-icons right">mode_edit</i></a>
-    <a class="waves-effect waves-light btn col s5" v-on:click="saveTransport('mail')" v-else>{{messages.api.action.save}}<i class="material-icons right">save</i></a>
-    </div>
+    <button type="submit" class="waves-effect waves-light btn col s5">
+    <span v-if="user.transports.mail">{{messages.api.action.modify}}<i class="material-icons right">mode_edit</i></span>
+    <span v-else>{{messages.api.action.save}}<i class="material-icons right">save</i></span>
+    </button>
+    </form>
     <div class="row" style="margin-bottom: 0;" v-if="user.transports.mail">
     <a class="waves-effect waves-light btn col s12  red darken-1" v-on:click="deleteTransport('mail')">{{messages.api.action.remove}}<i class="material-icons right">cancel</i></a>
     </div>

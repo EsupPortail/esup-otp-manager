@@ -211,21 +211,6 @@ const RandomCodeMethod = Vue.extend({
                 }.bind(this)
             });
         },
-        testTransport: function(transport) {
-            $.ajax({
-                url: this.formatApiUrl('transport/' + transport + '/test'),
-                dataType: 'json',
-                cache: false,
-                success: function(data) {
-                    if (data.code != "Ok") Materialize.toast(data.message, 3000, 'red darken-1');
-                    else Materialize.toast('Transport vérifié', 3000, 'green darken-1');
-                }.bind(this),
-                error: function(xhr, status, err) {
-                    Materialize.toast(err, 3000, 'red darken-1');
-                    console.error('/api/transport/' + transport + '/test', status, err.toString());
-                }.bind(this)
-            });
-        },
     },
     template: '#random_code-method'
 });

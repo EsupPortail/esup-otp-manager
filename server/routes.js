@@ -162,18 +162,6 @@ function routing() {
         res.send(data);
     });
 
-    router.get('/api/transport/:transport/test', isUser, function(req, res) {
-        request_otp_api(req, res, {
-            relUrl: 'users/' + req.session.passport.user.uid + '/transports/'+ req.params.transport+'/test/' + getHash(req),
-        });
-    });
-
-    router.get('/api/admin/transport/:transport/test/:uid', isManager, function(req, res) {
-        request_otp_api(req, res, {
-            relUrl: 'protected/users/' + req.params.uid + '/transports/'+ req.params.transport+'/test/', bearerAuth: true,
-        });
-    });
-
     router.get('/api/methods', isUser, function(req, res) {
         request_otp_api(req, res, {
             relUrl: 'protected/methods/', bearerAuth: true,
