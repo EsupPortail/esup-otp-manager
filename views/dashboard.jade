@@ -32,13 +32,13 @@ block content
                 li.bold
                     a#home(href='#', v-on:click='navigate', name = 'home') {{messages.api.menu.home}}
                     li.no-padding
-                    ul.collapsible.collapsible-accordion(data-collapsible='accordion')
-                        li
-                            .collapsible-header {{messages.api.menu.preferences}}
-                            .collapsible-body
-                                ul
-                                    li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
-                                        a(href='#', v-on:click='navigate', v-bind:id='method.name', v-bind:name='method.name') {{method.label || method.name}}
+                        ul.collapsible.collapsible-accordion(data-collapsible='accordion')
+                            li
+                                .collapsible-header {{messages.api.menu.preferences}}
+                                .collapsible-body
+                                    ul
+                                        li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
+                                            a(href='#', v-on:click='navigate', v-bind:id='method.name', v-bind:name='method.name') {{method.label || method.name}}
                     if right == "manager" || right == "admin"
                         li.bold
                             a#manager(href='#', v-on:click='navigate', name='manager') {{messages.api.menu.manager}}

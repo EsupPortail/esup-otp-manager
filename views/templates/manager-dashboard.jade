@@ -9,7 +9,7 @@ script#manager-dashboard(type='text/x-template').
     <a v-if="!isHidden && textButton=='chercher'" class="waves-effect waves-light btn col s4" v-on:click="search">{{messages.api.action.select}}<i class="material-icons right">search</i></a>
     <a v-if="!isHidden && textButton=='ajouter'" class="waves-effect waves-light btn col s4" v-on:click="addUser">{{messages.api.action.add}}<i class="material-icons right">add</i></a>
     <datalist id="usersId">
-    <option v-for="uid in suggestions" v-bind:value="uid">
+    <option v-for="uid in suggestions" v-bind:value="uid"/>
     </datalist>
     </div>
     <div v-show="user.uid">
