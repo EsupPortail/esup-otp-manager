@@ -56,7 +56,12 @@ module.exports = function(_passport) {
             done(null, user);
     });
 
-    passport.use(new(require('passport-apereo-cas').Strategy)(properties.esup.CAS, function(profile, done) {
+    const CAS = properties.esup.CAS;
+    if (!CAS.casBaseURL.endsWith('/')) {
+        CAS.casBaseURL += "/";
+    }
+
+    passport.use(new(require('passport-apereo-cas').Strategy)(CAS, function(profile, done) {
 	// console.log("profile : " + JSON.stringify(profile, null ,2));
         return done(null, {uid:profile.user, attributes:profile.attributes});
     }));

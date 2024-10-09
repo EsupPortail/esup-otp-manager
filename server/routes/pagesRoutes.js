@@ -64,7 +64,7 @@ exports.routing = function(router, passport) {
     router.get('/logout', function(req, res, next) {
         req.logout(function(err) {
             if (err) { return next(err); }
-            res.redirect(properties.esup.CAS.casBaseURL + '/logout');
+            res.redirect(properties.esup.CAS.casBaseURL + 'logout');
         });
     });
 }
