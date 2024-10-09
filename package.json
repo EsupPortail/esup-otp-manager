@@ -31,6 +31,9 @@
     "vue": "2.x"
   },
   "overrides": {
+    "express-socket.io-session": {
+      "cookie-parser": ">=1.4.7"
+    },
     "passport-apereo-cas": {
       "axios": "0.x",
       "xml2js": "0.x"
