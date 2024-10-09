@@ -11,6 +11,7 @@
     "start": "node run"
   },
   "dependencies": {
+    "@coursetable/passport-cas": "0.1.x",
     "body-parser": "2.x",
     "cookie-parser": "1.x",
     "debug": "4.x",
@@ -21,7 +22,6 @@
     "materialize-css": "0.97.x",
     "morgan": "1.x",
     "passport": "0.7.x",
-    "passport-apereo-cas": "0.2.0",
     "pug": "3.x",
     "serve-favicon": "2.x",
     "socket.io": "4.x",
@@ -33,10 +33,6 @@
   "overrides": {
     "express-socket.io-session": {
       "cookie-parser": ">=1.4.7"
-    },
-    "passport-apereo-cas": {
-      "axios": "0.x",
-      "xml2js": "0.x"
     },
     "materialize-css": {
       "jquery": "3.x",

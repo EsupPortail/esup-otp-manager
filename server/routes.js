@@ -61,7 +61,13 @@ module.exports = function(_passport) {
         CAS.casBaseURL += "/";
     }
 
-    passport.use(new(require('passport-apereo-cas').Strategy)(CAS, function(profile, done) {
+    const passportCasOpts = {
+        version: CAS.version,
+        ssoBaseURL: CAS.casBaseURL,
+        serverBaseURL: CAS.serviceBaseURL,
+    }
+
+    passport.use(new(require('@coursetable/passport-cas').Strategy)(passportCasOpts, function(profile, done) {
 	// console.log("profile : " + JSON.stringify(profile, null ,2));
         return done(null, {uid:profile.user, attributes:profile.attributes});
     }));
