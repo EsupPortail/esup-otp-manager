@@ -32,8 +32,8 @@ exports.routing = function(router, passport) {
         });
     });
 
-    router.get('/login', function(req, res, next) {
-        passport.authenticate('cas', function(err, user, info) {
+    router.all('/login', function(req, res, next) {
+        passport.authenticate(properties.strategy.name, function(err, user, info) {
             if (err) {
                 console.log(err);
                 return next(err);
@@ -61,10 +61,30 @@ exports.routing = function(router, passport) {
         })(req, res, next);
     });
 
-    router.get('/logout', function(req, res, next) {
-        req.logout(function(err) {
-            if (err) { return next(err); }
-            res.redirect(properties.esup.CAS.casBaseURL + 'logout');
+    if (properties.strategy.name == 'cas') {
+        router.get('/logout', function(req, res, next) {
+            req.logout(function(err) {
+                if (err) { return next(err); }
+                res.redirect(properties.esup.CAS.casBaseURL + 'logout');
+            });
         });
-    });
+    } else if (properties.strategy.name == 'saml') {
+        router.get('/logout', function(req, res, next) {
+            properties.strategy.strategy.logout(req, (err, logoutUrl) => {
+                if (err) { return next(err); }
+                req.logout(function(err) {
+                    if (err) { return next(err); }
+                    res.redirect(logoutUrl);
+                });
+            });
+        });
+
+        const spMetadataUrl = properties.esup.SAML.spMetadataUrl;
+        if (spMetadataUrl) {
+            router.get("/" + spMetadataUrl, function(req, res, next) {
+                res.type('xml');
+                res.send(properties.strategy.spMetadata);
+            });
+        }
+    }
 }
