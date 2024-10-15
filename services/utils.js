@@ -1,4 +1,5 @@
 var properties = require(__dirname+'/../properties/properties');
+const path = require('path');
 
 exports.is_admin = function(user){
     var result = false;
@@ -43,4 +44,12 @@ const supportedLanguages = Object.keys(properties)
 exports.getMessagesForRequest = function(req) {
     const lang = req.acceptsLanguages(supportedLanguages);
     return properties["messages_" + lang] || properties.messages;
+}
+
+exports.resolvePath = function(filePath){
+    if(path.isAbsolute(filePath)) {
+        return filePath;
+    } else {
+        return path.resolve(__dirname, '..', filePath);
+    }
 }
