@@ -49,8 +49,8 @@ app.use(function(req, res, next) {
     next();
 });
 
-var routes = require('./routes');
-app.use('/', routes(passport));
+require('./routes')(passport).then(router => {
+app.use('/', router)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -83,5 +83,5 @@ app.use(function(err, req, res, next) {
     });
 });
 
-
+});
 module.exports = app;
