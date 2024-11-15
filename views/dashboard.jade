@@ -61,9 +61,9 @@ block content
                                             i.material-icons language
                                     ul.collapsible-body
                                         li.bold
-                                            a(href='#', @click="getMessages('français')") Français
+                                            a(href='#', @click="getMessages('français')", lang="fr") Français
                                         li.bold
-                                            a(href='#', @click="getMessages('english')") English
+                                            a(href='#', @click="getMessages('english')", lang="en") English
         main
             .container
                 component(:is='currentView', :methods='methods', :messages='messages', :infos='infos', :current_view.sync='currentView', :currentmethod='currentMethod', :user='user' :get_user='getUser')
