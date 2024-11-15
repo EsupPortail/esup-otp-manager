@@ -1145,7 +1145,7 @@ var app = new Vue({
 
         },
 
-        navigate: function (event) {
+        navigate: function(event) {
             if (event.target.name == "manager") {
                 this.pageTitle = event.target.text;
                 this.currentView = 'manager';
@@ -1161,8 +1161,8 @@ var app = new Vue({
                 this.currentView = 'preferences';
             }
             $('a').parent().removeClass('active');
-                $('#' + event.target.name).parent().addClass('active');
-                if (document.getElementById("sidenav-overlay"))$('#navButton').click();
+            $('#' + event.target.name).parent().addClass('active');
+            if (document.getElementById("sidenav-overlay")) $('#navButton').click();
             this.getUser();
         },
 
