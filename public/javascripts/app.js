@@ -1120,6 +1120,11 @@ var app = new Vue({
         this.getMethods();
         await this.getInfos();
         this.getUser();
+
+        // wait for the #home button, then click on it
+        await $('#home').promise();
+        await this.$nextTick();
+        document.getElementById("home").click();
     },
     updated: async function () {
         await this.$nextTick();
@@ -1161,7 +1166,9 @@ var app = new Vue({
                 this.currentView = 'preferences';
             }
             $('a').parent().removeClass('active');
+            $('a').parent().attr('aria-current', 'false');
             $('#' + event.target.name).parent().addClass('active');
+            $('#' + event.target.name).parent().attr('aria-current', 'page');
             if (document.getElementById("sidenav-overlay")) $('#navButton').click();
             this.getUser();
         },
