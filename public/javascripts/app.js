@@ -1,9 +1,6 @@
 /** jQuery Initialisation **/
 (function ($) {
     $(function () {
-        $(document).on('click', ".collapsible-header", function(){
-            $(this).next('.collapsible-body').toggle(200);
-        });
     }); // end of document ready
 })(jQuery); // end of jQuery name space
 

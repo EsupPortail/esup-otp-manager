@@ -209,6 +209,10 @@ body.IE7 .Switch.Round {
     text-transform: uppercase;
 }
 
+.collapsible-body {
+    display: block;
+}
+
 
 /* Page d'Accueil et les blocs méthodes */ 
 

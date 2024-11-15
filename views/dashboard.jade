@@ -36,9 +36,9 @@ block content
                     li.no-padding
                         ul.collapsible.collapsible-accordion(data-collapsible='accordion')
                             li
-                                .collapsible-header {{messages.api.menu.preferences}}
-                                .collapsible-body
-                                    ul
+                                details
+                                    summary.collapsible-header {{messages.api.menu.preferences}}
+                                    ul.collapsible-body
                                         li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
                                             a(href='#', @click='navigate', :id='method.name', :name='method.name') {{method.label || method.name}}
                     if right == "manager" || right == "admin"
@@ -55,11 +55,11 @@ block content
                     li.no-padding
                         ul.collapsible.collapsible-accordion(data-collapsible='accordion')
                             li
-                                .collapsible-header
-                                    a(href='#')
-                                        i.material-icons language
-                                .collapsible-body
-                                    ul
+                                details
+                                    summary.collapsible-header
+                                        a
+                                            i.material-icons language
+                                    ul.collapsible-body
                                         li.bold
                                             a(href='#', @click="getMessages('français')") Français
                                         li.bold
