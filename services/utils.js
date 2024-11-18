@@ -41,6 +41,13 @@ const supportedLanguages = Object.keys(properties)
     .map(key => key.replace('messages_', ''));
 
 exports.getMessagesForRequest = function(req) {
-    const lang = req.acceptsLanguages(supportedLanguages);
-    return properties["messages_" + lang] || properties.messages;
+    let lang = req.acceptsLanguages(supportedLanguages) || properties.esup.default_language || "en";
+    if (req.params.language && supportedLanguages.includes(req.params.language)) {
+        lang = req.params.language;
+    }
+
+    return {
+        messages: properties["messages_" + lang],
+        lang: lang,
+    };
 }

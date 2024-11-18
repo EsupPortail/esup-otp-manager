@@ -10,7 +10,7 @@ exports.routing = function(router, passport) {
     router.get('/', function(req, res) {
         res.render('index', {
             title: 'Esup Otp Manager',
-            messages: utils.getMessagesForRequest(req),
+            messages: utils.getMessagesForRequest(req).messages,
         });
     });
 

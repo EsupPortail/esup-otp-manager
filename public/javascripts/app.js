@@ -1220,13 +1220,15 @@ var app = new Vue({
             this.cleanMethods();
         },
         getMessages: function(language) {
-            var query = '';
-            if (language) query = "/" + language;
+            language ||= localStorage.getItem("lang") || '';
             return fetchApi({
                 method: "GET",
-                uri: "/manager/messages" + query,
+                uri: "/manager/messages/" + language,
                 onSuccess: res => {
-                    this.setMessages(res.data);
+                    const { lang, messages } = res.data;
+                    this.setMessages(messages);
+                    $('html').attr('lang', lang);
+                    localStorage.setItem("lang", lang);
                 },
             }).catch(err => {
                 toast(err, 3000, 'red darken-1');

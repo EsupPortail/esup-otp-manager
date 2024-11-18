@@ -9,16 +9,8 @@ var passport;
 
 
 function routing() {
-    router.get('/manager/messages', function(req, res) {
+    router.get('/manager/messages/{:language}', isUser, function(req, res) {
         res.json(utils.getMessagesForRequest(req));
-    });
-
-    router.get('/manager/messages/:language', isUser, function(req, res) {
-        switch (req.params.language) {
-            case "français": res.json(properties.messages_fr); break;
-            case "english": res.json(properties.messages_en); break;
-            default: res.json(properties.messages); break;
-        }
     });
 
     router.get('/manager/users_methods', isUser, function(req, res) {
