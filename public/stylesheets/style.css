@@ -68,6 +68,9 @@ nav {
 }
 header { background:#424242; }
 
+.no-margin {
+    margin: 0;
+}
 
 .sidenav-header {
     background-image: url("../images/wallpaper_polygons.jpg") !important;

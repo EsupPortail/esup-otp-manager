@@ -22,7 +22,7 @@ block content
                     button#navButton.button-collapse.top-nav.btn-flat(href='#', data-activates='slide-out', onclick="toggle_visibility('slide-out')", :title="messages.api.action.show_menu")
                         i#target.material-icons menu
                     .nav-wrapper
-                        span.page-title(role="heading", aria-level="1") {{messages.api.menu[currentView]}}
+                        p.page-title.no-margin(role="heading", aria-level="1") {{messages.api.menu[currentView]}}
             ul(role="navigation")#slide-out.side-nav.fixed.may-be-hidden
                 .no-padding.sidenav-header
                     .flex

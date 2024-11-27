@@ -2,10 +2,9 @@ script#push-method(type='text/x-template').
     <div>
     <div class="card" v-if="user.methods.push.askActivation">
     <div class="card-image">
-    <br>
     <div class="row" style="margin-bottom: 0;">
     <div class="col s1 m2"><span class="white-text"></span></div>
-    <div class="col s10 m8" style="text-align: center;">{{messages.api.methods.push.push_confirmation1}}</div>
+    <p class="col s10 m8" style="text-align: center;">{{messages.api.methods.push.push_confirmation1}}</p>
     </div>
     </div>
     <div class="card-content">
@@ -24,7 +23,7 @@ script#push-method(type='text/x-template').
     <p>{{messages.api.methods.push.push_confirmation3}} {{user.uid}}</p>
     <p>{{messages.api.methods.push.push_confirmation4}} {{user.methods.push.activationCode}}</p>
     <p>{{messages.api.methods.push.push_confirmation5}} {{user.methods.push.api_url}}</p>
-    <p> {{messages.api.methods.push.push_confirmation6}}</p>
+    <p>{{messages.api.methods.push.push_confirmation6}}</p>
     </div>
     </div>
     </div>
@@ -39,13 +38,11 @@ script#push-method(type='text/x-template').
     <div class="col s3">
     <img src="images/icon-smartphone.svg" alt="">
     </div>
-    <div class="col s9">
-    <span>{{user.methods.push.device.platform}}</span>
-    <div class="divider"></div>
-    <span>{{user.methods.push.device.manufacturer}}</span>
-    <div class="divider"></div>
-    <span>{{user.methods.push.device.model}}</span>
-    </div>
+    <p class="col s9 no-margin">
+    {{user.methods.push.device.platform}}<br>
+    {{user.methods.push.device.manufacturer}}<br>
+    {{user.methods.push.device.model}}
+    </p>
     </div>
     </div>
     </div>
