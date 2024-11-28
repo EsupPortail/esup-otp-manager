@@ -246,7 +246,12 @@ body.IE7 .Switch.Round {
 .lock-solid { width:110px; margin: 0px 30px 0px 30px; }
 
 .card { padding-top:25px;  background-color: #eeeef0; } 
-.input-field label { top: 2rem; top:1rem; left: 10px; }
+.input-field label {
+    top: 2rem;
+    top: 1rem;
+    left: 10px;
+    color: #6C6C6C;
+}
 
 label { color: #555; font-size: 1.2rem; }
 
