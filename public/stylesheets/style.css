@@ -338,6 +338,11 @@ label { color: #555; font-size: 1.2rem; }
 .green.contrasted {
     background-color:#418545 !important
 }
+
+.red.darken-1 {
+    background-color: #CC332F!important;
+}
+
   
 .btn:hover,
 .btn:focus,
