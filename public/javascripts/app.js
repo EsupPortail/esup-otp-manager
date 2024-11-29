@@ -106,6 +106,18 @@ function bufferToBase64URLString(buffer) {
     return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 }
 
+function getImgWithAltText({ qrCodeImg, qrCodeSrc, alt = "QR code Esup Auth" }) {
+    if (!qrCodeSrc) {
+        if (qrCodeImg) {
+            // extract src from img
+            qrCodeSrc = new DOMParser().parseFromString(qrCodeImg, 'text/html').querySelector('img')?.src;
+        } else {
+            return "";
+        }
+    }
+    return `<img src="${qrCodeSrc}" alt="${alt}">`;
+}
+
 function toast(message, displayLength, className){
     Materialize.toast(message, displayLength, className);
     $('.toast').last()[0].setAttribute('role', 'alert');
@@ -634,7 +646,7 @@ var UserDashboard = Vue.extend({
                     const data = res.data;
                     if (data.code == "Ok") {
                         this.user.methods.push.activationCode = data.activationCode;
-                        this.user.methods.push.qrCode = data.qrCode;
+                        this.user.methods.push.qrCode = getImgWithAltText({ qrCodeImg: data.qrCode, qrCodeSrc: data.qrCodeSrc });
                         this.user.methods.push.api_url = this.infos.api_url;
                     } else {
                         throw new Error(JSON.stringify({ code: data.code }));
@@ -718,7 +730,7 @@ var UserDashboard = Vue.extend({
                     if (data.code == "Ok") {
                         this.user.methods.totp.active = true;
                         this.user.methods.totp.message = data.message;
-                        this.user.methods.totp.qrCode = data.qrCode;
+                        this.user.methods.totp.qrCode = getImgWithAltText({ qrCodeImg: data.qrCode, qrCodeSrc: data.qrCodeSrc });
                         this.user.methods.totp.uid = this.user.uid;
                     } else {
                         throw new Error(JSON.stringify({ code: data.code }));
@@ -804,7 +816,7 @@ var UserView = Vue.extend({
                     const data = res.data;
                     if (data.code == "Ok") {
                         this.user.methods.push.activationCode = data.activationCode;
-                        this.user.methods.push.qrCode = data.qrCode;
+                        this.user.methods.push.qrCode = getImgWithAltText({ qrCodeImg: data.qrCode, qrCodeSrc: data.qrCodeSrc });
                         this.user.methods.push.api_url = this.infos.api_url;
                     } else {
                         throw new Error(JSON.stringify({ code: data.code }));
@@ -885,7 +897,7 @@ var UserView = Vue.extend({
                     if (data.code == "Ok") {
                         this.user.methods.totp.active = true;
                         this.user.methods.totp.message = data.message;
-                        this.user.methods.totp.qrCode = data.qrCode;
+                        this.user.methods.totp.qrCode = getImgWithAltText({ qrCodeImg: data.qrCode, qrCodeSrc: data.qrCodeSrc });
                         this.user.methods.totp.uid = this.user.uid;
                     } else {
                         throw new Error(JSON.stringify({ code: data.code }));

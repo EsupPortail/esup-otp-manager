@@ -10,7 +10,7 @@ script#totp-method(type='text/x-template').
     </div>
     </div>
     <div class="card-content" style="text-align: center;">
-    <p v-html="user.methods.totp.qrCode"/>
+    <p class="totp-qrcode" v-html="user.methods.totp.qrCode"/>
     <p>{{user.methods.totp.message}}</p>
     </div>
     </div>
