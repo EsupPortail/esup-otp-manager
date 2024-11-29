@@ -1162,6 +1162,12 @@ var app = new Vue({
                 this.currentMethod = event.target.name;
                 this.currentView = 'preferences';
             }
+
+            document.title = "ESUP OTP Manager - " + this.messages.api.menu[this.currentView];
+            if(this.currentView == 'preferences') {
+                document.title += " - " + this.messages.api.methods[this.currentMethod].name;
+            }
+
             $('a').parent().removeClass('active');
             $('a').parent().attr('aria-current', 'false');
             $('#' + event.target.name).parent().addClass('active');
