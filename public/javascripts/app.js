@@ -179,6 +179,18 @@ var BypassMethod = Vue.extend({
     template: '#bypass-method'
 });
 
+const PasscodeGridMethod = Vue.extend({
+    props: {
+        'user': Object,
+        'generate_passcode_grid': Function,
+        'activate': Function,
+        'deactivate': Function,
+        'messages': Object,
+        'infos': Object,
+    },
+    template: '#passcode_grid-method'
+});
+
 const TotpMethod = Vue.extend({
     props: {
         'user': Object,
@@ -591,6 +603,7 @@ var UserDashboard = Vue.extend({
         "push": PushMethod,
         "totp": TotpMethod,
         "bypass": BypassMethod,
+        "passcode_grid": PasscodeGridMethod,
         "webauthn": WebAuthnMethod,
         "random_code": RandomCodeMethod,
         "random_code_mail": RandomCodeMailMethod,
@@ -614,6 +627,9 @@ var UserDashboard = Vue.extend({
                         .catch(err => {
                             this.user.methods.bypass.active = false;
                         });
+                    break;
+                case 'passcode_grid':
+                    this.standardActivate(method).then(res => this.setPasscodeGrid(res.data.grid));
                     break;
                 case 'random_code':
                     this.standardActivate(method);
@@ -700,6 +716,10 @@ var UserDashboard = Vue.extend({
             if (window.confirm(this.messages.api.action.confirm_generate))
                 this.generateBypass();
         },
+        generatePasscodeGridConfirm : function(){
+            if (window.confirm(this.messages.api.action.confirm_generate))
+                this.generatePasscodeGrid();
+        },
         generateTotpConfirm : function(){
             if (window.confirm(this.messages.api.action.confirm_generate))
                 this.generateTotp();
@@ -720,6 +740,26 @@ var UserDashboard = Vue.extend({
                 toast(err, 3000, 'red darken-1');
                 throw err;
             });
+        },
+        generatePasscodeGrid: function() {
+            return fetchApi({
+                method: "POST",
+                uri: "/api/generate/passcode_grid",
+                onSuccess: res => {
+                    const data = res.data;
+                    if (data.code == "Ok") {
+                        this.setPasscodeGrid(data.grid);
+                    } else {
+                        throw new Error(JSON.stringify({ code: data.code }));
+                    }
+                },
+            }).catch(err => {
+                toast(err, 3000, 'red darken-1');
+                throw err;
+            });
+        },
+        setPasscodeGrid: function(grid) {
+            this.$set(this.user.methods.passcode_grid, "grid", grid);
         },
         generateTotp: function() {
             return fetchApi({
@@ -757,6 +797,7 @@ var UserView = Vue.extend({
         "push": PushMethod,
         "totp": TotpMethod,
         "bypass": BypassMethod,
+        "passcode_grid": PasscodeGridMethod,
         "webauthn": WebAuthnMethod,
         "random_code": RandomCodeMethod,
         "random_code_mail": RandomCodeMailMethod,
@@ -783,6 +824,9 @@ var UserView = Vue.extend({
                         .catch(err => {
                             this.user.methods.bypass.active = false;
                         });
+                    break;
+                case 'passcode_grid':
+                    this.standardActivate(method).then(res => this.setPasscodeGrid(res.data.grid));
                     break;
                 case 'webauthn':
                     this.standardActivate(method);
@@ -868,6 +912,9 @@ var UserView = Vue.extend({
         generateBypassConfirm : function(){
             if (window.confirm(this.messages.api.action.confirm_generate)) this.generateBypass();
         },
+        generatePasscodeGridConfirm : function(){
+            if (window.confirm(this.messages.api.action.confirm_generate)) this.generatePasscodeGrid();
+        },
         generateTotpConfirm : function(){
             if (window.confirm(this.messages.api.action.confirm_generate)) this.generateTotp();
         },
@@ -887,6 +934,26 @@ var UserView = Vue.extend({
                 toast(err, 3000, 'red darken-1');
                 throw err;
             });
+        },
+        generatePasscodeGrid: function() {
+            return fetchApi({
+                method: "POST",
+                uri: "/api/admin/generate/passcode_grid/" + this.user.uid,
+                onSuccess: res => {
+                    const data = res.data;
+                    if (data.code == "Ok") {
+                        this.setPasscodeGrid(data.grid);
+                    } else {
+                        throw new Error(JSON.stringify({ code: data.code }));
+                    }
+                },
+            }).catch(err => {
+                toast(err, 3000, 'red darken-1');
+                throw err;
+            });
+        },
+        setPasscodeGrid: function(grid) {
+            this.$set(this.user.methods.passcode_grid, "grid", grid);
         },
         generateTotp: function() {
             return fetchApi({

@@ -13,7 +13,7 @@ script#user-view(type='text/x-template').
     </label>
     </div>
     <div v-if="user.methods[method.name].active || user.methods[method.name].activationCode">
-    <component :is=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :get_user=get_user :messages=messages :infos=infos :user=user :user.sync=user :switch_push_event=switchPushEvent :formatApiUri=formatApiUri></component>
+    <component :is=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :get_user=get_user :messages=messages :infos=infos :user=user :user.sync=user :switch_push_event=switchPushEvent :formatApiUri=formatApiUri></component>
     </div>
     <div class="divider"></div>
     </li>
