@@ -17,7 +17,7 @@ script#user-dashboard(type='text/x-template').
         </div>
          <div class="divider"></div>
          <div class="method-component-wrapper" v-if="user.methods[method.name].active || typeof(user.methods[method.name].activationCode)=='string'">
-            <component :is=currentmethod :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :get_user=get_user :messages=messages :infos=infos :user=user :formatApiUri=formatApiUri></component>
+            <component :is=currentmethod :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :get_user=get_user :messages=messages :infos=infos :user=user :formatApiUri=formatApiUri></component>
          </div>
       </div>
    </div>

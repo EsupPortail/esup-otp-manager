@@ -66,7 +66,14 @@
         "description": "Method for generating a random codes list",
         "generated_codes": "Generated codes",
         "available_codes": "Available codes",
-        "used_codes": "Used codes"
+        "used_codes": "Used codes",
+        "generation_date": "Codes generated on %DATE%"
+      },
+      "passcode_grid": {
+        "name": "Passcode grid",
+        "description": "Method for generating a grid of random codes",
+        "note": "Do not photograph. Do not share.<br>In case of loss, contact the DSIUN.",
+        "generation_date": "Codes generated on %DATE%"
       },
       "matrix": {
         "name": "Authentication Grid",
@@ -100,6 +107,7 @@
       "push":"Notification to Esup Auth (Android, iOS).",
       "totp":"TOTP code into an application (Esup Auth, Authenticator...).",
       "bypass":"Display random Codes (Backup codes).",
+      "passcode_grid":"Display Passcode Grid.",
       "esupnfc":"Connection with student card or business card",
       "random_code":"Send random code by SMS.",
       "random_code_mail":"Send random code by mail.",

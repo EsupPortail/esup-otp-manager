@@ -1,0 +1,30 @@
+body {
+    visibility: hidden;
+    text-align: center;
+}
+
+.passcode_grid-method-codes {
+    visibility: visible;
+    width: 85.60mm;
+    height: 53.98mm;
+    left: 10mm;
+    top: 10mm;
+    position: absolute;
+    border: 1px solid lightgray;
+    border-radius: 3.175mm;
+    font-size: 0.6em;
+}
+
+table {
+    border-spacing: 0.4em 0.3em;
+    border-bottom: 1px solid lightgray;
+}
+
+th[scope] {
+    border: 1px solid;
+    font-size: 1em;
+}
+
+caption {
+    font-size: 1em;
+}

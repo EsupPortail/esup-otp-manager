@@ -18,6 +18,9 @@ script#bypass-method(type='text/x-template').
     </tbody>
     </table>
     </ul>
+    <div v-if="user.methods.bypass.generation_date">
+        <p>{{ messages.api.methods.bypass.generation_date.replace("%DATE%", generationDateString) }}</p>
+    </div>
     <div class="row" style="text-align:center;">
     <a class="waves-effect waves-light btn" @click=generate_bypass>{{messages.api.action.generate_codes}}<i class="material-icons right" aria-hidden="true">sync</i></a>
     </div>

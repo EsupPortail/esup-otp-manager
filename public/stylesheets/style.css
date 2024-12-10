@@ -298,6 +298,10 @@ label { color: #555; font-size: 1.2rem; }
     margin: 0;
 }
 
+.passcode_grid-method-codes caption {
+    caption-side: bottom;
+}
+
 @media only screen and (min-width: 701px) {  
              .container {width: 86%; max-width: 1200px} 
 }

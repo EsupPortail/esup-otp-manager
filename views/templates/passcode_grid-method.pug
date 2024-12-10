@@ -1,0 +1,35 @@
+script#passcode_grid-method(type='text/x-template').
+    <div>
+        <div v-if="user.methods.passcode_grid.grid">
+            <a href="javascript:if(window.print)window.print()">
+                <i class="material-icons md-48">print</i>
+            </a>
+            <div class="passcode_grid-method-codes">
+                <table class="striped centered" >
+                    <caption><p v-html="messages.api.methods.passcode_grid.note"></p></caption>
+                    <link rel="stylesheet" href="/stylesheets/style-print-passcode_grid-method-codes.css" media="print"/>
+                    <thead>
+                        <tr>
+                            <th></th> <!-- Empty column header for lines headers -->
+                            <th v-for="(code, colIndex) in user.methods.passcode_grid.grid[0]" scope="col" :key="'col-' + colIndex">{{ colIndex + 1 }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(line, lineIndex) in user.methods.passcode_grid.grid">
+                            <th :key="'line-' + lineIndex" scope="row">{{ String.fromCharCode(lineIndex + 'A'.charCodeAt(0)) }}</th> <!-- the letter corresponding to the line number (A=0, B=1, C=2, ...) -->
+                            <td v-for="(code, colIndex) in line" :key="'cell-' + colIndex">
+                                {{ code }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div v-if="user.methods.passcode_grid.generation_date">
+            <p>{{ messages.api.methods.passcode_grid.generation_date.replace("%DATE%", generationDateString) }}</p>
+        </div>
+        <div class="row" style="text-align:center;">
+            <a class="waves-effect waves-light btn" @click=generate_passcode_grid>{{ messages.api.action.generate_codes }}<i class="material-icons right" aria-hidden="true">sync</i></a>
+        </div>
+    <div class="divider"></div>
+    </div>
