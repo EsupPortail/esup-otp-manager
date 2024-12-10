@@ -68,6 +68,10 @@
         "available_codes": "Codes restants",
         "used_codes": "Codes utilisés"
       },
+      "passcode_grid": {
+        "name": "Grille de codes",
+        "description": "Méthode permettant de générer une grille de codes aléatoires."
+      },
       "matrix": {
         "name": "Grille d'authentification",
         "description": "Méthode permettant de se connecter via une grille."
@@ -101,6 +105,7 @@
       "push":"qu'une notification / push soit envoyée sur l'application Esup Auth (Android, iOS).",
       "totp":"qu'un code (TOTP) soit généré dans une application (Esup Auth, Authenticator, Plugin OTP...).",
       "bypass":"qu'une liste de code à usage unique soit générée aléatoirement (Codes de secours).",
+      "passcode_grid":"qu'une grille de codes soit générée aléatoirement.",
       "esupnfc":"une connexion en badgeant avec votre carte d'étudiant ou professionnelle.",
       "random_code":"qu'un code à usage unique vous soit envoyé par SMS.",
       "random_code_mail":"qu'un code à usage unique vous soit envoyé par Courriel.",

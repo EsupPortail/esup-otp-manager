@@ -1,0 +1,19 @@
+body {
+    visibility: hidden;
+}
+
+.passcode_grid-method-codes a {
+    display: none;
+}
+
+@page {
+    size: 85.60mm 53.98mm;
+}
+
+.passcode_grid-method-codes {
+    visibility: visible;
+    left: 0;
+    top: 0;
+    position: absolute;
+    border-spacing: 0.5em;
+}

@@ -1,0 +1,51 @@
+<svg width="718" height="304" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
+	<g transform="translate(3 12)" style="fill:#20558A">
+		<path d="M0 0 77.9167 0 77.9167 66 0 66Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M77.9167 0 288.75 0 288.75 66 77.9167 66Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M288.75 0 499.583 0 499.583 66 288.75 66Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M499.583 0 710.417 0 710.417 66 499.583 66Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M0 66 77.9167 66 77.9167 132 0 132Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M77.9167 66 288.75 66 288.75 132 77.9167 132Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M288.75 66 499.583 66 499.583 132 288.75 132Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M499.583 66 710.417 66 710.417 132 499.583 132Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M0 132 77.9167 132 77.9167 198 0 198Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M77.9167 132 288.75 132 288.75 198 77.9167 198Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M288.75 132 499.583 132 499.583 198 288.75 198Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M499.583 132 710.417 132 710.417 198 499.583 198Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M0 198 77.9167 198 77.9167 264 0 264Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M77.9167 198 288.75 198 288.75 264 77.9167 264Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M288.75 198 499.583 198 499.583 264 288.75 264Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M499.583 198 710.417 198 710.417 264 499.583 264Z" fill="#E9EBF5" fill-rule="evenodd"/>
+		<path d="M77.9167-2.29167 77.9167 266.292" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M288.75-2.29167 288.75 266.292" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M499.583-2.29167 499.583 266.292" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M-2.29167 66 712.708 66" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M-2.29167 132 712.708 132" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M-2.29167 198 712.708 198" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M0-2.29167 0 266.292" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M710.417-2.29167 710.417 266.292" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M-2.29167 0 712.708 0" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<path d="M-2.29167 264 712.708 264" stroke="#FFFFFF" stroke-width="4.58333" stroke-linejoin="round" stroke-miterlimit="10" fill="none" fill-rule="evenodd"/>
+		<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 592.109 51)">3</text>
+		<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 381.276 51)">2</text>
+		<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 170.443 51)">1</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 566.328 117)">678</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 355.495 117)">345</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 144.661 117)">012</text>
+		<g>
+			<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 24.9218 117)">A</text>
+		</g>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 566.328 183)">567</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 355.495 183)">234</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 144.661 183)">901</text>
+		<g>
+			<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 24.9218 183)">B</text>
+		</g>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 566.328 249)">456</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 355.495 249)">123</text>
+		<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="400" font-size="50" transform="matrix(1 0 0 1 144.661 249)">890</text>
+		<g>
+			<text font-family="Aptos Narrow,Aptos Narrow_MSFontService,sans-serif" font-weight="700" font-stretch="semi-condensed" font-size="50" transform="matrix(1 0 0 1 22.9165 249)">C</text>
+		</g>
+	</g>
+</svg>
