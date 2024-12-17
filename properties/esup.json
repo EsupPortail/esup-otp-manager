@@ -11,7 +11,7 @@
         "publicCertPath": "/etc/shibboleth/sp-cert.pem",
         "uidSamlAttribute": "urn:oid:1.3.6.1.4.1.5923.1.1.1.6",
         "#how_to_spMetadataUrl": "if defined, expose ServiceProviderMetadata on localhost/${spMetadataUrl}",
-        "spMetadataUrl": "Shibboleth.sso/Metadata",
+        "spMetadataUrl": "saml2/metadata",
         "#how_to_idpMetadataUrl": "if defined, esup-otp-manager will retrieve IDP information (certificate, entryPoint, login/logout URLs, etc.). Alternatively, you can define this information manually just below ",
         "idpMetadataUrl": "https://example.com/idp/shibboleth",
         "#idpCert": "MIIC9...73sskQ==",
