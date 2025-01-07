@@ -3,7 +3,11 @@ var express = require('express');
 var expressSession = require('express-session')({
     secret: properties.esup.session_secret_key,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: "auto", // secure if httpS connection
+        sameSite: "lax",
+    },
 });
 var path = require('path');
 var favicon = require('serve-favicon');
