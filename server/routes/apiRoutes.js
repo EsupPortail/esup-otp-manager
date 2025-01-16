@@ -46,7 +46,7 @@ function isAdmin(req, res, next) {
     });
 }
 
-/** @param {{ relUrl: string; bearerAuth?: true, method?: 'GET'|'POST'|'PUT'|'DELETE' }} opts_ */
+/** @param {{ relUrl: string, queryParams?: Object; bearerAuth?: true, method?: 'GET'|'POST'|'PUT'|'DELETE' }} opts_ */
 async function request_otp_api(req, res, opts_) {
     console.log("requesting api");
     const clientIP = req.ip;
@@ -62,8 +62,10 @@ async function request_otp_api(req, res, opts_) {
     if (req.body && Object.keys(req.body).length) {
         opts.body = JSON.stringify(req.body);
     }
-    
-    const url = properties.esup.api_url + opts_.relUrl;
+    opts_.queryParams ||= {};
+    opts_.queryParams.managerUser = req.session.passport.user.uid;
+
+    const url = properties.esup.api_url + opts_.relUrl + "?" + new URLSearchParams(opts_.queryParams);
 
     opts.headers = {
         'X-Client-IP': clientIP,
@@ -246,14 +248,16 @@ exports.routing = function(router) {
     });
 
     router.post('/api/generate/:method', isUser, function(req, res) {
-        var uri = '/protected/users/'+ req.session.passport.user.uid + '/methods/' + req.params.method + '/secret';
-        if(req.query.require_method_validation === 'true') {
-            uri += '?require_method_validation=true';
+        const uri = '/protected/users/'+ req.session.passport.user.uid + '/methods/' + req.params.method + '/secret';
+        const queryParams = {};
+        if (req.query.require_method_validation === 'true') {
+            queryParams.require_method_validation = true;
         }
         request_otp_api(req, res, {
             method: 'POST',
             relUrl: uri,
             bearerAuth: true,
+            queryParams,
         });
     });
 
@@ -320,14 +324,16 @@ exports.routing = function(router) {
     });
 
     router.post('/api/admin/generate/:method/:uid', isManager, function(req, res) {
-        var uri = '/protected/users/'+ req.params.uid + '/methods/' + req.params.method + '/secret/';
-        if(req.query.require_method_validation === 'true') {
-            uri += '?require_method_validation=true';
+        const uri = '/protected/users/'+ req.params.uid + '/methods/' + req.params.method + '/secret/';
+        const queryParams = {};
+        if (req.query.require_method_validation === 'true') {
+            queryParams.require_method_validation = true;
         }
         request_otp_api(req, res, {
             method: 'POST',
             relUrl: uri,
             bearerAuth: true,
+            queryParams,
         });
     });
 
