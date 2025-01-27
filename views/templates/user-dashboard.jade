@@ -2,7 +2,7 @@ script#user-dashboard(type='text/x-template').
    <div>
       <div class="section method-section" v-for="method in methods" v-if="method.activate && currentmethod==method.name" autofocus aria-live="assertive">
          <div class="method-header">
-            <h4>{{method.label || method.name}}</h4>
+            <h2 class="h3">{{method.label || method.name}}</h2>
             <p>
                {{messages.api.methods[method.name].description}}
             </p>

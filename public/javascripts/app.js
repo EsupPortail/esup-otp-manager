@@ -88,9 +88,9 @@ function base64URLStringToBuffer(base64URLString) {
 /**
 * Convert the given array buffer into a Base64URL-encoded string. Ideal for converting various
 * credential response ArrayBuffers to string for sending back to the server as JSON.
-* 
+*
 * Helper method to compliment `base64URLStringToBuffer`
-* 
+*
 * source: https://github.com/MasterKale/SimpleWebAuthn/blob/master/packages/browser/src/helpers/bufferToBase64URLString.ts
 */
 function bufferToBase64URLString(buffer) {
@@ -118,7 +118,7 @@ function getImgWithAltText({ qrCodeImg, qrCodeSrc, alt = "QR code Esup Auth" }) 
     return `<img src="${qrCodeSrc}" alt="${alt}">`;
 }
 
-function toast(message, displayLength, className){
+function toast({ message, displayLength = 9000, className }) {
     Materialize.toast(message, displayLength, className);
     $('.toast').last()[0].setAttribute('role', 'alert');
 }
@@ -228,17 +228,17 @@ const TotpMethod = Vue.extend({
                 uri: this.formatApiUri("/totp/activate/confirm/" + totpCode),
                 onSuccess: res => {
                     if (res.data.code != "Ok") {
-                        toast('Erreur, veuillez réessayer.', 3000, 'red darken-1');
+                        toast({ message: 'Erreur, veuillez réessayer.', className: 'red darken-1' });
                     } else {
                         this.user.methods.totp.active = true;
                         this.user.methods.totp.qrCode = '';
                         this.user.methods.totp.message = '';
-                        toast('Code validé', 3000, 'green contrasted');
+                        toast({ message: 'Code validé', className: 'green contrasted' });
                     }
                 },
                 onStatus: {
                     401: res => {
-                        toast(this.messages.api.methods.random_code.verify_code.wrong, 3000, 'red darken-1');
+                        toast({ message: this.messages.api.methods.random_code.verify_code.wrong, className: 'red darken-1' });
                     }
                 }
             });
@@ -348,11 +348,11 @@ const WebAuthnMethod = Vue.extend({
                     } catch (e) {
                         console.error(e);
                     }
-                    
+
                     if (statusCode == 200) {
-                        toast(this.messages.success.webauthn.renamed, 3000, 'green contrasted');
+                        toast({ message: this.messages.success.webauthn.renamed, className: 'green contrasted' });
                     } else {
-                        toast(this.messages.error.webauthn.generic, 3000, 'red darken-1');
+                        toast({ message: this.messages.error.webauthn.generic, className: 'red darken-1' });
                     }
 
                 }
@@ -390,9 +390,9 @@ const WebAuthnMethod = Vue.extend({
                     }
 
                     if (statusCode == 200) {
-                        toast(this.messages.success.webauthn.deleted, 3000, 'green contrasted');
+                        toast({ message: this.messages.success.webauthn.deleted, className: 'green contrasted' });
                     } else {
-                        toast(this.messages.error.webauthn.delete_failed, 3000, 'red darken-1');
+                        toast({ message: this.messages.error.webauthn.delete_failed, className: 'red darken-1' });
                     }
 
                 }
@@ -453,7 +453,7 @@ const WebAuthnMethod = Vue.extend({
                         }
                     };
                 }
-                
+
                 await fetchApi({
                     method: "POST",
                     uri: this.formatApiUri("/webauthn/confirm_activate"),
@@ -467,25 +467,25 @@ const WebAuthnMethod = Vue.extend({
                             await this.renameAuthenticator(credentials.id);
                         }
                         else {
-                            toast(this.messages.error.webauthn.registration_failed, 3000, 'red darken-1');
+                            toast({ message: this.messages.error.webauthn.registration_failed, className: 'red darken-1' });
                         }
                     },
                     onStatus: {422: () => {
-                        toast(this.messages.error.webauthn.timeout, 3000, 'red darken-1');
+                        toast({ message: this.messages.error.webauthn.timeout, className: 'red darken-1' });
                     }},
                 });
             }
             catch(e) {
                 // Already registered
                 if(e.name === "InvalidStateError") {
-                    toast(this.messages.error.webauthn.already_registered, 3000, 'red darken-1');
+                    toast({ message: this.messages.error.webauthn.already_registered, className: 'red darken-1' });
                 }
                 // user said no / something like that
                 else if(e.name === "NotAllowedError") {
-                    toast(this.messages.error.webauthn.user_declined, 3000, 'red darken-1');
+                    toast({ message: this.messages.error.webauthn.user_declined, className: 'red darken-1' });
                 }
                 else {
-                    toast(this.messages.error.webauthn.generic, 3000, 'red darken-1');
+                    toast({ message: this.messages.error.webauthn.generic, className: 'red darken-1' });
                     console.error("/api/webauthn/confirm_activate", e);
                 }
             } finally {
@@ -528,7 +528,7 @@ const RandomCodeMethod = Vue.extend({
                 });
                 const data = res.data;
                 if (data.code != "Ok") {
-                    toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                    toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
                 } else {
                     const expected = data.otp;
 
@@ -563,12 +563,12 @@ const RandomCodeMethod = Vue.extend({
                             });
                             const data = res.data;
                             if (data.code != "Ok") {
-                                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
                             } else {
                                 // equivalent to "this.user.transports[transport] = new_transport;", but allows new reactive property to be added dynamically
                                 Vue.set(this.user.transports, transport, new_transport);
                                 document.getElementById(transport + '-input').value = '';
-                                toast('Transport vérifié', 3000, 'green contrasted');
+                                toast({ message: 'Transport vérifié', className: 'green contrasted' });
                             }
                         }
                     });
@@ -576,7 +576,7 @@ const RandomCodeMethod = Vue.extend({
 
 
             } catch (err) {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             };
         },
         deleteTransport: function(transport) {
@@ -593,7 +593,7 @@ const RandomCodeMethod = Vue.extend({
                 },
             }).catch(err => {
                 this.user.transports[transport] = oldTransport;
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             });
         },
     },
@@ -687,7 +687,7 @@ var UserDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         standardActivate: function(method) {
@@ -703,7 +703,7 @@ var UserDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         deactivate: function(method) {
@@ -726,7 +726,7 @@ var UserDashboard = Vue.extend({
                     },
                 }).catch(err => {
                     this.user.methods[method].active = true;
-                    toast(err, 3000, 'red darken-1');
+                    toast({ message: err, className: 'red darken-1' });
                 });
             }
         },
@@ -756,7 +756,7 @@ var UserDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         },
@@ -773,7 +773,7 @@ var UserDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         },
@@ -797,7 +797,7 @@ var UserDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         }
@@ -887,7 +887,7 @@ var UserView = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         standardActivate: function(method) {
@@ -903,14 +903,14 @@ var UserView = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         deactivate: function(method) {
             if (window.confirm(this.messages.api.action.confirm_deactivate)) {
                 if (this.user.methods[method].askActivation)
                     this.user.methods[method].askActivation = false;
-                
+
                 return fetchApi({
                     method: "PUT",
                     uri: "/api/admin/" + this.user.uid + "/" + method + "/deactivate",
@@ -925,7 +925,7 @@ var UserView = Vue.extend({
                     },
                 }).catch(err => {
                     this.user.methods[method].active = true;
-                    toast(err, 3000, 'red darken-1');
+                    toast({ message: err, className: 'red darken-1' });
                 });
             }
         },
@@ -952,7 +952,7 @@ var UserView = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         },
@@ -969,7 +969,7 @@ var UserView = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         },
@@ -993,7 +993,7 @@ var UserView = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
         },
@@ -1059,7 +1059,7 @@ var ManagerDashboard = Vue.extend({
                 this.getUser(this.requestedUid);
                 if(!this.requestedUidExists) {
                     this.uids.push.push(this.requestedUid);
-                    toast('utilisateur '+this.requestedUid+' ajouté avec succès', 3000, 'green contrasted');
+                    toast({ message: 'utilisateur ' + this.requestedUid + ' ajouté avec succès', className: 'green contrasted' });
                 }
                 this.requestedUid = '';
             }
@@ -1075,7 +1075,7 @@ var ManagerDashboard = Vue.extend({
                     this.setUser(data);
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             });
         },
         setUser: function(data) {
@@ -1114,7 +1114,7 @@ var AdminDashboard = Vue.extend({
             }).catch(err => {
                 event.target.checked = false;
                 this.methods[event.target.name].activate = false;
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         deactivate: function(event) {
@@ -1133,7 +1133,7 @@ var AdminDashboard = Vue.extend({
             }).catch(err => {
                 event.target.checked = true;
                 this.methods[event.target.name].activate = true;
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         activateTransport: function(method, transport) {
@@ -1149,7 +1149,7 @@ var AdminDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
         deactivateTransport: function(method, transport) {
@@ -1168,7 +1168,7 @@ var AdminDashboard = Vue.extend({
                     }
                 },
             }).catch(err => {
-                toast('Erreur interne, veuillez réessayer plus tard.', 3000, 'red darken-1');
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
             });
         },
     }
@@ -1287,7 +1287,7 @@ var app = new Vue({
                     this.setUser(res.data);
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             });
         },
 
@@ -1311,7 +1311,7 @@ var app = new Vue({
                 this.users_methods = users_methods;
                 this.setMethods(methods);
             } catch (err) {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             }
         },
         getInfos: async function() {
@@ -1322,7 +1322,7 @@ var app = new Vue({
                 })).data;
                 this.$set(this.infos, "lang", localStorage.getItem("lang") || "en");
             } catch (err) {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             }
         },
         setMethods: function (data) {
@@ -1342,7 +1342,7 @@ var app = new Vue({
                     this.infos.lang = lang;
                 },
             }).catch(err => {
-                toast(err, 3000, 'red darken-1');
+                toast({ message: err, className: 'red darken-1' });
             });
         },
         setMessages: function (data) {

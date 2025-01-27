@@ -28,7 +28,7 @@ script#passcode_grid-method(type='text/x-template').
         <div v-if="user.methods.passcode_grid.generation_date">
             <p>{{ messages.api.methods.passcode_grid.generation_date.replace("%DATE%", generationDateString) }}</p>
         </div>
-        <div class="row" style="text-align:center;">
+        <div class="row center">
             <a class="waves-effect waves-light btn" @click=generate_passcode_grid>{{ messages.api.action.generate_codes }}<i class="material-icons right" aria-hidden="true">sync</i></a>
         </div>
     <div class="divider"></div>

@@ -8,9 +8,11 @@ function isUser(req, res, next) {
 
 exports.routing = function(router, passport) {
     router.get('/', function(req, res) {
+        var reqMessages = utils.getMessagesForRequest(req);
         res.render('index', {
-            title: 'Esup Otp Manager',
-            messages: utils.getMessagesForRequest(req).messages,
+            title: 'ESUP OTP Manager',
+            messages: reqMessages.messages,
+            lang: reqMessages.lang
         });
     });
 

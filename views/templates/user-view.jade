@@ -1,9 +1,9 @@
 script#user-view(type='text/x-template').
     <div>
     <ul>
-    <h4 v-if="user.uid && typeof(user.uid)!== 'function'">{{user.uid}}</h4>
+    <h2 class="h3" v-if="user.uid && typeof(user.uid)!== 'function'">{{user.uid}}</h2>
     <li v-for="method in methods" v-if="user.methods[method.name] && methods[method.name].activate">
-    <h5>{{method.label}}</h5> 
+    <h3 class="h4">{{method.label}}</h3> 
     <div class='switch'>
     <label>
     {{messages.api.action.deactivate}}
