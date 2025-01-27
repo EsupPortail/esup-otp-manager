@@ -16,7 +16,7 @@ function routing() {
     router.get('/manager/users_methods', isUser, function(req, res) {
         res.send({ ...properties.esup.users_methods, user: req.user });
     });
-    
+
     router.get('/manager/infos', isUser, function(req, res) {
         res.send({
             api_url: properties.esup.api_url,
