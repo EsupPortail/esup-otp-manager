@@ -46,13 +46,13 @@
         "verify_code": {
           "sms": {
             "title": "Code received by SMS",
-            "pre": "A code has been sent to you by SMS to the number <b>",
-            "post": "</b>. <br />Please enter the code received to validate this number"
+            "pre": "A code has been sent to you by SMS to the number <strong>",
+            "post": "</strong>. <br />Please enter the code received to validate this number"
           },
           "mail": {
             "title": "Code received by email",
-            "pre": "A code has been sent to you by email to the address <b>",
-            "post": "</b>. <br />Please enter the code received to validate this email address"
+            "pre": "A code has been sent to you by email to the address <strong>",
+            "post": "</strong>. <br />Please enter the code received to validate this email address"
           },
           "wrong": "Incorrect code."
         }
@@ -77,9 +77,9 @@
         "description": "Method for connecting via smartphone notifications with Esup Auth",
         "push_confirmation1": "Please scan this code in the smartphone application",
         "push_confirmation2": "If your smartphone does not have a functional picture appreil or you are having difficulties to scan the code above. Go to the menu \"Settings \" then click \"Activate without scan \".",
-        "push_confirmation3": "Enter you login :",
-        "push_confirmation4": "Enter your activation code :",
-        "push_confirmation5": "Enter this hostname :",
+        "push_confirmation3": "Enter you login:",
+        "push_confirmation4": "Enter your activation code:",
+        "push_confirmation5": "Enter this hostname:",
         "push_confirmation6": "Then press 'Ok'"
       },
       "esupnfc": {
@@ -89,7 +89,7 @@
       "webauthn": {
           "name": "Hardware authenticator (WebAuthn)",
           "description": "WebAuthn hardware authentication factor (Smartphone, Windows Hello, TouchID, ...).",
-          "no_authentificators": "You have no authentificators registered. Register one ?",
+          "no_authentificators": "You have no authentificators registered. Register one?",
           "single_auth": "You have 1 authentification method registered.",
           "nb_of_auths": "You have %NB% authentification methods registered.",
           "new_name": "New name"
@@ -110,28 +110,30 @@
     },
     "index": "Single use passwords management interface",
     "action":{
-      "connection" : "Login",
-      "activate" : "Activate",
+      "connection": "Login",
+      "activate": "Activate",
       "validate": "Validate",
-      "deactivate" : "Deactivate",
-      "save" : "Save",
-      "modify" : "Modify",
-      "rename" : "Rename",
-      "remove" : "Remove",
-      "search" : "Search",
-      "select" : "Select",
+      "deactivate": "Deactivate",
+      "save": "Save",
+      "modify": "Modify",
+      "rename": "Rename",
+      "remove": "Remove",
+      "search": "Search",
+      "select": "Select",
       "cancel": "Cancel",
-      "add" : "Add",
-      "generate_codes" : "Generate codes",
-      "generate_qrcode" : "Generate QRCode",
-      "logout" : "Logout",
-      "confirm_deactivate" : "Do you want to deactivate ?",
-      "confirm_generate" :"Old codes will be erased. Continue ?",
+      "change_lang": "Change interface language",
+      "add": "Add",
+      "generate_codes": "Generate codes",
+      "generate_qrcode": "Generate QRCode",
+      "language": "Language",
+      "logout": "Logout",
+      "confirm_deactivate": "Do you want to deactivate?",
+      "confirm_generate":"Old codes will be erased. Continue?",
       "hide_menu": "Hide menu",
       "show_menu": "Show menu",
 
       "webauthn": {
-        "confirm_delete": "Do you really want to delete %NAME% ?"
+        "confirm_delete": "Do you really want to delete %NAME%?"
       }
     },
     "key": {
@@ -141,15 +143,15 @@
     "menu":{
       "home": "Home",
       "preferences": "Preferences",
-      "manager" : "Manager",
+      "manager": "Manager",
       "admin": "Administration"
     },
     "transports":{
-      "sms" : "Sms",
-      "mail" : "Mail"
+      "sms": "Sms",
+      "mail": "Mail"
     },
     "label":{
-      "user" : "User"
+      "user": "User"
     }
   }
 }

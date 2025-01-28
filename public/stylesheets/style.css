@@ -10,15 +10,21 @@ body,
     min-width: 100%;
     padding: 0;
     margin: 0;
-    font-family: "Roboto", arial, sans-serif;
+    font-family: Roboto, arial, sans-serif;
 }
- 
+
 
 header,
 main,
 footer {
-    padding-left: 245px;  
+    padding-left: 245px;
 }
+
+h1, .h1{font-size: 3.56rem;}
+h2, .h2{font-size: 2.92rem;}
+h3, .h3{font-size: 2.28rem;}
+h4, .h4{font-size: 1.64rem;}
+h5, .h5{font-size: 1rem;}
 
 .side-nav.fixed { width: 245px; }
 
@@ -37,13 +43,15 @@ footer {
     justify-content: center;
 }
 
-.top-nav {
+.top-nav, .top-nav h1 {
     box-shadow: none;
     font-size: 32px;
+    line-height: 64px;
     -webkit-font-smoothing: antialiased;
 }
 
 #slide-out{
+    transform: none;
     -webkit-transform: none;
 }
 
@@ -73,6 +81,7 @@ header { background:#424242; }
 }
 
 .sidenav-header {
+    background-color: #000;
     background-image: url("../images/wallpaper_polygons.jpg") !important;
     background-size: 150% 500%;
     background-repeat: no-repeat;
@@ -196,18 +205,19 @@ body.IE7 .Switch.Round {
 }
 
 
-#slide-out { border: 1px solid #ccc; color: #444; } 
+#slide-out { border: 1px solid #ccc; color: #444; }
 
-#slide-out  li.active { background-color: #24847C; }
-
-#slide-out  li.active a:hover { background-color: inherit; } /* overrride materializeCSS */
-
-#slide-out  li.active #home { color:white ; }
+#slide-out li.active,
+#slide-out li.active a {
+    background-color: #24847C;
+    color: white ;
+}
+#slide-out li.active a:hover { background-color: inherit; } /* overrride materializeCSS */
 
 #slide-out .collapsible-header  {
-    background-color : #eeeef0;  
-    border-bottom: 1px solid #ddd; 
-    border-top: 1px solid #ddd; 
+    background-color : #eeeef0;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     margin: 0;
     text-transform: uppercase;
 }
@@ -217,16 +227,16 @@ body.IE7 .Switch.Round {
 }
 
 
-/* Page d'Accueil et les blocs méthodes */ 
+/* Page d'Accueil et les blocs méthodes */
 
-.container {width: 86%; max-width: 1200px} 
+.container {width: 86%; max-width: 1200px}
 
 
 
 .flex-container {
-  display: flex; 
+  display: flex;
   flex-wrap: wrap;
-  margin-top: 19px; 
+  margin-top: 19px;
 }
 
 .status {
@@ -260,9 +270,9 @@ body.IE7 .Switch.Round {
 .methode img {  padding: 0px; margin:0px; width:88px; }
 .lock-solid { width:110px; margin: 0px 30px 0px 30px; }
 
-.card { padding-top:25px;  background-color: #eeeef0; } 
+.card { padding-top:25px;  background-color: #eeeef0; }
+
 .input-field label {
-    top: 2rem;
     top: 1rem;
     left: 10px;
     color: #6C6C6C;
@@ -298,8 +308,8 @@ label { color: #555; font-size: 1.2rem; }
     margin: 0;
 }
 
-@media only screen and (min-width: 701px) {  
-             .container {width: 86%; max-width: 1200px} 
+@media only screen and (min-width: 701px) {
+    .container {width: 86%; max-width: 1200px}
 }
 
 @media only screen and (max-width: 700px) {
@@ -310,7 +320,7 @@ label { color: #555; font-size: 1.2rem; }
 
 @media only screen and (max-width: 480px) {
     .methode { width:96% !important ; }
-    .methode img { width:60px; } 
+    .methode img { width:60px; }
 }
 
 @media only screen and (min-width: 992px) {
@@ -325,7 +335,7 @@ label { color: #555; font-size: 1.2rem; }
     #slide-out.may-be-hidden {
         display:none;
     }
-    
+
     /* hide the "menu" button if the menu is already displayed */
     header:not(:has(#slide-out.may-be-hidden)) #navButton {
         display: none;
@@ -368,7 +378,7 @@ label { color: #555; font-size: 1.2rem; }
     background-color: #CC332F!important;
 }
 
-  
+
 .btn:hover,
 .btn:focus,
 .btn-large:hover,

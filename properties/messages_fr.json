@@ -23,10 +23,10 @@
 
     "webauthn": {
       "generic": "Une erreur est survenue. Veuillez réessayer.",
-      "timeout": "Vous avez dépassé le temps maximal autorisé pour l'ajout du facteur. Veuillez réessayer.",
-      "registration_failed": "Une erreur est survenue pendant l'ajout du facteur. Veuillez réessayer.",
-      "already_registered": "Vous avez déjà ajouté ce facteur d'authentification.",
-      "user_declined": "Vous avez annulé l'ajout du facteur.",
+      "timeout": "Vous avez dépassé le temps maximal autorisé pour l’ajout du facteur. Veuillez réessayer.",
+      "registration_failed": "Une erreur est survenue pendant l’ajout du facteur. Veuillez réessayer.",
+      "already_registered": "Vous avez déjà ajouté ce facteur d’authentification.",
+      "user_declined": "Vous avez annulé l’ajout du facteur.",
       "delete_failed": "Une erreur est survenue pendant la suppression du facteur. Veuillez réessayer.",
       "empty_name": "Le nom ne peut pas être vide"
     }
@@ -36,30 +36,30 @@
       "totp": {
         "name": "Code temporel (TOTP)",
         "description": "Méthode permettant de générer des codes uniques de 6 chiffres.",
-        "howTo": "Scannez le code à l'aide de votre application mobile Esup Auth ou Google Authentificator ou entrez le code directement dans votre application TOTP favori",
-        "howToActivate": "Ensuite, pour valider l'activation du TOTP, saisissez ci-dessous le code à 6 chiffres affiché sur votre application",
+        "howTo": "Scannez le code à l’aide de votre application mobile Esup Auth ou Google Authentificator ou entrez le code directement dans votre application TOTP favori",
+        "howToActivate": "Ensuite, pour valider l’activation du TOTP, saisissez ci-dessous le code à 6 chiffres affiché sur votre application",
         "enter_code": "Saisissez le code de 6 chiffres"
       },
       "random_code": {
         "name": "Code par SMS",
-        "description": "Méthode permettant de s'authentifier à partir d'un code aléatoire à usage unique envoyé par SMS.",
+        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par SMS.",
         "verify_code": {
           "sms": {
             "title": "Code reçu par SMS",
-            "pre": "Un code vous a été envoyé par SMS au numéro <b>",
-            "post": "</b>. <br />Veuillez indiquer le code reçu pour valider ce numéro."
+            "pre": "Un code vous a été envoyé par SMS au numéro <strong>",
+            "post": "</strong>. <br />Veuillez indiquer le code reçu pour valider ce numéro."
           },
           "mail": {
-            "title": "Code reçu par email",
-            "pre": "Un code vous a été envoyé par email à l'adresse <b>",
-            "post": "</b>. <br />Veuillez indiquer le code reçu pour valider cette adresse email."
+            "title": "Code reçu par courriel",
+            "pre": "Un code vous a été envoyé par courriel à l’adresse <strong>",
+            "post": "</strong>.<br /> Veuillez indiquer le code reçu pour valider cette adresse email."
           },
           "wrong": "Code incorrect."
         }
       },
       "random_code_mail": {
         "name": "Code par Courriel",
-        "description": "Méthode permettant de s'authentifier à partir d'un code aléatoire à usage unique envoyé par courriel."
+        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel."
       },
       "bypass": {
         "name": "Codes de secours",
@@ -69,18 +69,18 @@
         "used_codes": "Codes utilisés"
       },
       "matrix": {
-        "name": "Grille d'authentification",
+        "name": "Grille d’authentification",
         "description": "Méthode permettant de se connecter via une grille."
       },
       "push": {
         "name": "Notification (Esup Auth)",
-        "description": "Méthode permettant de se connecter via les notifications de son smartphone avec l'application Esup Auth.",
-        "push_confirmation1": "Veuillez scannez ce code dans l'application smartphone Esup Auth",
-        "push_confirmation2": "Si votre smartphone ne dispose pas d'un appreil photo fonctionnel ou que vous épprouvez des difficultés à scanner le code précédent. Allez dans le menu \"Paramètres\" puis cliquer sur \"Activation manuelle\".",
-        "push_confirmation3": "Entrez votre nom de compte :",
-        "push_confirmation4": "Entrez le code d'activation :",
-        "push_confirmation5": "Entrez l'adresse :",
-        "push_confirmation6": "Puis cliquez sur 'Ok'"
+        "description": "Méthode permettant de se connecter via les notifications de son smartphone avec l’application Esup Auth.",
+        "push_confirmation1": "Veuillez scannez ce code dans l’application smartphone Esup Auth",
+        "push_confirmation2": "Si votre smartphone ne dispose pas d’un appareil photo fonctionnel ou que vous éprouvez des difficultés à scanner le code précédent. Allez dans le menu « Paramètres » puis cliquer sur « Activation manuelle ».",
+        "push_confirmation3": "Entrez votre nom de compte :",
+        "push_confirmation4": "Entrez le code d’activation :",
+        "push_confirmation5": "Entrez l’adresse :",
+        "push_confirmation6": "Puis cliquez sur « Ok »"
       },
       "esupnfc": {
           "name": "EsupNFC",
@@ -88,69 +88,71 @@
       },
       "webauthn": {
         "name": "Facteur physique (WebAuthn)",
-        "description": "Facteur physique d'authentification WebAuthn (Smartphone, Windows Hello, TouchID, ...).",
-        "no_authentificators": "Vous n'avez pas de moyen d'authentification enregistré. En ajouter un ?",
-        "single_auth": "Vous avez 1 moyen d'authentification.",
-        "nb_of_auths": "Vous avez %NB% moyens d'authentification.",
+        "description": "Facteur physique d’authentification WebAuthn (Smartphone, Windows Hello, TouchID, ...).",
+        "no_authentificators": "Vous n’avez pas de moyen d’authentification enregistré. En ajouter un ?",
+        "single_auth": "Vous avez 1 moyen d’authentification.",
+        "nb_of_auths": "Vous avez %NB% moyens d’authentification.",
         "new_name": "Nouveau nom"
       }
     },
     "home": {
-      "description": "Vous permet d'ajouter un deuxième niveau de protection à votre compte (authentification double facteur). Ainsi, il sera impossible d'accéder à votre compte même avec votre mot de passe.",
-      "methods":"Vous pouvez définir :",
-      "push":"qu'une notification / push soit envoyée sur l'application Esup Auth (Android, iOS).",
-      "totp":"qu'un code (TOTP) soit généré dans une application (Esup Auth, Authenticator, Plugin OTP...).",
-      "bypass":"qu'une liste de code à usage unique soit générée aléatoirement (Codes de secours).",
-      "esupnfc":"une connexion en badgeant avec votre carte d'étudiant ou professionnelle.",
-      "random_code":"qu'un code à usage unique vous soit envoyé par SMS.",
-      "random_code_mail":"qu'un code à usage unique vous soit envoyé par Courriel.",
-      "webauthn":"Facteur physique d'authentification WebAuthn (Smartphone, Windows Hello, TouchID, ...).",
+      "description": "Vous permet d’ajouter un deuxième niveau de protection à votre compte (authentification double facteur). Ainsi, il sera impossible d’accéder à votre compte même avec votre mot de passe.",
+      "methods": "Vous pouvez définir :",
+      "push": "qu’une notification / push soit envoyée sur l’application Esup Auth (Android, iOS).",
+      "totp": "qu’un code (TOTP) soit généré dans une application (Esup Auth, Authenticator, Plugin OTP...).",
+      "bypass": "qu’une liste de code à usage unique soit générée aléatoirement (Codes de secours).",
+      "esupnfc": "une connexion en badgeant avec votre carte d’étudiant ou professionnelle.",
+      "random_code": "qu’un code à usage unique vous soit envoyé par SMS.",
+      "random_code_mail": "qu’un code à usage unique vous soit envoyé par Courriel.",
+      "webauthn": "Facteur physique d’authentification WebAuthn (Smartphone, Windows Hello, TouchID, ...).",
       "activated": "Activé",
       "deactivated": "Désactivé",
-      "note":"Dans vos préférences, nous vous conseillons fortement de paramétrer au moins 2 méthodes afin de pouvoir assurer la continuité d'utilisation des services numériques."
+      "note": "Dans vos préférences, nous vous conseillons fortement de paramétrer au moins 2 méthodes afin de pouvoir assurer la continuité d’utilisation des services numériques."
     },
     "index": "Interface de gestion de mots de passe à usage unique",
     "action":{
-      "connection" : "Se connecter",
-      "activate" : "Activer",
+      "connection": "Se connecter",
+      "activate": "Activer",
       "validate": "Valider",
-      "deactivate" : "Désactiver",
-      "save" : "Enregistrer",
-      "modify" : "Modifier",
-      "rename" : "Renommer",
-      "remove" : "Supprimer",
-      "search" : "Chercher",
-      "select" : "Sélectionner",
+      "deactivate": "Désactiver",
+      "save": "Enregistrer",
+      "modify": "Modifier",
+      "rename": "Renommer",
+      "remove": "Supprimer",
+      "search": "Chercher",
+      "select": "Sélectionner",
       "cancel": "Annuler",
-      "add" : "Ajouter",
-      "generate_codes" : "Générer des codes",
-      "generate_qrcode" : "Générer QRCode",
-      "logout" : "Se déconnecter",
-      "confirm_deactivate" : "Voulez-vous vraiment désactiver ?",
-      "confirm_generate" :"Les anciens codes seront invalidés. Voulez-vous continuer ?",
+      "change_lang": "Changer la langue de l’interface",
+      "add": "Ajouter",
+      "generate_codes": "Générer des codes",
+      "generate_qrcode": "Générer QRCode",
+      "language": "Langue",
+      "logout": "Se déconnecter",
+      "confirm_deactivate": "Voulez-vous vraiment désactiver ?",
+      "confirm_generate": "Les anciens codes seront invalidés. Voulez-vous continuer ?",
       "hide_menu": "Masquer le menu",
       "show_menu": "Afficher le menu",
 
       "webauthn": {
-        "confirm_delete": "Voulez vous vraiment supprimer %NAME% ?"
+        "confirm_delete": "Voulez vous vraiment supprimer %NAME% ?"
       }
     },
     "key": {
       "escape": "echap"
     },
-    "title":"ESUP OTP Manager",
+    "title": "ESUP OTP Manager",
     "menu":{
       "home": "Accueil",
       "preferences": "Préférences",
-      "manager" : "Manager",
+      "manager": "Manager",
       "admin": "Administrateur"
     },
     "transports":{
-      "sms" : "Votre numéro portable",
-      "mail" : "Email"
+      "sms": "Votre numéro portable",
+      "mail": "Email"
     },
     "label":{
-      "user" : "Utilisateur"
+      "user": "Utilisateur"
     }
   }
 }

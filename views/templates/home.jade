@@ -2,7 +2,7 @@
 script#home-dashboard(type='text/x-template').
     <div>
     <div v-if="messages.api">
-       <h4>{{messages.api.title}}</h4>
+       <h2>{{messages.api.title}}</h2>
        <p>
        <img class= "lock-solid" src="images/logo-transparent.png" style="max-width: 150px; float: right;" alt="">
        {{messages.api.home.description}}
@@ -14,13 +14,13 @@ script#home-dashboard(type='text/x-template').
       <p>
       <img :src="'images/'+method.name+'.svg'" style="max-width: 200px;" alt="">
      </p>
-     
+
       <span>{{messages.api.home[method.name]}}</span>
       <span v-if="user.methods[method.name]?.active" class="status enabled">{{messages.api.home.activated}}</span>
       <span v-else class="status disabled">{{messages.api.home.deactivated}}</span>
      </button>
 
      </div>
-     
+
     </div>
     </div>
