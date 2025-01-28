@@ -47,6 +47,19 @@ footer {
     -webkit-transform: none;
 }
 
+.side-nav .collapsible .collapsible-header .chevron {
+    float: right;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: .5em 0 0;
+    transition: transform .2s;
+}
+
+.side-nav .collapsible details[open] .collapsible-header .chevron {
+    transform: rotate(-90deg);
+}
+
 @media only screen and (max-width: 992px) {
     header,
     main,

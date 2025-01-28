@@ -38,6 +38,8 @@ block content
                             li
                                 details
                                     summary.collapsible-header {{messages.api.menu.preferences}}
+                                        i.material-icons.chevron chevron_left
+
                                     ul.collapsible-body
                                         li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
                                             a(href='#', @click='navigate', :id='method.name', :name='method.name') {{method.label || method.name}}
