@@ -1,8 +1,11 @@
 # esup-otp-manager
-Manager for the esup-otp-api. Allow users to edit theirs preferences and admins to administrate ;)
 
-### Version
-1.5 **Require "npm install"**
+Manager for the esup-otp-api. Allow users to edit their preferences and admins to administrate ;)
+
+## Version
+
+1.5 **Require `npm install`**
+
 - You can now **redirect a manager to a user's page** using a link like `http://localhost:4000/login?user=toto`
 - You can now **prevent users from using their professional e-mail addresses** to *random_code_mail* transport.<br />
 For this, in *properties/esup.json*, uncomment *transport_regexes.mail*, and modify the associated regex.<br />
@@ -11,19 +14,29 @@ For this, in *properties/esup.json*, uncomment *transport_regexes.mail*, and mod
 - Update dependencies
 - Some refactors
 
-### Requirements
+## Requirements
+
 - [esup-otp-api](https://github.com/EsupPortail/esup-otp-api)
 
-### Installation
-- git clone https://github.com/EsupPortail/esup-otp-manager.git
-- npm install
-- change the fields values in properties/esup.json to your installation, some explanations are in #how_to attributes
-- npm start
+## Installation
+
+```sh
+# Download esup-otp-manager
+git clone https://github.com/EsupPortail/esup-otp-manager.git
+# Install required libraries
+npm install
+# Copy the default configuration
+cp properties/esup-dist.json properties/esup.json
+# change the fields values in properties/esup.json to your installation, some explanations are in `#how_to` attributes
+# Start server
+npm start
+```
 
 ### Behind Apache
-- https 
 
-```
+- https
+
+```apache
 RequestHeader set X-Forwarded-Proto https
 RequestHeader set X-Forwarded-Port 443
 
@@ -41,7 +54,7 @@ ProxyPassReverse http://127.0.0.1:4000/
 
 ### Systemd
 
-```
+```ini
 [Unit]
 Description=esup-otp-manager nodejs app
 Documentation=https://github.com/EsupPortail/esup-otp-manager
@@ -58,11 +71,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-### Development
-
-
-License
-----
+## License
 
 MIT
    [EsupPortail]: <https://www.esup-portail.org/>
