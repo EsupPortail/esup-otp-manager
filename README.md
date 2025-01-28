@@ -25,8 +25,6 @@ For this, in *properties/esup.json*, uncomment *transport_regexes.mail*, and mod
 git clone https://github.com/EsupPortail/esup-otp-manager.git
 # Install required libraries
 npm install
-# Copy the default configuration
-cp properties/esup-dist.json properties/esup.json
 # change the fields values in properties/esup.json to your installation, some explanations are in `#how_to` attributes
 # Start server
 npm start
