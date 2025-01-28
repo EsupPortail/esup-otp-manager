@@ -59,8 +59,8 @@ block content
                             li
                                 details
                                     summary.collapsible-header
-                                        a
-                                            i.material-icons language
+                                        i.material-icons language
+                                        i.material-icons.chevron(aria-hidden="true") chevron_left
                                     ul.collapsible-body
                                         li.bold
                                             a(href='#', @click="getMessages('fr')", lang="fr") Français

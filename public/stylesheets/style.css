@@ -22,13 +22,10 @@ footer {
 
 .side-nav.fixed { width: 245px; }
 
-.side-nav ul li ul li a {
-    height: 100%;
-    line-height: normal;
-    align-content: center;
-}
-.side-nav ul li ul li {
-    height: 48px;
+.side-nav a {
+    /* Prevent a multi-line menu to be displayed over the next item. */
+    height: auto;
+    min-height: 48px;
 }
 
 .nav-wrapper {
@@ -58,6 +55,10 @@ footer {
 
 .side-nav .collapsible details[open] .collapsible-header .chevron {
     transform: rotate(-90deg);
+}
+
+.side-nav .collapsible summary::-webkit-details-marker {
+    display: none;
 }
 
 @media only screen and (max-width: 992px) {
@@ -226,6 +227,7 @@ body.IE7 .Switch.Round {
 }
 
 .collapsible-body {
+    clear: both;
     display: block;
 }
 
