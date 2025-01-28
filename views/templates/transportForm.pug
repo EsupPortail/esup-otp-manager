@@ -4,7 +4,7 @@ script#transport_form(type='text/x-template').
       <div class="col s2 m3">
         <img :src="`images/${transport}.svg`" alt="">
       </div>
-      <div class="col s10 m9" style="text-align: justify;">
+      <div class="col s10 m9">
         <div class="row" v-if="user.transports[transport]">
           <p class="col s7">{{ user.transports[transport] }}</p>
         </div>
