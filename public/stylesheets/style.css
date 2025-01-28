@@ -72,9 +72,9 @@ h5, .h5{font-size: 1rem;}
 }
 
 nav {
-    background-color: #424242 ;
+    background-color: #424242;
 }
-header { background:#424242; }
+header { background: #424242; }
 
 .no-margin {
     margin: 0;
@@ -89,10 +89,10 @@ header { background:#424242; }
 }
 
 #closebtn {
-    color: #bbb ;
+    color: #bbb;
     height: initial !important;
     line-height: initial !important;
-    margin: 0px 0 32px 74px;
+    margin: 0 0 32px 74px;
     padding: 0 16px;
 }
 
@@ -210,7 +210,7 @@ body.IE7 .Switch.Round {
 #slide-out li.active,
 #slide-out li.active a {
     background-color: #24847C;
-    color: white ;
+    color: white;
 }
 #slide-out li.active a:hover { background-color: inherit; } /* overrride materializeCSS */
 
@@ -227,7 +227,7 @@ body.IE7 .Switch.Round {
 }
 
 
-/* Page d'Accueil et les blocs méthodes */
+/* Page d'accueil et les blocs méthodes */
 
 .container {width: 86%; max-width: 1200px}
 
@@ -315,11 +315,11 @@ label { color: #555; font-size: 1.2rem; }
 @media only screen and (max-width: 700px) {
     .methode {  width:46% !important; }
     .methode img { width:70px; }
-    .lock-solid { width:130px; margin: 3px 15px 0px ; }
+    .lock-solid { width:130px; margin: 3px 15px 0; }
 }
 
 @media only screen and (max-width: 480px) {
-    .methode { width:96% !important ; }
+    .methode { width:96% !important; }
     .methode img { width:60px; }
 }
 
