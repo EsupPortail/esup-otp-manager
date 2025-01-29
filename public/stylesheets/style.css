@@ -213,6 +213,12 @@ summary.collapsible-header{
     text-transform: uppercase;
 }
 
+.collapsible-header i {
+    display: inline-block;
+    float: none;
+    vertical-align: bottom;
+}
+
 .collapsible-body {
     clear: both;
     display: block;
