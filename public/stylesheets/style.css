@@ -40,26 +40,10 @@ footer {
     -webkit-font-smoothing: antialiased;
 }
 
-#slide-out{
+#slide-out {
     -webkit-transform: none;
 }
 
-.side-nav .collapsible .collapsible-header .chevron {
-    float: right;
-    height: 24px;
-    width: 24px;
-    line-height: 24px;
-    margin: .5em 0 0;
-    transition: transform .2s;
-}
-
-.side-nav .collapsible details[open] .collapsible-header .chevron {
-    transform: rotate(-90deg);
-}
-
-.side-nav .collapsible summary::-webkit-details-marker {
-    display: none;
-}
 
 @media only screen and (max-width: 992px) {
     header,
@@ -77,10 +61,9 @@ footer {
     }
 }
 
-nav {
-    background-color: #424242 ;
+nav, header {
+    background: #424242;
 }
-header { background:#424242; }
 
 .no-margin {
     margin: 0;
@@ -94,10 +77,10 @@ header { background:#424242; }
 }
 
 #closebtn {
-    color: #bbb ;
+    color: #bbb;
     height: initial !important;
     line-height: initial !important;
-    margin: 0px 0 32px 74px;
+    margin: 0 0 32px 74px;
     padding: 0 16px;
 }
 
@@ -105,7 +88,8 @@ header { background:#424242; }
     font-size: 24px;
 }
 
-#closebtn:hover, #closebtn:focus {
+#closebtn:hover,
+#closebtn:focus {
     color: white;
 }
 
@@ -169,8 +153,8 @@ body.IE7 .Switch {
 .Switch.Round {
     padding: 0px 20px;
     border-radius: 40px;
-    margin-left:10px;
-    margin-right:10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 body.IE7 .Switch.Round {
@@ -185,7 +169,7 @@ body.IE7 .Switch.Round {
 
 .Switch.Round.On .Toggle {
     left: 64%;
-    background-color:#26a69a;
+    background-color: #26a69a;
 }
 
 .Switch.Round.Off .Toggle {
@@ -215,6 +199,9 @@ body.IE7 .Switch.Round {
 #slide-out  li.active { background-color: #24847C; }
 
 #slide-out  li.active a:hover { background-color: inherit; } /* overrride materializeCSS */
+summary.collapsible-header{
+    display: list-item;
+}
 
 #slide-out  li.active #home { color:white ; }
 

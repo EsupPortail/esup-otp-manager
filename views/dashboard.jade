@@ -38,7 +38,6 @@ block content
                             li
                                 details
                                     summary.collapsible-header {{messages.api.menu.preferences}}
-                                        i.material-icons.chevron(aria-hidden="true") chevron_left
 
                                     ul.collapsible-body
                                         li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
@@ -60,7 +59,7 @@ block content
                                 details
                                     summary.collapsible-header
                                         i.material-icons language
-                                        i.material-icons.chevron(aria-hidden="true") chevron_left
+
                                     ul.collapsible-body
                                         li.bold
                                             a(href='#', @click="getMessages('fr')", lang="fr") Français
