@@ -26,6 +26,8 @@ footer {
     /* Prevent a multi-line menu to be displayed over the next item. */
     height: auto;
     min-height: 48px;
+    line-height: normal;
+    align-content: center;
 }
 
 .nav-wrapper {
