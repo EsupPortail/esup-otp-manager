@@ -11,7 +11,7 @@
     "start": "node run"
   },
   "dependencies": {
-    "@coursetable/passport-cas": "0.1.x",
+    "@coursetable/passport-cas": "0.1.2",
     "body-parser": "2.x",
     "cookie-parser": "1.x",
     "debug": "4.x",
