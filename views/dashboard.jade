@@ -38,6 +38,7 @@ block content
                             li
                                 details
                                     summary.collapsible-header {{messages.api.menu.preferences}}
+
                                     ul.collapsible-body
                                         li.bold(v-for='method in methods', v-show='method.activate && method.authorize')
                                             a(href='#', @click='navigate', :id='method.name', :name='method.name') {{method.label || method.name}}
@@ -57,8 +58,8 @@ block content
                             li
                                 details
                                     summary.collapsible-header
-                                        a
-                                            i.material-icons language
+                                        i.material-icons language
+
                                     ul.collapsible-body
                                         li.bold
                                             a(href='#', @click="getMessages('fr')", lang="fr") Français
