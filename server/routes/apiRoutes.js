@@ -2,6 +2,8 @@ const { request } = require('undici');
 const properties = require(__dirname + '/../../properties/properties');
 const utils = require(__dirname + '/../../services/utils');
 
+const tenantsApiPassword = new Map();
+
 function redirect(req, res, status, path) {
     res
         .status(status)
@@ -46,6 +48,32 @@ function isAdmin(req, res, next) {
     });
 }
 
+async function getApiTenantByName(tenant) {
+    const response = await fetch(properties.esup.api_url + '/admin/tenants', {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + properties.esup.admin_password
+    }});
+    const data = await response.json();
+    return data.find(item => item.name === tenant);
+}
+
+async function getApiTenant(tenantId) {
+    const response = await fetch(properties.esup.api_url + '/admin/tenant/' + tenantId, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + properties.esup.admin_password
+    }});
+    return await response.json();
+}
+
+async function getTenantApiPassword(tenantName) {
+    const apiTenant = await getApiTenantByName(tenantName);
+
+    if(apiTenant) {
+        const tenant = await getApiTenant(apiTenant.id);
+        return tenant.api_password;
+    }
+}
+
 /** @param {{ relUrl: string; bearerAuth?: true, method?: 'GET'|'POST'|'PUT'|'DELETE' }} opts_ */
 async function request_otp_api(req, res, opts_) {
     console.log("requesting api");
@@ -72,11 +100,17 @@ async function request_otp_api(req, res, opts_) {
     };
 
     if (opts_.bearerAuth) {
-        opts.headers.Authorization = 'Bearer ' + properties.esup.api_password;
+        const tenant = encodeURIComponent(req.session.passport.user.attributes.issuer);
+        if(!tenantsApiPassword.has(tenant)) {
+            tenantsApiPassword.set(tenant, await getTenantApiPassword(tenant));
+        }
+        opts.headers['x-tenant'] = tenant;
+        opts.headers.Authorization = 'Bearer ' + tenantsApiPassword.get(tenant);
     }
 
     //console.log(opts.method +':'+ opts.url);
     //console.log(req.session.passport);
+    //console.log(JSON.stringify(opts.headers, null, 2));
     let response;
     try {
         response = await request(url, opts);
