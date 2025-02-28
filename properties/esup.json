@@ -4,20 +4,23 @@
         "casBaseURL": "http://localhost/cas",
         "serviceBaseURL": "http://localhost:4000/"
     },
-    "#SAML": {
-        "callbackUrl": "http://localhost:4000/login",
-        "issuer": "esup-otp-manager",
-        "privateKeyPath": "/etc/shibboleth/sp-key.pem",
-        "publicCertPath": "/etc/shibboleth/sp-cert.pem",
-        "uidSamlAttribute": "urn:oid:1.3.6.1.4.1.5923.1.1.1.6",
-        "#how_to_spMetadataUrl": "if defined, expose ServiceProviderMetadata on localhost/${spMetadataUrl}",
-        "spMetadataUrl": "saml2/metadata",
-        "#how_to_idpMetadataUrl": "if defined, esup-otp-manager will retrieve IDP information (certificate, entryPoint, login/logout URLs, etc.). Alternatively, you can define this information manually just below ",
-        "idpMetadataUrl": "https://example.com/idp/shibboleth",
-        "#idpCert": "MIIC9...73sskQ==",
-        "#entryPoint": "https://example.com/idp/profile/SAML2/Redirect/SSO",
-        "#logoutUrl":  "https://example.com/idp/profile/SAML2/Redirect/SLO"
-    },
+    "#SAML": [
+        {
+            "callbackUrl": "http://localhost:4000/login",
+            "issuer": "esup-otp-manager",
+            "privateKeyPath": "/etc/shibboleth/sp-key.pem",
+            "publicCertPath": "/etc/shibboleth/sp-cert.pem",
+            "uidSamlAttribute": "urn:oid:1.3.6.1.4.1.5923.1.1.1.6",
+            "#how_to_spMetadataUrl": "if defined, expose ServiceProviderMetadata on localhost/${spMetadataUrl}",
+            "spMetadataUrl": "saml2/metadata",
+            "idpIssuer": "localhost",
+            "#how_to_idpMetadataUrl": "if defined, esup-otp-manager will retrieve IDP information (certificate, entryPoint, login/logout URLs, etc.). Alternatively, you can define this information manually just below ",
+            "idpMetadataUrl": "https://example.com/idp/shibboleth",
+            "#idpCert": "MIIC9...73sskQ==",
+            "#entryPoint": "https://example.com/idp/profile/SAML2/Redirect/SSO",
+            "#logoutUrl": "https://example.com/idp/profile/SAML2/Redirect/SLO"
+        }
+    ],
     "port": "",
     "api_url": "http://localhost:3000",
     "api_password":"changeit",

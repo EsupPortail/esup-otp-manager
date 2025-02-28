@@ -81,9 +81,9 @@ exports.routing = function(router, passport) {
 
         const spMetadataUrl = properties.esup.SAML.spMetadataUrl;
         if (spMetadataUrl) {
-            router.get("/" + spMetadataUrl, function(req, res, next) {
+            router.get("/" + spMetadataUrl, async function(req, res, next) {
                 res.type('xml');
-                res.send(properties.strategy.spMetadata);
+                res.send(await properties.strategy.spMetadata(req));
             });
         }
     }
