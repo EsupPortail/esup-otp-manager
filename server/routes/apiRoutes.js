@@ -100,7 +100,7 @@ async function request_otp_api(req, res, opts_) {
     };
 
     if (opts_.bearerAuth) {
-        const tenant = encodeURIComponent(req.session.passport.user.attributes.issuer);
+        const tenant = req.session.passport.user.attributes.issuer;
         if(!tenantsApiPassword.has(tenant)) {
             tenantsApiPassword.set(tenant, await getTenantApiPassword(tenant));
         }
