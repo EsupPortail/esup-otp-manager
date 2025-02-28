@@ -32,7 +32,7 @@ block content
                         button#closebtn(onclick="hide('slide-out');", class="btn-flat", :title="messages.api.action.hide_menu")
                             i.material-icons(aria-hidden="true") close
                 li.bold
-                    a#home(href='#', @click='navigate', name = 'home') {{messages.api.menu.home}}
+                    a#home(href='#', @click='navigate', name = 'home').collapsible-header {{messages.api.menu.home}}
                     li.no-padding
                         ul.collapsible.collapsible-accordion(data-collapsible='accordion')
                             li
@@ -43,10 +43,10 @@ block content
                                             a(href='#', @click='navigate', :id='method.name', :name='method.name') {{method.label || method.name}}
                     if right == "manager" || right == "admin"
                         li.bold
-                            a#manager(href='#', @click='navigate', name='manager') {{messages.api.menu.manager}}
+                            a#manager(href='#', @click='navigate', name='manager').collapsible-header {{messages.api.menu.manager}}
                     if right == "admin"
                         li.bold
-                            a#admin(href='#', @click='navigate', name='admin') {{messages.api.menu.admin}}
+                            a#admin(href='#', @click='navigate', name='admin').collapsible-header {{messages.api.menu.admin}}
                     .divider
                     li.bold.flex.waves-effect(style='display: flex !important;')
                         i.material-icons.prefix(aria-hidden="true") exit_to_app
