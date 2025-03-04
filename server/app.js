@@ -11,8 +11,9 @@ const expressSession = session({
         sameSite: "lax",
     },
 });
+import fs from 'fs';
 import path from 'path';
-import logger from 'morgan';
+import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import passport from 'passport';
@@ -40,7 +41,14 @@ app.use('/js/sweetalert2.all.min.js', express.static(path.join(__dirname + '/..'
 // uncomment after placing your favicon in /public
 //import favicon from 'serve-favicon';
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+const morganFormat = properties.esup.logs?.access?.format || 'dev';
+app.use(logger(morganFormat));
+const accessLogFile = properties.esup.logs?.access?.file;
+if (accessLogFile) {
+    app.use(logger(morganFormat, { stream: fs.createWriteStream(accessLogFile, { flags: 'a' }) }));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

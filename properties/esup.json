@@ -27,6 +27,17 @@
     },
     "#how_to default_language": "available languages: ['en', 'fr']",
     "default_language": "en",
+    "logs": {
+        "main": {
+            "level": "info",
+            "file": "/var/log/esup-otp-manager/main.log"
+        },
+        "access": {
+            "#how_to format": "see https://github.com/expressjs/morgan#predefined-formats",
+            "format": "combined",
+            "file": "/var/log/esup-otp-manager/access.log"
+        }
+    },
     "#how_to trustedProxies": "see https://expressjs.com/en/guide/behind-proxies.html",
     "trustedProxies": ["127.0.0.1", "loopback", "::1"]
 }

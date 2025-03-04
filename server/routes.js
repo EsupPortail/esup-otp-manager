@@ -6,6 +6,7 @@ import * as aclUtils from '../services/aclUtils.js';
 import * as apiRoutes from './routes/apiRoutes.js';
 const isUser = apiRoutes.isUser;
 import * as pagesRoutes from './routes/pagesRoutes.js';
+import logger from '../services/logger.js';
 import { Strategy as CasStrategy } from '@coursetable/passport-cas';
 
 let passport;
@@ -71,7 +72,9 @@ export default function(_passport) {
     }
 
     passport.use(new CasStrategy(passportCasOpts, function(profile, done) {
-	// console.log("profile : " + JSON.stringify(profile, null ,2));
+        if(logger.isDebugEnabled) {
+            logger.debug("profile : " + JSON.stringify(profile, null ,2));
+        }
         return done(null, {uid:profile.user, attributes:profile.attributes});
     }));
 

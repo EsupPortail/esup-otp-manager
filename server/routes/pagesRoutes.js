@@ -1,5 +1,6 @@
 import properties from '../../properties/properties.js';
 import * as utils from '../../services/utils.js';
+import logger from '../../services/logger.js';
 
 function isUser(req, res, next) {
     if (utils.isAuthenticated(req)) return next();
@@ -34,18 +35,18 @@ export function routing(router, passport) {
     router.get('/login', function(req, res, next) {
         passport.authenticate('cas', function(err, user, info) {
             if (err) {
-                console.log(err);
+                logger.error(err);
                 return next(err);
             }
 
             if (!user) {
-                console.log(info.message);
+                logger.info(info?.message);
                 return res.redirect('/');
             }
 
             req.logIn(user, function(err) {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     return next(err);
                 }
                 req.session.messages = '';

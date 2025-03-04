@@ -1,7 +1,5 @@
-/**
- * Created by abousk01 on 07/09/2016.
- */
 import properties from '../properties/properties.js';
+import logger from '../services/logger.js'
 
 import io from 'socket.io-client';
 
@@ -12,7 +10,7 @@ import * as sockets from '../server/sockets.js';
 const users = {};
 
 apiSockets.on('connect', function () {
-    console.log("Api Sockets connected");
+    logger.info("Api Sockets connected");
     apiSockets.emit('managers',properties.esup.admins.concat(properties.esup.managers));
 });
 

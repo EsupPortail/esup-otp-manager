@@ -1,5 +1,6 @@
 import properties from "../properties/properties.js";
 const { esup } = properties;
+import logger from "./logger.js";
 
 normalizeEsupProperties();
 
@@ -22,7 +23,7 @@ export function normalizeEsupProperties() {
             if (allow && deny) {
                 throw new Error("Only one filter between 'deny' and 'allow' can be defined by users_method (problematic users_method: " + methodName + ")");
             } else if (!(allow || deny)) {
-                console.log(methodName + " method has no 'allow' or 'deny' filter defined");
+                logger.warn(methodName + " method has no 'allow' or 'deny' filter defined");
                 delete users_methods[methodName];
             } else {
                 // lowercase all attribute values

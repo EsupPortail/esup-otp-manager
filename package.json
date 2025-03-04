@@ -15,7 +15,6 @@
     "@coursetable/passport-cas": "0.1.4",
     "body-parser": "2.x",
     "cookie-parser": "1.x",
-    "debug": "4.x",
     "express": "5.x",
     "express-session": "1.x",
     "express-socket.io-session": "1.x",
@@ -29,7 +28,8 @@
     "socket.io-client": "4.x",
     "sweetalert2": "11.x",
     "undici": "6.x",
-    "vue": "2.x"
+    "vue": "2.x",
+    "winston": "3.x"
   },
   "overrides": {
     "express-socket.io-session": {
@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "@types/cookie-parser": "1.x",
-    "@types/debug": "4.x",
     "@types/express-session": "1.x",
     "@types/express-socket.io-session": "1.x",
     "@types/morgan": "1.x",

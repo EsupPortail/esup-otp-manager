@@ -2,6 +2,7 @@ import { request } from 'undici';
 import properties from '../../properties/properties.js';
 import * as utils from '../../services/utils.js';
 import * as aclUtils from '../../services/aclUtils.js';
+import logger from '../../services/logger.js';
 
 function redirect(req, res, status, path) {
     res
@@ -57,7 +58,7 @@ function canAccessUserMethod(req, res, next) {
 
 /** @param {{ relUrl: string, queryParams?: Object; bearerAuth?: true, method?: 'GET'|'POST'|'PUT'|'DELETE' }} opts_ */
 async function request_otp_api(req, res, opts_) {
-    console.log("requesting api");
+    logger.info("requesting api");
     const clientIP = req.ip;
     const userAgent = req.headers['user-agent'];
     /**
@@ -86,8 +87,9 @@ async function request_otp_api(req, res, opts_) {
         opts.headers.Authorization = 'Bearer ' + properties.esup.api_password;
     }
 
-    //console.log(opts.method +':'+ opts.url);
-    //console.log(req.session.passport);
+    logger.debug(opts.method + ':' + opts.url);
+    logger.debug(req.session.passport)
+
     let response;
     try {
         response = await request(url, opts);
@@ -109,7 +111,7 @@ async function request_otp_api(req, res, opts_) {
     res.status(response.statusCode);
     /** @type {Object} */
     const infos = await response.body.json();
-    //console.log(infos)
+    logger.debug(infos);
     res.send(infos);
 }
 

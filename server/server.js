@@ -4,10 +4,9 @@
  * Module dependencies.
  */
 import app from '../server/app.js';
-import Debug from 'debug';
-const debug = Debug('esup-otp-manager:server');
 import http from 'http';
 import properties from '../properties/properties.js';
+import logger from '../services/logger.js';
 
 /**
  * Get port from environment and store in Express.
@@ -15,7 +14,7 @@ import properties from '../properties/properties.js';
 
 const port = normalizePort(properties.esup.port || process.env.PORT || '4000');
 app.set('port', port);
-console.log("Port: " + port);
+logger.info("Port: " + port);
 
 /**
  * Create HTTP server.
@@ -70,11 +69,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      logger.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      logger.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     default:
@@ -91,5 +90,5 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  logger.info('Listening on ' + bind);
 }
