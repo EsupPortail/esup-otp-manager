@@ -26,5 +26,11 @@
     "default_language": "en",
     "dev": {},
     "#how_to":"Usually CAS works in Secure mode, so ssBaseURL must be a HTTPS url",
-    "trustedProxies": ["127.0.0.1", "loopback", "::1"]
+    "trustedProxies": ["127.0.0.1", "loopback", "::1"],
+    "logs": {
+        "access": {
+            "format": "combined",
+            "file": "/var/log/esup-otp-manager/access.log"
+        }
+    }
 }
