@@ -31,6 +31,10 @@
         "access": {
             "format": "combined",
             "file": "/var/log/esup-otp-manager/access.log"
+        },
+        "error": {
+            "level": "info",
+            "file": "/var/log/esup-otp-manager/error.log"
         }
     }
 }

@@ -2,6 +2,7 @@
  * Created by abousk01 on 07/09/2016.
  */
 var properties = require(__dirname+'/../properties/properties');
+const logger = require(__dirname + '/../services/logger');
 
 var apiSockets = require("socket.io-client").connect(properties.esup.api_url, {reconnect: true, path: "/sockets", query: 'app=manager', extraHeaders: {
     Authorization: "Bearer " + properties.esup.api_password,
@@ -10,7 +11,7 @@ var sockets = require('../server/sockets');
 var users = {};
 
 apiSockets.on('connect', function () {
-    console.log("Api Sockets connected");
+    logger.info("Api Sockets connected");
     apiSockets.emit('managers',properties.esup.admins.concat(properties.esup.managers));
 });
 
