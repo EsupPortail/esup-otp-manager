@@ -2,19 +2,19 @@ extends layout.jade
 
 block content
 
-    include templates/user-dashboard.jade
-    include templates/push-method.jade
-    include templates/bypass-method.jade
+    include templates/user-dashboard.pug
+    include templates/push-method.pug
+    include templates/bypass-method.pug
     include templates/passcode_grid-method
-    include templates/totp-method.jade
-    include templates/webauthn-method.jade
-    include templates/random_code-method.jade
-    include templates/random_code_mail-method.jade
-    include templates/manager-dashboard.jade
-    include templates/user-view.jade
-    include templates/admin-dashboard.jade
-    include templates/home.jade
-    include templates/esupnfc-method.jade
+    include templates/totp-method.pug
+    include templates/webauthn-method.pug
+    include templates/random_code-method.pug
+    include templates/random_code_mail-method.pug
+    include templates/manager-dashboard.pug
+    include templates/user-view.pug
+    include templates/admin-dashboard.pug
+    include templates/home.pug
+    include templates/esupnfc-method.pug
     include templates/transportForm
     #app.container
         header(v-if="messages.api")
