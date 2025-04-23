@@ -9,6 +9,13 @@ var passport;
 
 
 function routing() {
+    router.get('/status', function(req,res) {
+        res.status(200);
+        res.send({
+            code: 'Ok'
+        });
+    });
+
     router.get('/manager/messages/{:language}', isUser, function(req, res) {
         res.json(utils.getMessagesForRequest(req));
     });
