@@ -1,5 +1,4 @@
-/* To print on a conventional printer */
-body {
+html, body {
     visibility: hidden;
     text-align: center;
 }
@@ -16,21 +15,18 @@ body {
     font-size: 0.6em;
 }
 
-/* To print on a CR80 printer (credit card format) */
+/* To print on a CR80 printer (credit card format) uncomment block below */
 /*
 html, body {
-    visibility: hidden;
-    text-align: center;
     height:100%; 
     overflow: hidden;
 }
 
 .passcode_grid-method-codes {
-    visibility: visible;
-    left: 0;
-    top: 0;
-    position: absolute;
-    font-size: 0.6em;
+    left: 1mm;
+    top: 1mm;
+    font-weight: bold;
+    border: 0;
 }
 */
 
