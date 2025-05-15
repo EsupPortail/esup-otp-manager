@@ -18,13 +18,15 @@
        "#random_code_mail" : {"allow" : {"edupersonaffiliation":["student","alum"],"memberof":["cn=esup-otp.random_code_mail,ou=groups,dc=univ-ville,dc=fr"]}},
        "#bypass" : {"allow" : {"memberof":["cn=esup-otp.bypass,ou=groups,dc=univ-ville,dc=fr"]}}
     },
+    "#how_to transport_regexes": "if defined, users must provide a telephone number or address that matches the corresponding regex",
+    "#how_to transport_regexes sms": "`^((0[67](([.]|-| )?[0-9]){8})|((00|[+])(([.]|-| )?[0-9]){7,15}))$` authorizes French mobile numbers (10 digits starting with '06' or '07') or international numbers (7 to 15 digits starting with '+' or '00').",
+    "#how_to transport_regexes mail": "`^(?!.*(?:univ[.]fr|univ-paris[.]fr)$).*$` prevents users from setting an email address containing 'univ.fr' or 'univ-paris.fr'. Users will therefore not be able to configure their university email address as a second factor.",
     "transport_regexes": {
         "sms":  "^((0[67](([.]|-| )?[0-9]){8})|((00|[+])(([.]|-| )?[0-9]){7,15}))$",
         "#mail": "^(?!.*(?:univ[.]fr|univ-paris[.]fr)$).*$"
     },
     "#how_to default_language": "available languages: ['en', 'fr']",
     "default_language": "en",
-    "dev": {},
-    "#how_to":"Usually CAS works in Secure mode, so ssBaseURL must be a HTTPS url",
+    "#how_to trustedProxies": "see https://expressjs.com/en/guide/behind-proxies.html",
     "trustedProxies": ["127.0.0.1", "loopback", "::1"]
 }
