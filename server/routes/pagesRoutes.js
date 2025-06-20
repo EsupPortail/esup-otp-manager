@@ -76,21 +76,17 @@ export function routing(router, passport) {
 
         async function getUserActiveMethods(user) {
             // TODO: do it on API-side
-            const response = await fetch(properties.esup.api_url + '/protected/users/' + user.uid, {headers: {
-                'Content-Type': 'application/json',
-                'Authorization':  'Bearer ' + properties.esup.api_password
-            }});
-            const data = await response.json();
-            const methods = data.user.methods;
-
-            var active_methods = [];
-            for (const method of ['random_code', 'random_code_mail', 'bypass', 'passcode_grid', 'totp', 'push', 'esupnfc', 'webauthn']) {
-                if (method in methods && methods[method].active === true) {
-                    active_methods.push(method);
+            const response = await fetch(properties.esup.api_url + '/protected/users/' + user.uid, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + properties.esup.api_password
                 }
-            }
+            });
+            const data = await response.json();
 
-            return active_methods;
+            return Object.entries(data.user.methods)
+                .filter(([key, value]) => value.active)
+                .map(([key, value]) => key);
         }
 
         async function logOrReauthUser(req, res, next, user) {
