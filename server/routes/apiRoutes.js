@@ -275,8 +275,9 @@ export function routing(router) {
 
     router.get('/api/admin/users', isManager, function(req, res) {
         request_otp_api(req, res, {
-            relUrl: '/admin/users/',
+            relUrl: '/protected/users/',
             bearerAuth: true,
+            queryParams: { token: req.query.token },
         });
     });
 
