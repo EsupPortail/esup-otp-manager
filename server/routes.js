@@ -68,10 +68,10 @@ export default async function(_passport) {
     });
 
     if (properties.esup.CAS) {
-        const { default: authentication } = await import('./authentication/CAS.mjs');
+        const { default: authentication } = await import('./authentication/CAS.js');
         properties.authentication = await authentication(properties.esup.CAS);
     } else if (properties.esup.SAML) {
-        const { default: authentication } = await import('./authentication/SAML.mjs');
+        const { default: authentication } = await import('./authentication/SAML.js');
         properties.authentication = await authentication(properties.esup.SAML);
     } else {
         throw new Error("No authentication backend defined in esup.properties");
