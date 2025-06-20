@@ -8,11 +8,11 @@ script#manager-dashboard(type='text/x-template').
     </div>
     
     <a v-if="requestedUid" class="waves-effect waves-light btn col s4" @click="search">
-        {{requestedUidExists ? messages.api.action.select : messages.api.action.add}}
-        <i class="material-icons right" aria-hidden="true">{{requestedUidExists ? 'search' : 'add'}}</i>
+        {{messages.api.action.select}}
+        <i class="material-icons right" aria-hidden="true">search</i>
     </a>
     <datalist id="usersId">
-    <option v-for="uid in suggestions" :value="uid"/>
+    <option v-for="user in users" :value="user.uid" :label="user.displayName ? `${user.displayName} (${user.uid})` : user.uid"/>
     </datalist>
     </div>
     <div v-show="user.uid">

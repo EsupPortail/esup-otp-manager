@@ -39,11 +39,37 @@ function routing() {
     apiRoutes.routing(router);
 }
 
+const attributesToSave = ["displayName"];
+
+function updateApiUser(user) {
+    if (!user.attributes) {
+        return;
+    }
+
+    const values = attributesToSave
+        .map(attr => [attr, user.attributes[attr.toLowerCase()]])
+        .filter(([attr, value]) => value);
+
+    if (!values) {
+        return;
+    }
+
+    return apiRoutes.fetch_otp_api({
+        method: 'PUT',
+        relUrl: '/protected/users/' + user.uid,
+        bearerAuth: true,
+        body: Object.fromEntries(values),
+    });
+}
+
 export default async function(_passport) {
     passport = _passport;
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
+        // async
+        updateApiUser(user);
+
         const _user = {
             uid:          user.uid,
             name:         user.name,
@@ -79,3 +105,5 @@ export default async function(_passport) {
 
     return router
 }
+
+

@@ -2,6 +2,8 @@ import properties from '../../properties/properties.js';
 import * as utils from '../../services/utils.js';
 import logger from '../../services/logger.js';
 
+import { fetch_otp_api } from './apiRoutes.js';
+
 function isUser(req, res, next) {
     if (utils.isAuthenticated(req)) return next();
     res.redirect('/login'); // can't use 401 because of https://www.rfc-editor.org/rfc/rfc7235#section-3.1 (302 is used by default)
@@ -75,15 +77,13 @@ export function routing(router, passport) {
     } else if (properties.authentication.name == 'saml') {
 
         async function getUserActiveMethods(user) {
-            // TODO: do it on API-side
-            const response = await fetch(properties.esup.api_url + '/protected/users/' + user.uid, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + properties.esup.api_password
-                }
+            const response = await fetch_otp_api({
+                relUrl: '/protected/users/' + user.uid,
+                bearerAuth: true,
             });
             const data = await response.json();
 
+            // TODO: do it on API-side
             return Object.entries(data.user.methods)
                 .filter(([key, value]) => value.active)
                 .map(([key, value]) => key);

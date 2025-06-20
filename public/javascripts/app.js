@@ -1018,31 +1018,19 @@ var ManagerDashboard = Vue.extend({
                 methods: Object,
                 transports: Object
             },
-            uids: [],
+            users: [],
             requestedUid: '',
+            debounceTimeout: null,
         }
     },
-    computed: {
-        suggestions() {
-            return this.uids.filter(uid => uid.toLowerCase().includes(this.requestedUid.toLowerCase()));
-        },
-        requestedUidExists() {
-          return this.suggestions.includes(this.requestedUid);
-        },
-    },
-    created: function () {
-        if (this.uids?.length) {
-            return;
+    watch: {
+        requestedUid: function(newVal) {
+            clearTimeout(this.debounceTimeout);
+
+            this.debounceTimeout = setTimeout(() => {
+                this.fetchUsersByToken(newVal);
+            }, 300);
         }
-        return fetchApi({
-            method: "GET",
-            uri: "/api/admin/users",
-            onSuccess: res => {
-                this.uids = res.data.uids;
-            },
-        }).catch(err => {
-            toast(err, 3000, 'red darken-1');
-        });
     },
     mounted: async function() {
         const url = new URL(location);
@@ -1056,13 +1044,25 @@ var ManagerDashboard = Vue.extend({
         }
     },
     methods: {
+        fetchUsersByToken: function(token) {
+            if (token?.length < 3) {
+                this.users = [];
+                return;
+            }
+
+            fetchApi({
+                method: "GET",
+                uri: `/api/admin/users?token=${encodeURIComponent(token)}`,
+                onSuccess: res => {
+                    this.users = res.data.users;
+                }
+            }).catch(err => {
+                toast(err, 3000, 'red darken-1');
+            });
+        },
         search: function () {
             if (this.requestedUid) {
                 this.getUser(this.requestedUid);
-                if(!this.requestedUidExists) {
-                    this.uids.push.push(this.requestedUid);
-                    toast({ message: 'utilisateur ' + this.requestedUid + ' ajouté avec succès', className: 'green contrasted' });
-                }
                 this.requestedUid = '';
             }
         },
@@ -1212,7 +1212,6 @@ var app = new Vue({
             transports: {}
         },
         users_methods:{},
-        uids: [],
         messages: {},
         infos: {},
     },

@@ -56,44 +56,68 @@ function canAccessUserMethod(req, res, next) {
     });
 }
 
-/** @param {{ relUrl: string, queryParams?: Object; bearerAuth?: true, method?: 'GET'|'POST'|'PUT'|'DELETE' }} opts_ */
-async function request_otp_api(req, res, opts_) {
+/** 
+ *  @typedef {{ 
+ *      relUrl: string,
+ *      queryParams?: Object,
+ *      body?: Object,
+ *      bearerAuth?: boolean,
+ *      headers?: Object,
+ *      method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
+ *  }} opts_
+ */
+
+/**
+ * @param { opts_ } opts_
+ */
+export function fetch_otp_api(opts_) {
     logger.info("requesting api");
-    const clientIP = req.ip;
-    const userAgent = req.headers['user-agent'];
     /**
      * @typedef {import('undici').Dispatcher.RequestOptions} RequestOptions
      * @type {Omit<RequestOptions, 'origin' | 'path'>}
      */
-    let opts = {
+    const opts = {
         method: opts_.method || 'GET',
     }
 
-    if (req.body && Object.keys(req.body).length) {
-        opts.body = JSON.stringify(req.body);
+    if (opts_.body && Object.keys(opts_.body).length) {
+        opts.body = JSON.stringify(opts_.body);
     }
-    opts_.queryParams ||= {};
-    opts_.queryParams.managerUser = req.session.passport.user.uid;
 
     const url = properties.esup.api_url + opts_.relUrl + "?" + new URLSearchParams(opts_.queryParams);
 
-    opts.headers = {
-        'X-Client-IP': clientIP,
-        'Client-User-Agent': userAgent,
-        'Content-Type': 'application/json'
-    };
+    opts.headers = opts_.headers || {};
+    opts.headers['Content-Type'] ||= 'application/json';
 
     if (opts_.bearerAuth) {
         opts.headers.Authorization = 'Bearer ' + properties.esup.api_password;
     }
 
-    logger.debug(opts.method + ':' + opts.url);
-    logger.debug(req.session.passport)
+    logger.debug(opts.method + ':' + url);
     logger.debug(JSON.stringify(opts.headers, null, 2));
+
+    return request(url, opts);
+}
+
+/** @param {Omit<opts_, 'body' | 'headers'>} opts_ */
+async function request_otp_api(req, res, opts_) {
+    const clientIP = req.ip;
+    const userAgent = req.headers['user-agent'];
+
+    opts_.body = req.body;
+    opts_.queryParams ||= {};
+    opts_.queryParams.managerUser = req.session.passport.user.uid;
+
+    opts_.headers = {
+        'X-Client-IP': clientIP,
+        'Client-User-Agent': userAgent,
+    };
+
+    logger.debug(req.session.passport)
 
     let response;
     try {
-        response = await request(url, opts);
+        response = await fetch_otp_api(opts_);
     } catch (error) {
         res.status(503);
         return res.send({
@@ -101,8 +125,8 @@ async function request_otp_api(req, res, opts_) {
             "message": error.message || "Api did not give a response"
         });
     }
-    
-    
+
+
     // forward the status code, because if the request failed
     // it should not be responding with 200 ("everything is fine !")
     //
@@ -275,8 +299,9 @@ export function routing(router) {
 
     router.get('/api/admin/users', isManager, function(req, res) {
         request_otp_api(req, res, {
-            relUrl: '/admin/users/',
+            relUrl: '/protected/users/',
             bearerAuth: true,
+            queryParams: { token: req.query.token },
         });
     });
 
