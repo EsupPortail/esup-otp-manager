@@ -79,6 +79,7 @@ esup-otp-manager support either CAS or SAML authentication.
 
 CAS authentication require the presence of a CAS object in the configuration file:
 ```
+"authentication": "CAS",
 "CAS": {
     "version": "CAS3.0",
     "casBaseURL": "http://localhost/cas",
@@ -87,15 +88,16 @@ CAS authentication require the presence of a CAS object in the configuration fil
 ```
 
 This object has the following keys:
-- `version`: FIXME
-- 'casBaseURL`: FIXME
-- 'serviceBaseURL`: FIXME
+- `version`: "CAS1.0" | "CAS2.0" | "CAS3.0"
+- `casBaseURL`: CAS server public URL
+- `serviceBaseURL`: esup-otp-manager public URL
 
 #### SAML
 
 SAML authentication require the presence of a SAML object in the configuration file:
 
 ```
+"authentication": "SAML",
 "SAML": {
     "sp": {
         "callbackUrl": "http://localhost:4000/login",

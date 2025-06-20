@@ -6,8 +6,6 @@ import * as aclUtils from '../services/aclUtils.js';
 import * as apiRoutes from './routes/apiRoutes.js';
 const isUser = apiRoutes.isUser;
 import * as pagesRoutes from './routes/pagesRoutes.js';
-import logger from '../services/logger.js';
-import { Strategy as CasStrategy } from '@coursetable/passport-cas';
 
 let passport;
 
@@ -67,15 +65,13 @@ export default async function(_passport) {
         done(null, user);
     });
 
-    if (properties.esup.CAS) {
-        const { default: authentication } = await import('./authentication/CAS.js');
-        properties.authentication = await authentication(properties.esup.CAS);
-    } else if (properties.esup.SAML) {
-        const { default: authentication } = await import('./authentication/SAML.js');
-        properties.authentication = await authentication(properties.esup.SAML);
-    } else {
+    const authenticationName = properties.esup.authentication || "CAS";
+    const authenticationProperties = properties.esup[authenticationName];
+    if (!authenticationProperties) {
         throw new Error("No authentication backend defined in esup.properties");
     }
+    const { default: authentication } = await import(`./authentication/${authenticationName}.js`);
+    properties.authentication = await authentication(authenticationProperties);
 
     passport.use(properties.authentication.strategy);
 

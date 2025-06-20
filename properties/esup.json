@@ -1,5 +1,6 @@
 {
     "#howto_authentication": "see README.md file for details",
+    "authentication": "CAS",
     "CAS": {
         "version": "CAS3.0",
         "casBaseURL": "http://localhost/cas",
