@@ -1,0 +1,7 @@
+script#stats-dashboard(type='text/x-template').
+  <div class="section">
+    <div v-if="loading">{{messages.stats.loading}}</div>
+    <div v-else>
+      <canvas id="statsChartMfaMethods" height="600"/>
+    </div>
+  </div>

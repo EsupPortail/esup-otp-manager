@@ -1173,6 +1173,130 @@ var AdminDashboard = Vue.extend({
     }
 });
 
+/** Stats  **/
+var StatsDashboard = Vue.extend({
+    props: {
+        messages: Object,
+    },
+    data() {
+        return {
+            data: {},
+            loading: false,
+            chart: null,
+        };
+    },
+    methods: {
+        fetchStats() {
+            this.loading = true;
+            fetchApi({
+                method: 'GET',
+                uri: '/api/admin/stats',
+                onSuccess: res => {
+                    this.data = res.data;
+                    this.loading = false;
+                    this.$nextTick(() => {
+                        this.renderChart(); // appel une fois le DOM mis à jour
+                    });
+                },
+            }).catch(err => {
+                toast({ message: 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
+            });
+        },
+        renderChart() {
+
+            const totalUsers = this.data.totalUsers;
+            const totalMfaUsers = this.data.totalMfaUsers;
+
+            if (this.chart) {
+                this.chart.destroy(); // évite les superpositions
+            }
+
+            const ctx = document.getElementById('statsChartMfaMethods').getContext('2d');
+
+            const methods = this.data.methods;
+
+            const sorted = Object.entries(methods)
+                .sort(([, a], [, b]) => b - a); // tri décroissant
+
+            const labels = sorted.map(([method]) => this.messages.api.methods[method]?.name || method);
+            const activated = sorted.map(([, count]) => count);
+            const notActivated = activated.map(count => totalMfaUsers - count);
+            const title = this.messages.stats.chart_title
+                .replace("%NB_USERS_MFA%", totalMfaUsers)
+                .replace("%NB_USERS%", totalUsers)
+                .replace("%PERCENT_USERS_MFA%", ((totalMfaUsers / totalUsers) * 100).toFixed(1));
+
+            this.chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: this.messages.stats.methods_activated,
+                            data: activated,
+                            backgroundColor: '#42A5F5',
+                        },
+                        {
+                            label: this.messages.stats.methods_deactivated,
+                            data: notActivated,
+                            backgroundColor: '#B0BEC5',
+                        }
+                    ],
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: title,
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = activated[context.dataIndex] + notActivated[context.dataIndex];
+                                    const percent = ((context.raw / total) * 100).toFixed(1);
+                                    return `${context.dataset.label}: ${context.raw} (${percent}%)`;
+                                }
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'center',
+                            align: 'center',
+                            formatter: (value, context) => {
+                                const total = activated[context.dataIndex] + notActivated[context.dataIndex];
+                                const percent = ((value / total) * 100).toFixed(1);
+                                return `${percent}%`;
+                            },
+                            color: '#fff',
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            beginAtZero: true,
+                            max: totalMfaUsers
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+    },
+    mounted() {
+        this.fetchStats();
+    },
+    template: '#stats-dashboard',
+});
+
+
 /** Admin **/
 var Home = Vue.extend({
     props: {
@@ -1196,7 +1320,8 @@ var app = new Vue({
         "home": Home,
         "preferences": UserDashboard,
         "manager": ManagerDashboard,
-        "admin": AdminDashboard
+        "admin": AdminDashboard,
+        "stats": StatsDashboard
     },
     data: {
         pageTitle: 'Accueil',
@@ -1255,6 +1380,9 @@ var app = new Vue({
                 this.currentView = 'manager';
             } else if (event.target.name == "admin") {
                 this.currentView = 'admin';
+                this.pageTitle = event.target.text;
+            } else if (event.target.name == "stats") {
+                this.currentView = 'stats';
                 this.pageTitle = event.target.text;
             } else if (event.target.name == "home") {
                 this.currentView = 'home';

@@ -152,7 +152,8 @@
       "home": "Home",
       "preferences": "Preferences",
       "manager": "Manager",
-      "admin": "Administration"
+      "admin": "Administration",
+      "stats": "Statistics"
     },
     "transports":{
       "sms": "Sms",
@@ -161,5 +162,11 @@
     "label":{
       "user": "User"
     }
+  },
+  "stats":{
+    "loading": "Loading statistics...",
+    "methods_activated": "Activated methods",
+    "methods_deactivated": "Deactivated methods",
+    "chart_title": "%NB_USERS_MFA% users with MFA on %NB_USERS% (%PERCENT_USERS_MFA%%)"
   }
 }
