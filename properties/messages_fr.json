@@ -153,7 +153,8 @@
       "home": "Accueil",
       "preferences": "Préférences",
       "manager": "Manager",
-      "admin": "Administrateur"
+      "admin": "Administrateur",
+      "stats": "Statistiques"
     },
     "transports":{
       "sms": "Votre numéro portable",
@@ -162,5 +163,11 @@
     "label":{
       "user": "Utilisateur"
     }
+  },
+  "stats":{
+    "loading": "Chargement des statistiques...",
+    "methods_activated": "Méthodes activées",
+    "methods_deactivated": "Méthodes désactivées",
+    "chart_title": "%NB_USERS_MFA% utilisateurs avec MFA sur %NB_USERS% (%PERCENT_USERS_MFA%%)"
   }
 }

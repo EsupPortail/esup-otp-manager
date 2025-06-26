@@ -32,7 +32,9 @@
     "sweetalert2": "11.x",
     "undici": "6.x",
     "vue": "2.x",
-    "winston": "3.x"
+    "winston": "3.x",
+    "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0"
   },
   "overrides": {
     "express-socket.io-session": {
