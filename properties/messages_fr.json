@@ -67,7 +67,8 @@
         "generated_codes": "Codes générés",
         "available_codes": "Codes restants",
         "used_codes": "Codes utilisés",
-        "generation_date": "Codes générés le %DATE%"
+        "generation_date": "Codes générés le %DATE%",
+        "note": "Ces codes sont à usage unique. Une fois générés, imprimez-les et conservez-les dans un endroit sûr. Vous ne pourrez pas les récupérer par la suite. Vous pourrez en générer de nouveaux à tout moment, mais les anciens codes deviendront alors invalides."
       },
       "passcode_grid": {
         "name": "Grille de codes",
