@@ -67,7 +67,8 @@
         "generated_codes": "Generated codes",
         "available_codes": "Available codes",
         "used_codes": "Used codes",
-        "generation_date": "Codes generated on %DATE%"
+        "generation_date": "Codes generated on %DATE%",
+        "note": "These codes can only be used once. Once generated, print them out and store them in a safe place. You will not be able to retrieve them later. You can generate new codes at any time, but the previous ones will then be invalidated."
       },
       "passcode_grid": {
         "name": "Passcode grid",
