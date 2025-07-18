@@ -356,4 +356,11 @@ export function routing(router) {
             bearerAuth: true,
         });
     });
+
+    router.get('/api/admin/stats', isAdmin, function(req, res) {
+        request_otp_api(req, res, {
+            relUrl: '/admin/stats',
+            bearerAuth: true,
+        });
+    });
 }

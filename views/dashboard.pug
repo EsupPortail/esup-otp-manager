@@ -13,6 +13,7 @@ block content
     include templates/manager-dashboard.pug
     include templates/user-view.pug
     include templates/admin-dashboard.pug
+    include templates/stats-dashboard.pug
     include templates/home.pug
     include templates/esupnfc-method.pug
     include templates/transportForm
@@ -48,6 +49,8 @@ block content
                     if right == "admin"
                         li.bold
                             a#admin(href='#', @click='navigate', name='admin').collapsible-header {{messages.api.menu.admin}}
+                        li.bold
+                            a#stats(href='#', @click='navigate', name='stats').collapsible-header {{messages.api.menu.stats}}
                     .divider
                     li.bold.flex.waves-effect(style='display: flex !important;')
                         i.material-icons.prefix(aria-hidden="true") exit_to_app
