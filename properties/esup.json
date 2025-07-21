@@ -32,11 +32,11 @@
     "logs": {
         "main": {
             "level": "info",
-            "type": "console"
+            "console": true
         },
         "access": {
             "format": "dev",
-            "type": "console"
+            "console": true
         }
     },
     "#how_to trustedProxies": "see https://expressjs.com/en/guide/behind-proxies.html",

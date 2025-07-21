@@ -46,17 +46,11 @@ const logProperties = properties.esup.logs?.access;
 
 if (logProperties) {
     const format = logProperties.format || 'dev';
-    const type = logProperties.type || 'console';
-    if (type == 'console') {
+    if (logProperties.console) {
         app.use(morgan(format, { stream: process.stdout }));
-    } else if (type == 'file') {
-        if ('file' in logProperties) {
-            app.use(morgan(format, { stream: fs.createWriteStream(logProperties.file, { flags: 'a' }) }));
-        } else {
-            throw new Error("logs.access.file must be defined in properties/esup.json");
-        }
-    } else {
-        throw new Error(`invalid value '${logProperties.type}' for logs.access.type property`);
+    }
+    if (logProperties.file) {
+        app.use(morgan(format, { stream: fs.createWriteStream(logProperties.file, { flags: 'a' }) }));
     }
 }
 

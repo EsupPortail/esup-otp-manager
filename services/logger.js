@@ -19,20 +19,12 @@ const logger = winston.createLogger({
     handleExceptions: true,
 });
 
-if (logProperties) {
-    const type = logProperties.type || 'console';
+if (logProperties.console) {
+    logger.add(new winston.transports.Console());
+}
 
-    if (type == 'console') {
-        logger.add(new winston.transports.Console());
-    } else if (type == 'file') {
-        if ('file' in logProperties) {
-            logger.add(new winston.transports.File({ filename: logProperties.file }));
-        } else {
-            throw new Error("logs.main.file must be defined in properties/esup.json");
-        }
-    } else {
-        throw new Error(`invalid value '${logs.main.type}' for logs.main.type property`);
-    }
+if (logProperties.file) {
+    logger.add(new winston.transports.File({ filename: logProperties.file }));
 }
 
 export default logger;
