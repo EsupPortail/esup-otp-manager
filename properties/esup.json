@@ -32,12 +32,11 @@
     "logs": {
         "main": {
             "level": "info",
-            "#file": "/var/log/esup-otp-manager/main.log"
+            "type": "console"
         },
         "access": {
-            "#how_to format": "see https://github.com/expressjs/morgan#predefined-formats",
             "format": "dev",
-            "#file": "/var/log/esup-otp-manager/access.log"
+            "type": "console"
         }
     },
     "#how_to trustedProxies": "see https://expressjs.com/en/guide/behind-proxies.html",
