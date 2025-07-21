@@ -132,6 +132,45 @@ This object has the following keys:
 - `idp`: a single IdP object
     - `metadataURL`: URL from which to retrieve IdP metadata
 
+### Logging
+
+esup-otp-manager provides two different log types.
+
+Generic logs, for generic messages, are configured with the following key:
+```
+"logs": {
+    "main": {
+        "level": "info",
+        "type": "file",
+        "file": "logs/main.log"
+    }
+}
+```
+This object has the following keys:
+- `level`: logging level
+- `type`: either 'console' or 'file' (default: 'console')
+- `file`: target file, if type is set to 'file'
+
+If `logs.main` key is not defined, no message will be logged.
+
+Traffic logs, for HTTP queries, are configured with the following key:
+```
+"logs": {
+    "access": {
+        "format": "dev",
+        "type": "file",
+        "file": "logs/access.log"
+    }
+}
+```
+
+This object has the following keys:
+- `format`: logging format,  see https://github.com/expressjs/morgan#predefined-formats for details (default: 'dev')
+- `type`: either 'console' or 'file' (default: 'console')
+- `file`: target file, if type is set to 'file'
+
+If `logs.access` key is not defined, no traffic will be logged.
+
 ## License
 
 MIT
