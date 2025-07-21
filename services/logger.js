@@ -1,7 +1,7 @@
 import * as winston from 'winston';
 import properties from "../properties/properties.js";
 
-const logProperties = properties.esup.logs?.main || {};
+const logProperties = properties.esup.logs?.main;
 
 /**
  * @type { winston.Logger }
@@ -17,11 +17,22 @@ const logger = winston.createLogger({
     ),
     handleRejections: true,
     handleExceptions: true,
-    transports: [new winston.transports.Console()],
 });
 
-if (logProperties.file) {
-    logger.add(new winston.transports.File({ filename: logProperties.file }));
+if (logProperties) {
+    const type = logProperties.type || 'console';
+
+    if (type == 'console') {
+        logger.add(new winston.transports.Console());
+    } else if (type == 'file') {
+        if ('file' in logProperties) {
+            logger.add(new winston.transports.File({ filename: logProperties.file }));
+        } else {
+            throw new Error("logs.main.file must be defined in properties/esup.json");
+        }
+    } else {
+        throw new Error(`invalid value '${logs.main.type}' for logs.main.type property`);
+    }
 }
 
 export default logger;
