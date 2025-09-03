@@ -76,8 +76,8 @@ Generic logs, for generic messages, are configured with the following key:
 }
 ```
 This object has the following keys:
-- `level`: logging level
-- `console`: log to console (true/false, default to false)
+- `level`: logging level (see [NPM logging levels](https://github.com/winstonjs/winston?tab=readme-ov-file#logging-levels) for values, default: 'info')
+- `console`: log to console (true/false, default: false)
 - `file`: log to given file
 
 If `logs.main` key is not defined, no message will be logged.
@@ -94,8 +94,8 @@ Traffic logs, for HTTP queries, are configured with the following key:
 ```
 
 This object has the following keys:
-- `format`: logging format,  see https://github.com/expressjs/morgan#predefined-formats for details (default: 'dev')
-- `console`: log to console (true/false, default to false)
+- `format`: logging format ( see [morgan predefined formats](https://github.com/expressjs/morgan#predefined-formats) for values, default: 'dev')
+- `console`: log to console (true/false, default: false)
 - `file`: log to given file
 
 If `logs.access` key is not defined, no traffic will be logged.
