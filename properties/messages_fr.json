@@ -173,6 +173,7 @@
     "loading": "Chargement des statistiques...",
     "methods_activated": "Méthodes activées",
     "methods_deactivated": "Méthodes désactivées",
-    "chart_title": "%NB_USERS_MFA% utilisateurs avec MFA sur %NB_USERS% (%PERCENT_USERS_MFA%%)"
+    "chart_title": "%NB_USERS_MFA% utilisateurs avec MFA sur %NB_USERS% (%PERCENT_USERS_MFA%%)",
+    "chart_platforms_title" : "%NB_USERS_MFA_PUSH% utilisateurs avec la méthode par notification d'activée sur %NB_USERS_MFA%"
   }
 }

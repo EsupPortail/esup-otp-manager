@@ -1196,6 +1196,7 @@ var StatsDashboard = Vue.extend({
             data: {},
             loading: false,
             chart: null,
+            chart2: null,
         };
     },
     methods: {
@@ -1216,92 +1217,141 @@ var StatsDashboard = Vue.extend({
         },
         async renderChart() {
 
+
+            await import ("/js/chart.js");
+            await import ("/js/chartjs-plugin-datalabels.min.js");
+
+            // this.data example :
+            // {"totalUsers":32507,"totalMfaUsers":1887,"methods":{"totp":588,"bypass":838,"passcode_grid":38,"push":1072,"esupnfc":195,"webauthn":518},"pushPlatforms":{"iOS":354,"Android":716,"Mac":2}}
+
             const totalUsers = this.data.totalUsers;
             const totalMfaUsers = this.data.totalMfaUsers;
 
             if (this.chart) {
                 this.chart.destroy(); // évite les superpositions
             }
+            if (this.chart2) {
+                this.chart2.destroy();
+            }
 
-            const ctx = document.getElementById('statsChartMfaMethods').getContext('2d');
+            const statsChartMfaMethods = document.getElementById('statsChartMfaMethods');
+            if(typeof statsChartMfaMethods !== 'undefined' && statsChartMfaMethods !== null) {
 
-            const methods = this.data.methods;
+                const ctx = statsChartMfaMethods.getContext('2d');
 
-            const sorted = Object.entries(methods)
-                .sort(([, a], [, b]) => b - a); // tri décroissant
+                const methods = this.data.methods;
 
-            const labels = sorted.map(([method]) => this.messages.api.methods[method]?.name || method);
-            const activated = sorted.map(([, count]) => count);
-            const notActivated = activated.map(count => totalMfaUsers - count);
-            const title = this.messages.stats.chart_title
-                .replace("%NB_USERS_MFA%", totalMfaUsers)
-                .replace("%NB_USERS%", totalUsers)
-                .replace("%PERCENT_USERS_MFA%", ((totalMfaUsers / totalUsers) * 100).toFixed(1));
+                const sorted = Object.entries(methods)
+                    .sort(([, a], [, b]) => b - a); // tri décroissant
 
-            await import ("/js/chart.js");
-            await import ("/js/chartjs-plugin-datalabels.min.js");
-            this.chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels,
-                    datasets: [
-                        {
-                            label: this.messages.stats.methods_activated,
-                            data: activated,
-                            backgroundColor: '#42A5F5',
-                        },
-                        {
-                            label: this.messages.stats.methods_deactivated,
-                            data: notActivated,
-                            backgroundColor: '#B0BEC5',
-                        }
-                    ],
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: title,
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
+                const labels = sorted.map(([method]) => this.messages.api.methods[method]?.name || method);
+                const activated = sorted.map(([, count]) => count);
+                const notActivated = activated.map(count => totalMfaUsers - count);
+                const title = this.messages.stats.chart_title
+                    .replace("%NB_USERS_MFA%", totalMfaUsers)
+                    .replace("%NB_USERS%", totalUsers)
+                    .replace("%PERCENT_USERS_MFA%", ((totalMfaUsers / totalUsers) * 100).toFixed(1));
+
+
+                this.chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [
+                            {
+                                label: this.messages.stats.methods_activated,
+                                data: activated,
+                                backgroundColor: '#42A5F5',
+                            },
+                            {
+                                label: this.messages.stats.methods_deactivated,
+                                data: notActivated,
+                                backgroundColor: '#B0BEC5',
+                            }
+                        ],
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: title,
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const total = activated[context.dataIndex] + notActivated[context.dataIndex];
+                                        const percent = ((context.raw / total) * 100).toFixed(1);
+                                        return `${context.dataset.label}: ${context.raw} (${percent}%)`;
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                anchor: 'center',
+                                align: 'center',
+                                formatter: (value, context) => {
                                     const total = activated[context.dataIndex] + notActivated[context.dataIndex];
-                                    const percent = ((context.raw / total) * 100).toFixed(1);
-                                    return `${context.dataset.label}: ${context.raw} (${percent}%)`;
+                                    const percent = ((value / total) * 100).toFixed(1);
+                                    return `${percent}%`;
+                                },
+                                color: '#fff',
+                                font: {
+                                    weight: 'bold'
                                 }
                             }
                         },
-                        datalabels: {
-                            anchor: 'center',
-                            align: 'center',
-                            formatter: (value, context) => {
-                                const total = activated[context.dataIndex] + notActivated[context.dataIndex];
-                                const percent = ((value / total) * 100).toFixed(1);
-                                return `${percent}%`;
+                        scales: {
+                            x: {
+                                stacked: true,
+                                beginAtZero: true,
+                                max: totalMfaUsers
                             },
-                            color: '#fff',
-                            font: {
-                                weight: 'bold'
+                            y: {
+                                stacked: true
                             }
                         }
                     },
-                    scales: {
-                        x: {
-                            stacked: true,
-                            beginAtZero: true,
-                            max: totalMfaUsers
-                        },
-                        y: {
-                            stacked: true
+                    plugins: [ChartDataLabels]
+                });
+            }
+
+            const statsChartPushPlatforms = document.getElementById('statsChartPushPlatforms');
+            if(typeof statsChartPushPlatforms !== 'undefined' && statsChartPushPlatforms !== null) {
+
+                const pushPlatforms = this.data.pushPlatforms;
+                const pushPlatformsLabels = Object.keys(pushPlatforms);
+                const pushPlatformsData = Object.values(pushPlatforms);
+                const totalMfaPushUsers = pushPlatformsData.reduce((a, b) => a + b, 0);
+
+                // statsChartPushPlatforms as a pie chart
+                const title = this.messages.stats.chart_platforms_title
+                    .replace("%NB_USERS_MFA_PUSH%", totalMfaPushUsers)
+                    .replace("%NB_USERS_MFA%", totalMfaUsers);
+
+                const ctx2 = statsChartPushPlatforms.getContext('2d');
+                this.chart2 = new Chart(ctx2, {
+                    type: 'pie',
+                    data: {
+                        labels: pushPlatformsLabels,
+                        datasets: [{
+                            data: pushPlatformsData
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: title,
+                            }
                         }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
+                    },
+                    plugins: [ChartDataLabels]
+                });
+            }
         }
     },
     mounted() {
