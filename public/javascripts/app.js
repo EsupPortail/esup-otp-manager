@@ -1274,6 +1274,10 @@ var StatsDashboard = Vue.extend({
                         indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
+                        interaction: {
+                            // show all data for this label on hover
+                            mode: 'index'
+                        },
                         plugins: {
                             title: {
                                 display: true,
@@ -1346,6 +1350,16 @@ var StatsDashboard = Vue.extend({
                             title: {
                                 display: true,
                                 text: title,
+                            },
+                            legend: {
+                                onHover: (evt, legendItem) => {
+                                    const activeElement = {
+                                        datasetIndex: 0,
+                                        index: legendItem.index
+                                    };
+                                    this.chart2.tooltip.setActiveElements([activeElement]);
+                                    this.chart2.update();
+                                }
                             }
                         }
                     },
