@@ -992,7 +992,7 @@ const UserView = {
                 onSuccess: res => {
                     const data = res.data;
                     if (data.code == "Ok") {
-                        this.user.methods.totp.active = true;
+                        this.user.methods.totp.active = false;
                         this.user.methods.totp.message = data.message;
                         this.user.methods.totp.qrCode = getImgWithAltText({ qrCodeImg: data.qrCode, qrCodeSrc: data.qrCodeSrc });
                         this.user.methods.totp.uid = this.user.uid;
