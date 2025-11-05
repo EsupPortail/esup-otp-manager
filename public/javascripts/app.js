@@ -1368,6 +1368,7 @@ Vue.createApp({
                     false,
             EsupAuth: { name: "Esup Auth", android: "https://play.google.com/store/apps/details?id=org.esupportail.esupAuth", ios: "https://apps.apple.com/fr/app/esup-auth/id1563904941" },
         },
+        has_window_opener: Boolean(window.opener),
       };
     },
     watch: {
@@ -1382,6 +1383,19 @@ Vue.createApp({
                 }
             },
             immediate: true,
+        },
+        has_active_method(val, prev) {
+            // on small screens, show the menu which contains closeOtpManager button
+            if (val && prev === false) toggle_visibility('slide-out')
+        },
+    },
+    computed: {
+        has_active_method() {
+            const methods = Object.entries(this.user.methods)
+            if (methods.length === 0) return undefined
+            return methods
+                .filter(([_key, value]) => value.active && !value.askActivation)
+                .length > 0
         }
     },
     created: async function() {
@@ -1502,6 +1516,9 @@ Vue.createApp({
         setMethods: function (data) {
             this.methods = data.methods;
             this.cleanMethods();
+        },
+        closeOtpManagerWindow() {
+            window.opener.postMessage('closeOtpManagerWindow', '*')
         },
         getMessages: function(language) {
             language ||= localStorage.getItem("lang") || '';

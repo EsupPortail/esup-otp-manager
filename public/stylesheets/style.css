@@ -329,3 +329,18 @@ ul.totp-registration-ways>li {
     width: 35ch !important;
     text-align: center;
 }
+
+#app .collapsible-header#back-to-app {
+    &.has_active_method {
+        &, i {
+            background-color:#418545 !important;
+            color: white !important;
+        }
+        &:hover, &:hover i {
+            background-color: #519555 !important;
+        }
+    }
+    i {
+        margin-right: 0.5rem !important;
+    }
+}
