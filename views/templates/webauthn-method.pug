@@ -11,7 +11,7 @@ script#webauthn-method(type='text/x-template').
         </div>
         <div class="row">
           <ul id="list-of-authenticators" class="collection">
-            <li class="collection-item" v-for="auth in realData.auths" :key="auth.credentialID">
+            <li class="collection-item" v-for="auth in webauthnData.auths" :key="auth.credentialID">
               <div class="row valign-wrapper" style="margin-bottom:0;"> <!-- TODO : use secondary-content instead https://archives.materializecss.com/0.100.2/collections.html#secondary --> 
                 <div class="col s6">{{ auth.name }}</div>
                 <div class="col s6 right-align">

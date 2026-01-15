@@ -280,10 +280,11 @@ const WebAuthnMethod = {
         'messages': Object,
         'infos': Object,
         'formatApiUri': Function,
+        'fetchWebauthnData': Function,
     },
     data() {
         return {
-            realData: { // example (will be override by mounted() )
+            webauthnData: { // example (will be override by mounted() )
                 nonce: "",
                 auths: [], // [{credentialID: "", credentialPublicKey: "", counter: 0, name: ""}],
                 user_id: "",
@@ -294,31 +295,31 @@ const WebAuthnMethod = {
         }
     },
     async mounted() {
-        await this.fetchAuthData();
+        await this.updateWebauthnData();
 
-        if(this.realData.auths.length === 0) {
+        if(this.webauthnData.auths.length === 0) {
             this.generateWebauthn();
         }
     },
     computed: {
         descriptionMessage() {
-            switch (this.realData.auths.length) {
+            switch (this.webauthnData.auths.length) {
                 case 0:
                     return this.messages.api.methods.webauthn.no_authentificators;
                 case 1:
                     return this.messages.api.methods.webauthn.single_auth;
                 default:
-                    return this.messages.api.methods.webauthn.nb_of_auths.replace('%NB%', this.realData.auths.length);
+                    return this.messages.api.methods.webauthn.nb_of_auths.replace('%NB%', this.webauthnData.auths.length);
             }
         },
     },
     watch: {
         'user.uid': function(newUid, oldUid) {
             if (newUid !== oldUid) {
-                this.fetchAuthData();
+                this.updateWebauthnData();
             }
         },
-        'realData.auths.length': {
+        'webauthnData.auths.length': {
             handler(lenght) {
                 this.user.methods.webauthn.askActivation = !lenght
             },
@@ -326,16 +327,12 @@ const WebAuthnMethod = {
         },
     },
     methods: {
-        fetchAuthData: async function() {
-            const res = await fetchApi({
-                method: "POST",
-                uri: this.formatApiUri("/generate/webauthn"),
-            });
-            this.realData = res.data;
-            return this.realData;
+        updateWebauthnData: async function() {
+            this.webauthnData = await this.fetchWebauthnData();
+            return this.webauthnData;
         },
         getAuthById: function (id) {
-            return this.realData.auths.find(authenticator => authenticator.credentialID === id);
+            return this.webauthnData.auths.find(authenticator => authenticator.credentialID === id);
         },
         renameAuthenticator: function(authCredID) {
             const auth = this.getAuthById(authCredID);
@@ -374,7 +371,7 @@ const WebAuthnMethod = {
                                 name: newName
                             }),
                         });
-                        await this.fetchAuthData();
+                        await this.updateWebauthnData();
                         statusCode = res.status;
                     } catch (e) {
                         console.error(e);
@@ -413,7 +410,7 @@ const WebAuthnMethod = {
                             method: "DELETE",
                             uri: this.formatApiUri("/webauthn/auth/" + authCredID),
                         });
-                        await this.fetchAuthData();
+                        await this.updateWebauthnData();
                         statusCode = res.status;
                     } catch (e) {
                         console.error(e);
@@ -431,7 +428,7 @@ const WebAuthnMethod = {
         generateWebauthn: async function() {
             this.registrationInProgress = true;
             try {
-                const data = await this.fetchAuthData();
+                const data = await this.updateWebauthnData();
 
                 // arguments for the webauthn registration
                 const publicKeyCredentialCreationOptions = {
@@ -493,7 +490,7 @@ const WebAuthnMethod = {
                     }),
                     onSuccess: async res => {
                         if (res.data.registered) { // SUCCESS
-                            await this.fetchAuthData();
+                            await this.updateWebauthnData();
                             await this.renameAuthenticator(credentials.id);
                         }
                         else {
@@ -548,6 +545,7 @@ const RandomCodeMethod = {
         'infos': Object,
         'activate': Function,
         'deactivate': Function,
+        'hasValidTransportForRandom_codeMethod': Function,
         'formatApiUri': Function,
         'isManager': Boolean,
         'method': String,
@@ -557,9 +555,8 @@ const RandomCodeMethod = {
     },
     watch: {
         "user.transports": {
-            handler(transports) {
-                const method = this.user.methods[this.method];
-                method.askActivation = !method.transports.some(transport => transports[transport]);
+            handler() {
+                this.user.methods[this.method].askActivation = !this.hasValidTransportForRandom_codeMethod();
             },
             deep: true,
             immediate: true,
@@ -678,6 +675,35 @@ const UserDashboard = {
         "esupnfc":Esupnfc
     },
     template: "#user-dashboard",
+    watch: {
+        currentmethod: {
+            async handler(currentmethod) {
+                if (this.user.methods[currentmethod].active) {
+                    return;
+                }
+
+                if (currentmethod === "webauthn") {
+                    const webauthnData = await this.fetchWebauthnData();
+                    if (webauthnData.auths.length) {
+                        return;
+                    }
+                }
+
+                switch (currentmethod) {
+                    case "random_code":
+                    case "random_code_mail":
+                        if (this.hasValidTransportForRandom_codeMethod()) {
+                            return
+                        }
+                    case "webauthn":
+                    case "push":
+                    case "totp":
+                        return this.activate(currentmethod);
+                }
+            },
+            immediate: true,
+        }
+    },
     methods: {
         formatApiUri: function(uri) {
             return '/api' + uri;
@@ -830,6 +856,18 @@ const UserDashboard = {
                 toast({ message: err, className: 'red darken-1' });
                 throw err;
             });
+        },
+        hasValidTransportForRandom_codeMethod: function() {
+            return this.user
+                .methods[this.currentmethod].transports
+                .some(transport => this.user.transports[transport]);
+        },
+        fetchWebauthnData: async function() {
+            const { data } = await fetchApi({
+                method: "POST",
+                uri: this.formatApiUri("/generate/webauthn"),
+            });
+            return data;
         },
     },
 };
