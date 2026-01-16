@@ -1,5 +1,6 @@
 {
   "success": {
+    "update": "Mise à jour réussie",
     "webauthn": {
       "renamed": "Facteur renommé",
       "deleted": "Facteur supprimé."
