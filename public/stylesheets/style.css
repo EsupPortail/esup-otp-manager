@@ -286,6 +286,10 @@ summary.collapsible-header{
 .methode img {  padding: 0px; margin:0px; width:88px; }
 .lock-solid { width:110px; margin: 0px 30px 0px 30px; }
 
+span.lever.askActivation::after {
+    left: 9.5px
+}
+
 .card { padding-top:25px;  background-color: #eeeef0; }
 
 .input-field label {

@@ -123,6 +123,7 @@
       "webauthn": "WebAuthn hardware authentication factor (Smartphone, Windows Hello, TouchID, ...).",
       "activated": "Activated",
       "deactivated": "Deactivated",
+      "activating": "Activating",
       "note": "Set up at least 2 methods among:"
     },
     "index": "Multi-Factor Authentication Management Interface",
