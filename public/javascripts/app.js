@@ -556,7 +556,7 @@ const RandomCodeMethod = {
     watch: {
         "user.transports": {
             handler() {
-                this.user.methods[this.method].askActivation = !this.hasValidTransportForRandom_codeMethod();
+                this.user.methods[this.method].askActivation = !this.hasValidTransportForRandom_codeMethod(this.method);
             },
             deep: true,
             immediate: true,
@@ -678,6 +678,9 @@ const UserDashboard = {
     watch: {
         currentmethod: {
             async handler(currentmethod) {
+                if (!currentmethod) {
+                    return;
+                }
                 if (this.user.methods[currentmethod].active) {
                     return;
                 }
@@ -692,7 +695,7 @@ const UserDashboard = {
                 switch (currentmethod) {
                     case "random_code":
                     case "random_code_mail":
-                        if (this.hasValidTransportForRandom_codeMethod()) {
+                        if (this.hasValidTransportForRandom_codeMethod(currentmethod)) {
                             return
                         }
                     case "webauthn":
@@ -857,9 +860,9 @@ const UserDashboard = {
                 throw err;
             });
         },
-        hasValidTransportForRandom_codeMethod: function() {
+        hasValidTransportForRandom_codeMethod: function(method) {
             return this.user
-                .methods[this.currentmethod].transports
+                .methods[method].transports
                 .some(transport => this.user.transports[transport]);
         },
         fetchWebauthnData: async function() {

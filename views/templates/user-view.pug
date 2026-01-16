@@ -14,7 +14,7 @@ script#user-view(type='text/x-template').
     </label>
     </div>
     <div v-if="user.methods[method.name].active">
-    <component :is=method.name :method=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :get_user=get_user :messages=messages :infos=infos :user.sync=user :formatApiUri=formatApiUri :isManager=true></component>
+    <component :is=method.name :method=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get_user=get_user :messages=messages :infos=infos :user.sync=user :formatApiUri=formatApiUri :isManager=true></component>
     </div>
     <div class="divider"></div>
     </li>
