@@ -1,23 +1,23 @@
 script#user-view(type='text/x-template').
     <div>
-    <ul>
-    <h2 class="h3" v-if="user.uid && typeof(user.uid)!== 'function'">{{user.uid}}</h2>
-    <template v-for="method in methods">
-    <li v-if="user.methods[method.name] && methods[method.name].activate">
-    <h3 class="h4">{{method.label}}</h3> 
-    <div class='switch'>
-    <label>
-    {{messages.api.action.deactivate}}
-    <input type='checkbox' :id="method.name+'_switch'" @click.prevent="user.methods[method.name].active ? deactivate(method.name) : activate(method.name)" :name="method.name" role="switch" :aria-label="method.label" :checked="user.methods[method.name].active && !user.methods[method.name].askActivation"/>
-    <span class='lever'></span> 
-    {{messages.api.action.activate}}
-    </label>
-    </div>
-    <div v-if="user.methods[method.name].active">
-    <component :is=method.name :method=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get_user=get_user :messages=messages :infos=infos :user.sync=user :formatApiUri=formatApiUri :isManager=true></component>
-    </div>
-    <div class="divider"></div>
-    </li>
-    </template>
-    </ul>
+      <ul>
+        <h2 class="h3" v-if="user.uid && typeof(user.uid)!== 'function'">{{user.uid}}</h2>
+        <template v-for="method in methods">
+          <li v-if="user.methods[method.name] && methods[method.name].activate">
+            <h3 class="h4">{{method.label}}</h3>
+            <div class='switch'>
+              <label>
+                {{messages.api.action.deactivate}}
+                <input type='checkbox' :id="method.name+'_switch'" @click.prevent="user.methods[method.name].active ? deactivate(method.name) : activate(method.name)" :name="method.name" role="switch" :aria-label="method.label" :checked="user.methods[method.name].active && !user.methods[method.name].askActivation"/>
+                <span class='lever'></span>
+                {{messages.api.action.activate}}
+              </label>
+            </div>
+            <div v-if="user.methods[method.name].active">
+              <component :is=method.name :method=method.name :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get_user=get_user :messages=messages :infos=infos :user.sync=user :formatApiUri=formatApiUri :isManager=true></component>
+            </div>
+            <div class="divider"></div>
+          </li>
+        </template>
+      </ul>
     </div>
