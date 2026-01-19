@@ -900,6 +900,7 @@ const ManagerDashboard = {
         return {
             user: {
                 uid: String,
+                displayName: String,
                 methods: Object,
                 transports: Object
             },
@@ -967,19 +968,18 @@ const ManagerDashboard = {
                 method: "GET",
                 uri: "/api/admin/user/" + uid,
                 onSuccess: res => {
-                    const data = res.data;
-                    data.uid = uid;
-                    this.setUser(data);
+                    this.setUser(uid, res.data.user);
                 },
             }).catch(err => {
                 toast({ message: err, className: 'red darken-1' });
             });
         },
-        setUser: function(data) {
+        setUser: function(uid, user) {
             this.user = {
-                uid: data.uid,
-                methods: data.user.methods,
-                transports: data.user.transports
+                uid: uid,
+                displayName: user.displayName,
+                methods: user.methods,
+                transports: user.transports,
             }
         }
     },
