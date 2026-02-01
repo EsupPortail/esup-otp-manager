@@ -113,7 +113,7 @@ function getImgWithAltText({ qrCodeImg, qrCodeSrc, alt = "QR code Esup Auth" }) 
     return `<img src="${qrCodeSrc}" alt="${alt}">`;
 }
 
-function toast({ message, displayLength = 9000, className }) {
+function toast({ message, displayLength = 9 /*seconds*/ * 1000, className }) {
     Materialize.toast(message, displayLength, className);
     $('.toast').last().attr('role', 'alert');
 }
