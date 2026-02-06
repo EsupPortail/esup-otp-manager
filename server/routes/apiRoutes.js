@@ -29,6 +29,7 @@ export function isUser(req, res, next) {
 function isManager(req, res, next) {
     isUser(req, res, () => {
         if (req.session.passport.user.isManager) {
+            req.routeForManagers = true
             return next();
         } else {
             redirectForbidden(req, res);
@@ -106,7 +107,9 @@ async function request_otp_api(req, res, opts_) {
 
     opts_.body = req.body;
     opts_.queryParams ||= {};
-    opts_.queryParams.managerUser = req.session.passport.user.uid;
+    if (req.routeForManagers) {
+        opts_.queryParams.managerUser = req.session.passport.user.uid;
+    }
 
     opts_.headers = {
         'X-Client-IP': clientIP,
