@@ -3,11 +3,11 @@ script#manager-dashboard(type='text/x-template').
       <div class="row input-field">
         <div class="col s8">
           <i class="material-icons prefix" aria-hidden="true">account_box</i>
-          <input @keyup.enter="search" v-model.trim="requestedUid" type="text" id="autocomplete-input" list="usersId">
+          <input @keyup.enter="checkUserThenGetAndSet" v-model.trim="requestedUid" type="text" id="autocomplete-input" list="usersId">
           <label for="autocomplete-input">{{messages.api.label.user}}</label>
         </div>
     
-        <a v-if="requestedUid" class="waves-effect waves-light btn col s4" @click="search">
+        <a v-if="requestedUid" class="waves-effect waves-light btn col s4" @click="checkUserThenGetAndSet">
           {{messages.api.action.select}}
           <i class="material-icons right" aria-hidden="true">search</i>
         </a>
@@ -16,6 +16,6 @@ script#manager-dashboard(type='text/x-template').
         </datalist>
       </div>
       <div v-if="user.uid">
-        <user-view :methods=methods :user.sync=user :messages=messages :infos=infos :get_user=getUser></user-view>
+        <user-view :methods=methods :user.sync=user :messages=messages :infos=infos :get-and-set-user=getAndSetUser></user-view>
       </div>
     </div>

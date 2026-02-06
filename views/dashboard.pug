@@ -70,7 +70,7 @@ block content
                                             a(href='#', @click="getMessages('en')", lang="en") English
         main
             .container
-                component(:is='currentView', :methods='methods', :messages='messages', :infos='infos', :currentmethod='currentMethod', :user='user' :get_user='getUser')
+                component(:is='currentView', :methods='methods', :messages='messages', :infos='infos', :currentmethod='currentMethod', :user='user' :get-and-set-user='getAndSetUser')
 
 block script
     script(type='text/javascript', src='/javascripts/app.js')

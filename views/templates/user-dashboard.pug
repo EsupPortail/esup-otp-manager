@@ -18,7 +18,7 @@ script#user-dashboard(type='text/x-template').
         </div>
          <div class="divider"></div>
          <div class="method-component-wrapper" v-if="user.methods[method.name].active">
-            <component :is=currentmethod :method=currentmethod :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get_user=get_user :messages=messages :infos=infos :user=user :formatApiUri=formatApiUri :isManager=false></component>
+            <component :is=currentmethod :method=currentmethod :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get-and-set-user=getAndSetUser :messages=messages :infos=infos :user=user :formatApiUri=formatApiUri :isManager=false></component>
          </div>
       </div>
      </template>

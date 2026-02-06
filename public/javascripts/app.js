@@ -124,7 +124,7 @@ function toast({ message, displayLength = 9000, className }) {
 const PushMethod = {
     props: {
         'user': Object,
-        'get_user': Function,
+        'getAndSetUser': Function,
         'messages': Object,
         'infos': Object,
         'activate': Function,
@@ -142,11 +142,11 @@ const PushMethod = {
 
                 this.socket = io.connect({ reconnect: true, path: "/sockets", query: 'uid=' + uid });
                 this.socket.on('userPushActivate', () => {
-                    this.get_user(uid);
+                    this.getAndSetUser(uid);
                 });
 
                 this.socket.on('userPushDeactivate', () => {
-                    this.get_user(uid);
+                    this.getAndSetUser(uid);
                 });
 
                 onCleanup(() => {
@@ -661,7 +661,7 @@ const UserDashboard = {
         'methods': Object,
         'messages': Object,
         'infos': Object,
-        'get_user': Function,
+        'getAndSetUser': Function,
         'currentmethod': String,
     },
     components: {
@@ -923,7 +923,7 @@ const ManagerDashboard = {
         const user = url.searchParams.get('user');
         if (user) { // if url contains ?user=xxx
             await this.$nextTick();
-            await this.getUser(user); // display user xxx
+            await this.getAndSetUser(user); // display user xxx
             await this.$nextTick();
             url.searchParams.set('user', '');
             history.pushState({}, '', url); // and remove xxx from current url
@@ -946,10 +946,10 @@ const ManagerDashboard = {
                 toast(err, 3000, 'red darken-1');
             });
         },
-        search: async function() {
+        checkUserThenGetAndSet: async function() {
             if (this.requestedUid) {
                 if (await this.user_exists(this.requestedUid) || window.confirm("Aucun utilisateur avec pour identifiant '" + this.requestedUid + "' n'existe en base de données. Souhaitez-vous le créer ?")) {
-                    this.getUser(this.requestedUid);
+                    this.getAndSetUser(this.requestedUid);
                     this.requestedUid = '';
                 }
             }
@@ -963,7 +963,7 @@ const ManagerDashboard = {
                 uri: `/api/admin/user/${uid}/exists`,
             })).data.user_exists;
         },
-        getUser: function(uid) {
+        getAndSetUser: function(uid) {
             return fetchApi({
                 method: "GET",
                 uri: "/api/admin/user/" + uid,
@@ -1388,7 +1388,7 @@ Vue.createApp({
         const messagesPromise = this.getMessages();
         this.getMethods();
         await this.getInfos();
-        this.getUser();
+        this.getAndSetUser();
 
         // wait for the #home button, then click on it
         await messagesPromise;
@@ -1449,10 +1449,10 @@ Vue.createApp({
             $('#' + event.target.name).parent().addClass('active');
             $('#' + event.target.name).parent().attr('aria-current', 'page');
             if (document.getElementById("sidenav-overlay")) $('#navButton').click();
-            this.getUser();
+            this.getAndSetUser();
         },
 
-        getUser: function() {
+        getAndSetUser: function() {
             return fetchApi({
                 method: "GET",
                 uri: "/api/user",
