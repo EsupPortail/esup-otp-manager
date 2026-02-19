@@ -98,9 +98,9 @@ export default async function authentication(properties) {
         }
     } else if (properties.idp.cert && properties.idp.entryPoint) {
         // https://github.com/node-saml/node-saml/issues/361
-        options[cert]       = properties.idp.cert.replace(/\s/g, '');
-        options[entryPoint] = properties.idp.entryPoint;
-        options[logoutUrl]  = properties.idp.logoutUrl;
+        options["cert"]       = properties.idp.cert.replace(/\s/g, '');
+        options["entryPoint"] = properties.idp.entryPoint;
+        options["logoutUrl"]  = properties.idp.logoutUrl;
     } else {
         throw new Error("either SAML.idp.metadataUrl or (SAML.idp.cert and SAML.idp.entryPoint) must be defined in properties/esup.json");
     }
