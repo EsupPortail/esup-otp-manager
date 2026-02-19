@@ -6,7 +6,7 @@ script#push-method(type='text/x-template').
           <p class="col s10 m8 center-align">
             <p v-html="messages.api.methods.push.esup_Auth_installation_instructions.replace('%ESUP_AUTH%', infos.esup_auth_download_link)"></p>
             <p v-if="user.methods.push.deepLink && infos.mobile" v-html="messages.api.methods.push.deeplink_instructions.replace('%DEEPLINK%', user.methods.push.deepLink)"/>
-            <templace v-else>
+            <template v-else>
               <p v-html="messages.api.methods.push.qrcode_instructions"/>
               <p class="push-qrcode" v-html="user.methods.push.qrCode"/>
             </template>
