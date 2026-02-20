@@ -684,6 +684,11 @@ const UserDashboard = {
                 if (this.user.methods[currentmethod].active) {
                     return;
                 }
+                // avoid overwriting a method that may have been activated in the meantime (e.g., TOTP auto-activated with push)
+                await this.getAndSetUser();
+                if (this.user.methods[currentmethod].active) {
+                    return;
+                }
 
                 if (currentmethod === "webauthn") {
                     const webauthnData = await this.fetchWebauthnData();
