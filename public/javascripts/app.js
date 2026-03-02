@@ -296,10 +296,6 @@ const WebAuthnMethod = {
     },
     async mounted() {
         await this.updateWebauthnData();
-
-        if(this.webauthnData.auths.length === 0) {
-            this.generateWebauthn();
-        }
     },
     computed: {
         descriptionMessage() {
