@@ -11,7 +11,7 @@ script#user-dashboard(type='text/x-template').
         <div class='switch'>
           <label>
             {{messages.api.home.deactivated}}
-            <input type='checkbox' :id="method.name+'_switch'" @click.prevent="user.methods[method.name].active ? deactivate(method.name) : activate(method.name)" :name="method.name" role="switch" :aria-label="method.label" :checked="user.methods[method.name].active && !user.methods[method.name].askActivation" :disabled="user.methods[method.name].askActivation"/>
+            <input type='checkbox' :id="method.name+'_switch'" @click.prevent="user.methods[method.name].active ? deactivate(method.name) : activate(method.name)" :name="method.name" role="switch" :aria-label="method.label" :checked="user.methods[method.name].active && !user.methods[method.name].askActivation"/>
             <span class='lever' :class="{ askActivation: user.methods[method.name].askActivation }"></span>
             {{ user.methods[method.name].askActivation ? messages.api.home.activating : messages.api.home.activated }}
           </label>

@@ -767,7 +767,7 @@ const UserDashboard = {
             });
         },
         deactivate: function(method) {
-            if (window.confirm(this.messages.api.action.confirm_deactivate)) {
+            if (this.user.methods[method].askActivation || window.confirm(this.messages.api.action.confirm_deactivate)) {
                 return fetchApi({
                     method: "PUT",
                     uri: this.formatApiUri("/" + method + "/deactivate"),
