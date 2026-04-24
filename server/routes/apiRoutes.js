@@ -17,8 +17,8 @@ function redirectLogin(req, res) {
     redirect(req, res, 401, '/login');
 }
 
-function redirectForbidden(req, res) {
-    redirect(req, res, 401, '/forbidden');
+function redirectForbidden(req, res, status = 401) {
+    redirect(req, res, status, '/forbidden');
 }
 
 export function isUser(req, res, next) {
@@ -55,6 +55,23 @@ function canAccessUserMethod(req, res, next) {
             redirectForbidden(req, res);
         }
     });
+}
+
+if (properties.esup.transport_regexes) {
+    properties.esup.transport_regExps = Object.fromEntries(
+        Object.entries(properties.esup.transport_regexes)
+            .filter(([transport, _regex]) => !transport.startsWith("#"))
+            .map(([transport, regex]) => [transport, new RegExp(regex)])
+    )
+}
+
+function checkTransportRegex(req, res, next) {
+    const regex = properties.esup.transport_regExps[req.params.transport];
+    if (regex && !regex.test(req.params.new_transport)) {
+        return redirectForbidden(req, res, 500);
+    } else {
+        return next();
+    }
 }
 
 /** 
@@ -239,7 +256,7 @@ export function routing(router) {
         });
     });
 
-    router.put('/api/transport/:transport/:new_transport', isUser, function(req, res) {
+    router.put('/api/transport/:transport/:new_transport', isUser, checkTransportRegex, function(req, res) {
         request_otp_api(req, res, {
             method: 'PUT',
             relUrl: '/protected/users/'+ req.session.passport.user.uid +'/transports/'+req.params.transport+'/'+req.params.new_transport,
@@ -255,7 +272,7 @@ export function routing(router) {
         });
     });
 
-    router.get('/api/transport/:transport/:new_transport/test', isUser, function(req, res) {
+    router.get('/api/transport/:transport/:new_transport/test', isUser, checkTransportRegex, function(req, res) {
         request_otp_api(req, res, {
             method: 'GET',
             relUrl: '/protected/users/' + req.session.passport.user.uid + '/transports/' + req.params.transport + '/' + req.params.new_transport + '/test/',
