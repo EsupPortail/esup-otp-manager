@@ -29,7 +29,9 @@ async function fetchApi({
         if (res.ok) {
             await onSuccess?.(res);
         } else if (res.data?.code === 'REDIRECT') {
-            window.alert("Session expirée. Veuillez vous reconnecter.")
+            if(res.data.path == "/login") {
+                window.alert("Session expirée. Veuillez vous reconnecter.")
+            }
             return document.location.replace(res.data.path); // redirect to res.data.path (/login or /forbidden)
         } else if (onStatus[res.status]) {
             await onStatus[res.status](res);
