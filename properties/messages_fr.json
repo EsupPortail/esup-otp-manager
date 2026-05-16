@@ -112,9 +112,9 @@
       },
       "esupnfc": {
         "name": "EsupNFC",
-        "description": "Méthode permettant de récupérer un code en badgeant la carte"
+        "description": "Méthode permettant de récupérer un code en badgeant la carte",
         "help_is_active": "",
-        "help_is_inactive": "",
+        "help_is_inactive": ""
       },
       "webauthn": {
         "name": "Facteur physique (WebAuthn)",
