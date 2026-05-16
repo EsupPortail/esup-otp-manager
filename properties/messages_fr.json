@@ -21,7 +21,7 @@
       "totp": {
         "name": "Code temporel (TOTP)",
         "description": "Méthode permettant de générer des codes uniques de 6 chiffres.",
-        "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>révoquer</strong> le secret actuel et <strong>générer une nouvelle série</strong> de codes uniques, cliquez sur le bouton « Générer QRcode ».<br>⏹️ Pour <strong>révoquer</strong> le secret actuel et <strong>désactiver la méthode</strong>, cliquez sur la réglette pour désactiver.",
+        "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>révoquer</strong> le secret actuel et <strong>générer une nouvelle série</strong> de codes uniques, cliquez sur le bouton « Générer QRcode ».<br>⏹️ Pour <strong>révoquer</strong> le secret actuel et <strong>désactiver la méthode</strong>, cliquez sur la réglette.",
         "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, suivez les 2 étapes décrites ci-après.",
         "apple_passwords_app": "l’application Apple « Mots de passe »",
         "registration_instructions": {
@@ -69,7 +69,7 @@
         "name": "Code par Courriel",
         "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel."
         "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>recevoir vos codes sur une autre adresse (remplaçant l'actuelle)</strong>, enregistrez la nouvelle adresse ci-après puis suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette nouvelle adresse pour confirmer le remplacement.<br>⏹️ Pour <strong>supprimer l'adresse</strong> actuelle et <strong>désactiver la méthode</strong>, cliquer sur « Supprimer ».",
-        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, cliquez sur la réglette puis enregistrez votre adresse courriel ci-après et suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette adresse pour confirmer l'activation de la méthode.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, enregistrez votre adresse courriel ci-après et suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette adresse pour confirmer l'activation de la méthode.",
       },
       "bypass": {
         "name": "Codes de secours",
@@ -93,8 +93,8 @@
       "push": {
         "name": "Notification (Esup Auth)",
         "description": "Méthode permettant de se connecter via les notifications de son smartphone avec l’application Esup Auth.",
-        "help_is_active": "",
-        "help_is_inactive": "",
+        "help_is_active": "Cette méthode est active et notifie l'appareil associé ci-après.<br>⏹️ Pour <strong>révoquer</strong> l'association et le secret actuels, cliquez sur la réglette pour désactiver. Vous aurez ensuite la possibilité d'associer un nouvel appareil en réactivant la méthode.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, suivez les étapes décrites ci-après. Si besoin, cliquez au préalable sur la réglette.",
         "esup_auth_download_link": "Esup Auth sur <a href='%ANDROID_URL%' target='_blank'>Android</a> ou <a href='%IOS_URL%' target='_blank'>IOS</a>",
         "esup_Auth_installation_instructions": "Une fois l'application %ESUP_AUTH% installée,",
         "deeplink_instructions": "<a href='%DEEPLINK%'>Cliquez ici</a>.",
