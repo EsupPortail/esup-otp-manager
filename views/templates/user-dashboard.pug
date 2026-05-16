@@ -17,6 +17,12 @@ script#user-dashboard(type='text/x-template').
           </label>
           <p v-if="user.methods[method.name].askActivation" class="grey-text text-darken-1" style="margin-top: 0">{{ messages.api.home.activating }}</p>
         </div>
+         <div v-if="user.methods[method.name].active && user.methods[method.name].askActivation==false">
+            <p>{{messages.api.methods[method.name].help_is_active}}</p>
+         </div>
+         <div v-else>
+            <p>{{messages.api.methods[method.name].help_is_inactive}}</p>
+         </div>       
          <div class="divider"></div>
          <div class="method-component-wrapper" v-if="user.methods[method.name].active">
             <component :is=currentmethod :method=currentmethod :methods=methods :generate_totp=generateTotpConfirm :generate_bypass=generateBypassConfirm :generate_passcode_grid=generatePasscodeGridConfirm :hasValidTransportForRandom_codeMethod=hasValidTransportForRandom_codeMethod :fetchWebauthnData=fetchWebauthnData :get-and-set-user=getAndSetUser :messages=messages :infos=infos :user=user :formatApiUri=formatApiUri :isManager=false></component>
