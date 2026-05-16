@@ -67,9 +67,9 @@
       },
       "random_code_mail": {
         "name": "Code par Courriel",
-        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel."
+        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel.",
         "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>recevoir vos codes sur une autre adresse (remplaçant l'actuelle)</strong>, enregistrez la nouvelle adresse ci-après puis suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette nouvelle adresse pour confirmer le remplacement.<br>⏹️ Pour <strong>supprimer l'adresse</strong> actuelle et <strong>désactiver la méthode</strong>, cliquer sur « Supprimer ».",
-        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, enregistrez votre adresse courriel ci-après et suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette adresse pour confirmer l'activation.<br>NB. Si le champ de saisie n'apparaît pas, cliquez au préalable sur la réglette pour activer la méthode.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, enregistrez votre adresse courriel ci-après et suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette adresse pour confirmer l'activation.<br>NB. Si le champ de saisie n'apparaît pas, cliquez au préalable sur la réglette pour activer la méthode."
       },
       "bypass": {
         "name": "Codes de secours",
