@@ -21,6 +21,8 @@
       "totp": {
         "name": "Timed password (TOTP)",
         "description": "This method generate 6 numerals codes",
+        "help_is_active": "This method is on.<br>🔁 To <strong>revoke</strong> the current secret and <strong>create a new set</strong> of one-time codes, click on « Generate QRcode » button.<br>⏹️ To <strong>revoke</strong> the current secret and <strong>disable the method</strong>, click on the switch.",
+        "help_is_inactive": "This method is off.<br>▶️ <strong>To enable it</strong>, please follow the 2 steps bellow.",  
         "apple_passwords_app": "Apple Passwords app",
         "registration_instructions": {
           "deeplink": "<strong><a href='%DEEPLINK%'>Click here</a></strong> to register your key in the %ESUP_AUTH% app (after installing the app).",
@@ -35,6 +37,8 @@
       "random_code": {
         "name": "One time password",
         "description": "Method to generate random codes valid for some time",
+        "help_is_active": "",
+        "help_is_inactive": "",
         "verify_code": {
           "sms": {
             "title": "Code received by SMS",
@@ -63,11 +67,15 @@
       },
       "random_code_mail": {
         "name": "One time password by mail",
-        "description": "Method to generate random codes and sent it by mail"
+        "description": "Method to generate random codes and sent it by mail",
+        "help_is_active": "This method is on.<br>🔁 To <strong>send your codes to another email adress (which will replace current one)</strong>, registrer the new adress bellow and follow the instructions. You will have to enter or copy a code sent to this new adress to complete the change.<br>⏹️ To <strong>delete the current email adress</strong> and <strong>disable the method</strong>, click on « Remove ».",
+        "help_is_inactive": "This method is off.<br>▶️ <strong>To enable it</strong>, registrer your email adress bellow and follow the instructions. You will have to enter or copy a code sent to this adress to validate the activation.<br>NB. If no text field is visible, click on the switch before to enable the method."
       },
       "bypass": {
         "name": "Backup codes",
         "description": "Method for generating a random codes list",
+        "help_is_active": "",
+        "help_is_inactive": "",
         "generated_codes": "Generated codes",
         "available_codes": "Available codes",
         "used_codes": "Used codes",
@@ -77,12 +85,16 @@
       "passcode_grid": {
         "name": "Passcode grid",
         "description": "Method for generating a grid of random codes",
+        "help_is_active": "This method is on.<br>🔁 To <strong>revoke</strong> current codes and <strong>get new ones</strong>, click on « Generate codes » on page bottom.<br><strong>Be careful</strong> : theses codes won't show up again, save it in your password vault before leaving the page.<br>⏹️ To <strong>revoke</strong> current codes and <strong>disable the method</strong>, click on « Generate codes » on page bottom then on the switch to deactivate.",
+        "help_is_inactive": "This method is off.<br>▶️ <strong>To enable it</strong>, click on the switch then on « Generate codes » button.<br><strong>Be careful</strong> : theses codes won't show up again, save it in your password vault before leaving the page.",
         "note": "Do not photograph. Do not share.<br>In case of loss, contact the DSIUN.",
         "generation_date": "Codes generated on %DATE%"
       },
       "push": {
         "name": "Notification (Esup Auth)",
         "description": "Method for connecting via smartphone notifications with Esup Auth",
+        "help_is_active": "This method is on and can send notifications to the associated device listed bellow.<br>⏹️ To <strong>revoke</strong> the pairing and the current secret, click on the switch to deactivate the method. After this, you would be able to enable the method again and to pair a new device.",
+        "help_is_inactive": "This method is off.<br>▶️ <strong>To enable it</strong>, follow the steps bellow.<br>NB. If no step is displayed, click on the switch before to enable the method.",
         "esup_auth_download_link": "Esup Auth on <a href='%ANDROID_URL%' target='_blank'>Android</a> or <a href='%IOS_URL%' target='_blank'>IOS</a>",
         "esup_Auth_installation_instructions": "After installing the %ESUP_AUTH% app",
         "deeplink_instructions": "<strong><a href='%DEEP_LINK%'>Click here</a></strong>,",
@@ -100,11 +112,15 @@
       },
       "esupnfc": {
         "name": "EsupNFC",
-        "description": "Method for connecting via NFC swipe"
+        "description": "Method for connecting via NFC swipe",
+        "help_is_active": "",
+        "help_is_inactive": ""
       },
       "webauthn": {
         "name": "Hardware authenticator (WebAuthn)",
         "description": "WebAuthn hardware authentication factor (Smartphone, Windows Hello, TouchID, ...).",
+        "help_is_active": "This method is on. Devices authorized for your authentication are listed bellow.<br>You can <strong>edit or remove each authorization</strong>.",
+        "help_is_inactive": "This method is off.<br>▶️ <strong>To enable it</strong>, please get the device you want to pair ready (phone, security key, ...), click on « Add » and follow the instructions provided by your browser and device.",
         "no_authentificators": "You have no authentificators registered. Register one?",
         "single_auth": "You have 1 authentification method registered.",
         "nb_of_auths": "You have %NB% authentification methods registered.",

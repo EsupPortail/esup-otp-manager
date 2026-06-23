@@ -21,6 +21,8 @@
       "totp": {
         "name": "Code temporel (TOTP)",
         "description": "Méthode permettant de générer des codes uniques de 6 chiffres.",
+        "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>révoquer</strong> le secret actuel et <strong>générer une nouvelle série</strong> de codes uniques, cliquez sur le bouton « Générer QRcode ».<br>⏹️ Pour <strong>révoquer</strong> le secret actuel et <strong>désactiver la méthode</strong>, cliquez sur la réglette.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, suivez les 2 étapes décrites ci-après.",
         "apple_passwords_app": "l’application Apple « Mots de passe »",
         "registration_instructions": {
           "deeplink": "<strong><a href='%DEEPLINK%'>Cliquez ici</a></strong> pour enregistrer votre clé dans l'application %ESUP_AUTH% (après avoir installé l'application).",
@@ -35,6 +37,8 @@
       "random_code": {
         "name": "Code par SMS",
         "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par SMS.",
+        "help_is_active": "",
+        "help_is_inactive": "",
         "verify_code": {
           "sms": {
             "title": "Code reçu par SMS",
@@ -63,11 +67,15 @@
       },
       "random_code_mail": {
         "name": "Code par Courriel",
-        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel."
+        "description": "Méthode permettant de s’authentifier à partir d’un code aléatoire à usage unique envoyé par courriel.",
+        "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>recevoir vos codes sur une autre adresse (remplaçant l'actuelle)</strong>, enregistrez la nouvelle adresse ci-après puis suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette nouvelle adresse pour confirmer le remplacement.<br>⏹️ Pour <strong>supprimer l'adresse</strong> actuelle et <strong>désactiver la méthode</strong>, cliquer sur « Supprimer ».",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, enregistrez votre adresse courriel ci-après et suivez les indications. Vous aurez à saisir ou copier un code reçu sur cette adresse pour confirmer l'activation.<br>NB. Si le champ de saisie n'apparaît pas, cliquez au préalable sur la réglette pour activer la méthode."
       },
       "bypass": {
         "name": "Codes de secours",
         "description": "Méthode permettant de générer une liste de codes aléatoires à usage unique.",
+        "help_is_active": "",
+        "help_is_inactive": "",
         "generated_codes": "Codes générés",
         "available_codes": "Codes restants",
         "used_codes": "Codes utilisés",
@@ -77,12 +85,16 @@
       "passcode_grid": {
         "name": "Grille de codes",
         "description": "Méthode permettant de générer une grille de codes aléatoires.",
+        "help_is_active": "Cette méthode est active.<br>🔁 Pour <strong>révoquer</strong> les codes actuels et en <strong>obtenir de nouveaux</strong>, cliquez sur « Générer des codes » en bas de page.<br><strong>Attention</strong> : ces codes ne seront pas réaffichés, enregistrez-les dans votre coffre-fort avant de quitter la page.<br>⏹️ Pour <strong>révoquer</strong> les codes actuels et <strong>désactiver la méthode</strong>, cliquer sur « Générer des codes » en bas de page puis sur la réglette pour désactiver.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, cliquez sur la réglette puis sur le bouton « Générer des codes ».<br><strong>Attention</strong> : ces codes ne seront pas réaffichés, enregistrez-les dans votre coffre-fort avant de quitter la page.",
         "note": "Ne pas photographier. Ne pas montrer cette grille à qui que ce soit.<br>En cas de perte ou divulgation, contacter la DSIUN.",
         "generation_date": "Codes générés le %DATE%"
       },
       "push": {
         "name": "Notification (Esup Auth)",
         "description": "Méthode permettant de se connecter via les notifications de son smartphone avec l’application Esup Auth.",
+        "help_is_active": "Cette méthode est active et notifie l'appareil associé ci-après.<br>⏹️ Pour <strong>révoquer</strong> l'association et le secret actuels, cliquez sur la réglette pour désactiver. Vous aurez ensuite la possibilité d'associer un nouvel appareil en réactivant la méthode.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, suivez les étapes décrites ci-après.<br>NB. Si les étapes ne s'affichent pas, cliquez au préalable sur la réglette.",
         "esup_auth_download_link": "Esup Auth sur <a href='%ANDROID_URL%' target='_blank'>Android</a> ou <a href='%IOS_URL%' target='_blank'>IOS</a>",
         "esup_Auth_installation_instructions": "Une fois l'application %ESUP_AUTH% installée,",
         "deeplink_instructions": "<a href='%DEEPLINK%'>Cliquez ici</a>.",
@@ -100,11 +112,15 @@
       },
       "esupnfc": {
         "name": "EsupNFC",
-        "description": "Méthode permettant de récupérer un code en badgeant la carte"
+        "description": "Méthode permettant de récupérer un code en badgeant la carte",
+        "help_is_active": "",
+        "help_is_inactive": ""
       },
       "webauthn": {
         "name": "Facteur physique (WebAuthn)",
         "description": "Facteur physique d’authentification WebAuthn (Smartphone, Windows Hello, TouchID, ...).",
+        "help_is_active": "Cette méthode est active. Les appareils listés ci-après sont vos moyens d'authentification autorisés.<br>Vous pouvez <strong>modifier ou supprimer chaque autorisation</strong> ci-après.",
+        "help_is_inactive": "Cette méthode n'est pas encore activée.<br>▶️ <strong>Pour l'activer</strong>, préparez l'appareil à associer (téléphone, clé, ...), cliquez sur « Ajouter » puis suivez les indications de votre navigateur et appareil.",
         "no_authentificators": "Vous n’avez pas de moyen d’authentification enregistré. En ajouter un ?",
         "single_auth": "Vous avez 1 moyen d’authentification.",
         "nb_of_auths": "Vous avez %NB% moyens d’authentification.",
