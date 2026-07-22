@@ -437,7 +437,7 @@ const WebAuthnMethod = {
                     user: {
                         id: Uint8Array.from(data.user_id),
                         name: `${this.user.uid}`,
-                        displayName: `${this.user.displayName}`
+                        displayName: `${this.user.name || this.user.uid}`
                     },
                     // Spec recommends at least supporting these
                     pubKeyCredParams: data.pubKeyTypes,
