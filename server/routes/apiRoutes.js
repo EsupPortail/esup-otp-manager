@@ -77,8 +77,8 @@ function checkTransportRegex(req, res, next) {
     }
 }
 
-/** 
- *  @typedef {{ 
+/**
+ *  @typedef {{
  *      relUrl: string,
  *      queryParams?: Object,
  *      body?: Object,
@@ -107,6 +107,8 @@ export function fetch_otp_api(opts_) {
 
     const url = properties.esup.api_url + opts_.relUrl + "?" + new URLSearchParams(opts_.queryParams);
 
+    logger.debug("Url: " + url);
+
     opts.headers = opts_.headers || {};
     opts.headers['Content-Type'] ||= 'application/json';
 
@@ -115,7 +117,7 @@ export function fetch_otp_api(opts_) {
     }
 
     logger.debug(opts.method + ':' + url);
-    logger.debug(JSON.stringify(opts.headers, null, 2));
+    logger.debug("Headers: " + JSON.stringify(opts.headers, null, 2));
 
     return request(url, opts);
 }
@@ -137,7 +139,7 @@ async function request_otp_api(req, res, opts_) {
         'User-Agent': 'esup-otp-manager',
     };
 
-    logger.debug(req.session.passport)
+    logger.debug("Req Session Passport: " + JSON.stringify(req.session.passport))
 
     let response;
     try {
@@ -160,7 +162,7 @@ async function request_otp_api(req, res, opts_) {
     res.status(response.statusCode);
     /** @type {Object} */
     const infos = await response.body.json();
-    logger.debug(infos);
+    logger.debug("Infos: " + JSON.stringify(infos));
     res.send(infos);
 }
 
@@ -186,7 +188,7 @@ export function routing(router) {
             bearerAuth: true,
         });
     });
-    
+
     router.post('/api/:method/activate/confirm/:activation_code', canAccessUserMethod, function(req, res) {
         request_otp_api(req, res, {
             method: 'POST',
@@ -194,7 +196,7 @@ export function routing(router) {
             bearerAuth: true,
         });
     });
-    
+
     router.post('/api/admin/:uid/:method/activate/confirm/:activation_code', isManager, function(req, res) {
         request_otp_api(req, res, {
             method: 'POST',
@@ -226,7 +228,7 @@ export function routing(router) {
             bearerAuth: true,
         });
     });
-    
+
     router.post('/api/admin/:uid/:method/confirm_activate', isManager, function(req, res) {
         request_otp_api(req, res, {
             method: 'POST',
