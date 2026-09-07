@@ -1,28 +1,25 @@
 
 script#home-dashboard(type='text/x-template').
     <div>
-    <div v-if="messages.api">
-       <h2>{{messages.api.title}}</h2>
-       <p>
-       <img class= "lock-solid" src="images/logo-transparent.png" style="max-width: 150px; float: right;" alt="">
-       {{messages.api.home.description}}
-       </p>
-       <p>{{messages.api.home.note}}</p>
-     <p>{{messages.api.home.methods}}</p>
-     <div class="flex-container">
-     <template v-for="method in methods">
-      <button v-if="method.activate & method.authorize" role="link" class="methode" @click="navigate(method.name);" >
-      <p>
-      <img :src="'images/'+method.name+'.svg'" style="max-width: 200px;" alt="">
-     </p>
-
-      <span>{{messages.api.home[method.name]}}</span>
-      <span v-if="user.methods[method.name]?.active" class="status enabled">{{messages.api.home.activated}}</span>
-      <span v-else class="status disabled">{{messages.api.home.deactivated}}</span>
-     </button>
-     </template>
-
-     </div>
-
-    </div>
+      <div v-if="messages.api">
+        <h2>{{messages.api.title}}</h2>
+        <p>
+          <img class= "lock-solid" src="images/logo-transparent.png" style="max-width: 150px; float: right;" alt="">
+          {{messages.api.home.description}}
+        </p>
+        <p>{{messages.api.home.note}}</p>
+        <p>{{messages.api.home.methods}}</p>
+        <div class="flex-container">
+        <template v-for="method in methods">
+          <button v-if="method.activate & method.authorize" role="link" class="methode" @click="navigate(method.name);" >
+          <p>
+            <img :src="'images/'+method.name+'.svg'" style="max-width: 200px;" alt="">
+          </p>
+          <span>{{messages.api.home[method.name]}}</span>
+          <span v-if="user.methods[method.name]?.active" class="status enabled">{{messages.api.home.activated}}</span>
+          <span v-else class="status disabled">{{messages.api.home.deactivated}}</span>
+          </button>
+        </template>
+        </div>
+      </div>
     </div>
