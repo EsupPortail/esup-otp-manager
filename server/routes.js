@@ -7,8 +7,13 @@ import * as apiRoutes from './routes/apiRoutes.js';
 const isUser = apiRoutes.isUser;
 import * as pagesRoutes from './routes/pagesRoutes.js';
 import logger from '../services/logger.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 let passport;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pushServiceWorkerTemplate = fs.readFileSync(path.join(__dirname, 'firebase-messaging-sw.template.js'), 'utf8');
 
 
 function routing() {
@@ -17,6 +22,20 @@ function routing() {
         res.send({
             code: 'Ok'
         });
+    });
+
+    router.get('/firebase-messaging-sw.js', function(req, res) {
+        const firebaseConfig = properties.esup.push?.firebaseConfig;
+        if (!firebaseConfig) {
+            return res.status(404).send('// Firebase Push is not configured.');
+        }
+        res.set('Cache-Control', 'no-store');
+        res.type('application/javascript');
+        res.send(pushServiceWorkerTemplate.replace('__FIREBASE_CONFIG__', JSON.stringify(firebaseConfig)));
+    });
+
+    router.get('/push-confirm', function(req, res) {
+        res.render('push-confirm', { lang: properties.esup.default_language || 'en' });
     });
 
     router.get('/manager/messages/{:language}', isUser, function(req, res) {
@@ -33,6 +52,7 @@ function routing() {
             uid: req.session.passport.user.uid,
             name: req.session.passport.user.name,
             transport_regexes: properties.esup.transport_regexes,
+            push: properties.esup.push,
         });
     });
 
@@ -108,5 +128,3 @@ export default async function(_passport) {
 
     return router
 }
-
-

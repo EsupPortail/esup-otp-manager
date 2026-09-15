@@ -3,11 +3,24 @@
     "authentication": "CAS",
     "CAS": {
         "version": "CAS3.0",
-        "casBaseURL": "http://localhost/cas",
+        "casBaseURL": "http://localhost:3001/mfa",
         "serviceBaseURL": "http://localhost:4000/"
     },
     "port": "",
     "api_url": "http://localhost:3000",
+    "push": {
+        "firebaseConfig": {
+            "apiKey": "changeit",
+            "authDomain": "esup-otp-276500.firebaseapp.com",
+            "databaseURL": "https://esup-otp-276500.firebaseio.com",
+            "projectId": "esup-otp-276500",
+            "storageBucket": "esup-otp-276500.firebasestorage.app",
+            "messagingSenderId": "703115166283",
+            "appId": "1:703115166283:web:4157c87cfe7dae63b083ce",
+            "measurementId": "G-Q7W0127YBP"
+        },
+        "vapidKey": "changeit"
+    },
     "api_password":"changeit",
     "session_secret_key": "changeit",
     "admins": ["john"],

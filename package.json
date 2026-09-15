@@ -22,6 +22,7 @@
     "express-session": "1.x",
     "express-socket.io-session": "1.x",
     "file-system-cache": "2.x",
+    "firebase": "^12.15.0",
     "jquery": "3.x",
     "materialize-css": "0.97.x",
     "memorystore": "1.x",
