@@ -185,10 +185,13 @@
     "transports": {
       "sms": "Votre numéro portable",
       "mail": "Votre adresse email"
-    },
-    "label": {
-      "user": "Utilisateur"
     }
+  },
+  "manager": {
+    "user_label": "Utilisateur",
+    "deactivateAllMethods": "Désactiver toutes les méthodes de cet utilisateur",
+    "confirm_deactivateAllMethods": "Désactiver toutes les méthodes de cet utilisateur ?",
+    "allMethodsSuccessfullyDeactivated": "Méthodes désactivées."
   },
   "stats": {
     "loading": "Chargement des statistiques...",
