@@ -327,8 +327,8 @@ const WebAuthnMethod = {
     },
     methods: {
         updateWebauthnData: async function() {
-            this.webauthnData = await this.fetchWebauthnData();
-            return this.webauthnData;
+            // does not return `webauthnData` proxied by Vue.js (which caused issues with KeePassXC-Browser in `this.generateWebauthn()`)
+            return this.webauthnData = await this.fetchWebauthnData();
         },
         getAuthById: function (id) {
             return this.webauthnData.auths.find(authenticator => authenticator.credentialID === id);
