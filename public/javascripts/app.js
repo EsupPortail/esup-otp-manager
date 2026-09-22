@@ -285,6 +285,14 @@ const PushMethod = {
             'socket': Object,
         };
     },
+    computed: {
+        canAddPushBrowser: function() {
+            return !this.isManager
+                && this.user.methods.push?.allow_browser_devices === true
+                && this.infos.push?.firebaseConfig
+                && this.infos.push?.vapidKey;
+        },
+    },
     watch: {
         'user.uid': {
             handler(uid, old, onCleanup) {

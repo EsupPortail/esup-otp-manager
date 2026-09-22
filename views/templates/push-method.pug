@@ -25,7 +25,7 @@ script#push-method(type='text/x-template').
               '></p>
             </div>
           </div>
-          <div class="row center-align" style="margin-bottom: 0;" v-if="!isManager && infos.push && infos.push.firebaseConfig && infos.push.vapidKey">
+          <div class="row center-align" style="margin-bottom: 0;" v-if="canAddPushBrowser">
             <button type="button" class="waves-effect waves-light btn" @click="addPushBrowser">
               <i class="material-icons left" aria-hidden="true">computer</i>
               {{messages.api.methods.push.add_browser}}
@@ -73,7 +73,7 @@ script#push-method(type='text/x-template').
             </div>
           </div>
         </div>
-        <div class="row center-align" style="margin-bottom: 0;" v-if="!isManager && infos.push && infos.push.firebaseConfig && infos.push.vapidKey">
+        <div class="row center-align" style="margin-bottom: 0;" v-if="canAddPushBrowser">
           <button type="button" class="waves-effect waves-light btn" @click="addPushBrowser">
             <i class="material-icons left" aria-hidden="true">computer</i>
             {{messages.api.methods.push.add_browser}}
