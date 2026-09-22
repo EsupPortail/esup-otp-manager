@@ -90,8 +90,8 @@
         "generation_date": "Codes générés le %DATE%"
       },
       "push": {
-        "name": "Notification (Esup Auth)",
-        "description": "Méthode permettant de se connecter via les notifications de son smartphone avec l’application Esup Auth.",
+        "name": "Notification Push",
+        "description": "Méthode permettant de se connecter via les notifications de l’application Esup Auth ou de ce navigateur.",
         "confirm_deactivate": "Voulez-vous vraiment désactiver cette méthode ? Vous ne recevrez plus de notifications pour vous authentifier. Si plus tard vous réactivez la méthode, vous devrez re-suivre les instructions.",
         "confirm_reset": "Voulez-vous continuer ? Vous ne recevrez plus de notifications pour vous authentifier sur votre ancien smartphone. Pour activer la méthode sur votre nouveau smartphone, vous devrez re-suivre les instructions.",
         "esup_auth_download_link": "Esup Auth sur <a href='%ANDROID_URL%' target='_blank'>Android</a> ou <a href='%IOS_URL%' target='_blank'>IOS</a>",
@@ -108,10 +108,9 @@
           "</ul>",
           "Puis cliquez sur « Activer »."
         ],
-        "device": {
-          "description": "Les notifications seront affichés sur l’application Esup Auth sur votre <b style='white-space: nowrap;'>%MANUFACTURER% %MODEL%</b>.",
-          "reset": "En cas de changement de smartphone ou de désinstallation de l’application, cliquez sur"
-        }
+        "browser_activation_instructions": "Autorisez les notifications pour associer ce navigateur.",
+        "add_browser": "Ajouter ce navigateur",
+        "confirm_delete": "Voulez-vous vraiment supprimer ce terminal ?"
       },
       "esupnfc": {
         "name": "EsupNFC",
@@ -129,7 +128,7 @@
     "home": {
       "description": "Vous permet d’ajouter un deuxième niveau de protection à votre compte (authentification double facteur). Ainsi, il sera impossible d’accéder à votre compte même avec votre mot de passe.",
       "methods": "Vous pouvez définir :",
-      "push": "qu’une notification / push soit envoyée sur l’application Esup Auth (Android, iOS).",
+      "push": "qu’une notification push soit envoyée sur l’application Esup Auth ou sur votre navigateur.",
       "totp": "qu’un code (TOTP) soit généré dans une application (Esup Auth, Authenticator, Plugin OTP...).",
       "bypass": "qu’une liste de code à usage unique soit générée aléatoirement (Codes de secours).",
       "passcode_grid": "qu’une grille de codes soit générée aléatoirement.",

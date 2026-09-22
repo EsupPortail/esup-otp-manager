@@ -90,8 +90,8 @@
         "generation_date": "Codes generated on %DATE%"
       },
       "push": {
-        "name": "Notification (Esup Auth)",
-        "description": "Method for connecting via smartphone notifications with Esup Auth",
+        "name": "Push notification",
+        "description": "Method for signing in with notifications from Esup Auth or this browser.",
         "confirm_deactivate": "Are you sure you want to disable this method? You will no longer receive notifications asking you to authenticate. If you re-enable the method later, you'll need to follow the instructions again.",
         "confirm_reset": "Would you like to continue? You will no longer receive notifications asking you to authenticate on your old smartphone. To set up this method on your new smartphone, you'll need to follow the instructions again.",
         "esup_auth_download_link": "Esup Auth on <a href='%ANDROID_URL%' target='_blank'>Android</a> or <a href='%IOS_URL%' target='_blank'>IOS</a>",
@@ -108,10 +108,9 @@
           "</ul>",
           "Then click on '<span lang='fr'>Activer</span>'."
         ],
-        "device": {
-          "description": "Notifications will be displayed in the Esup Auth app on your <b style='white-space: nowrap;'>%MANUFACTURER% %MODEL%</b>.",
-          "reset": "If you switch to a new smartphone or uninstall the app, click"
-        }
+        "browser_activation_instructions": "Allow notifications to link this browser.",
+        "add_browser": "Add this browser",
+        "confirm_delete": "Do you really want to remove this device?"
       },
       "esupnfc": {
         "name": "EsupNFC",
@@ -129,7 +128,7 @@
     "home": {
       "description": "ESUP-OTP permits you to add a second level of protection to your account. You can, for example, set a single-use code sent to you by SMS in addition to your username and password. Thus, a third can not access your account with the same password.",
       "methods": "You can set up:",
-      "push": "Notification to Esup Auth (Android, iOS).",
+      "push": "Push notification to Esup Auth or your browser.",
       "totp": "TOTP code into an application (Esup Auth, Authenticator...).",
       "bypass": "Display random Codes (Backup codes).",
       "passcode_grid": "Display Passcode Grid.",

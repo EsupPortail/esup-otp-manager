@@ -120,6 +120,151 @@ function toast({ message, displayLength = 9 /*seconds*/ * 1000, className }) {
     $('.toast').last().attr('role', 'alert');
 }
 
+let pushForegroundMessaging;
+
+function pushBrowserModel() {
+    const brands = navigator.userAgentData?.brands;
+    return brands?.map(brand => brand.brand + ' ' + brand.version).join(', ') || navigator.userAgent;
+}
+
+function requestPushNotificationPermission() {
+    if (Notification.permission !== 'default') {
+        return Promise.resolve(Notification.permission);
+    }
+    if (Notification.requestPermission.length === 0) {
+        return Notification.requestPermission();
+    }
+    return new Promise(resolve => Notification.requestPermission(resolve));
+}
+
+async function getPushBrowserClient(infos) {
+    if (!window.isSecureContext || !('serviceWorker' in navigator) || !('Notification' in window)) {
+        throw new Error('Ce navigateur ne permet pas les notifications Web Push dans ce contexte.');
+    }
+    if (!infos.push?.firebaseConfig || !infos.push?.vapidKey) {
+        throw new Error('La configuration Firebase Push est incomplète.');
+    }
+
+    const permission = await requestPushNotificationPermission();
+    if (permission !== 'granted') {
+        throw new Error('Les notifications ont été refusées dans ce navigateur.');
+    }
+    if (!await firebase.messaging.isSupported()) {
+        throw new Error('Ce navigateur ne prend pas en charge Firebase Cloud Messaging.');
+    }
+
+    const serviceWorkerRegistration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(infos.push.firebaseConfig);
+    const messaging = app.messaging();
+    const fcmToken = await messaging.getToken({
+        vapidKey: infos.push.vapidKey,
+        serviceWorkerRegistration,
+    });
+    if (!fcmToken) {
+        throw new Error('Firebase n’a pas fourni de token pour ce navigateur.');
+    }
+
+    return { fcmToken, messaging, serviceWorkerRegistration };
+}
+
+function initializeForegroundPush(messaging, serviceWorkerRegistration) {
+    if (pushForegroundMessaging === messaging) {
+        return;
+    }
+    pushForegroundMessaging = messaging;
+    messaging.onMessage(payload => {
+        const data = payload.data || {};
+        const isAuthentication = data.action === 'auth';
+        const canDisplayActions = Notification.maxActions > 0;
+        const body = data.body || data.message || '';
+        if (data.action === 'desync') {
+            PushStorage.remove(data.url, data.uid);
+        }
+        serviceWorkerRegistration.showNotification(data.title || 'Esup Auth', {
+            body: isAuthentication && !canDisplayActions ? body + ' Cliquez pour valider ou refuser.' : body,
+            icon: '/images/web_push.svg',
+            tag: 'esup-otp-auth-' + data.uid + '-' + data.lt,
+            renotify: true,
+            requireInteraction: isAuthentication,
+            data,
+            actions: isAuthentication && canDisplayActions ? [
+                { action: 'accept', title: 'Accepter' },
+                { action: 'reject', title: 'Refuser' },
+            ] : [],
+        });
+    });
+}
+
+// Register this browser as a regular push endpoint. The API stores it in the
+// same push.devices[] array as mobile devices, with type=browser.
+async function enrollPushBrowser({ user, infos, formatApiUri }) {
+    const client = await getPushBrowserClient(infos);
+    initializeForegroundPush(client.messaging, client.serviceWorkerRegistration);
+
+    const activation = await fetchApi({
+        method: 'PUT',
+        uri: formatApiUri('/push/activate'),
+    });
+    const activationCode = activation.data.activationCode;
+    const confirmation = await fetchApi({
+        method: 'POST',
+        uri: formatApiUri('/push/activate/confirm/' + activationCode),
+        body: JSON.stringify({
+            activation_code: activationCode,
+            gcm_id: client.fcmToken,
+            type: 'browser',
+            platform: navigator.platform || 'Web',
+            manufacturer: navigator.vendor || 'Browser',
+            model: pushBrowserModel(),
+        }),
+    });
+
+    await PushStorage.put({
+        apiUrl: infos.api_url,
+        uid: user.uid,
+        fcmToken: client.fcmToken,
+        tokenSecret: confirmation.data.tokenSecret,
+    });
+    return confirmation.data;
+}
+
+async function pushDeviceId(tokenSecret) {
+    const bytes = new TextEncoder().encode(tokenSecret);
+    const hash = await crypto.subtle.digest('SHA-256', bytes);
+    return Array.from(new Uint8Array(hash))
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+// FCM can rotate browser tokens. When the manager opens, refresh the API-side
+// token for the current browser without asking the user to enroll again.
+async function refreshLocalPushRegistration(user, infos) {
+    if (!('Notification' in window) || Notification.permission !== 'granted' || !user.methods.push?.active) {
+        return;
+    }
+    const stored = await PushStorage.get(infos.api_url, user.uid);
+    if (!stored?.tokenSecret) {
+        return;
+    }
+
+    const client = await getPushBrowserClient(infos);
+    initializeForegroundPush(client.messaging, client.serviceWorkerRegistration);
+    if (stored.fcmToken === client.fcmToken) {
+        return;
+    }
+
+    const endpoint = PushStorage.normalizeApiUrl(infos.api_url)
+        + '/users/' + encodeURIComponent(user.uid)
+        + '/methods/push/refresh/' + encodeURIComponent(stored.tokenSecret)
+        + '/' + encodeURIComponent(stored.fcmToken || client.fcmToken)
+        + '/' + encodeURIComponent(client.fcmToken);
+    const response = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' } });
+    if (!response.ok) {
+        throw new Error('Le token Push local n’a pas pu être actualisé.');
+    }
+    await PushStorage.put({ ...stored, fcmToken: client.fcmToken });
+}
+
 /** Vue.JS **/
 
 /** User **/
@@ -132,6 +277,8 @@ const PushMethod = {
         'infos': Object,
         'activate': Function,
         'deactivate': Function,
+        'formatApiUri': Function,
+        'isManager': Boolean,
     },
     data() {
         return {
@@ -160,6 +307,48 @@ const PushMethod = {
         },
     },
     methods: {
+        addPushBrowser: async function() {
+            const wasAskingMobileActivation = Boolean(this.user.methods.push.askActivation);
+            this.user.methods.push.askActivation = false;
+            this.user.methods.push.askBrowserActivation = true;
+            try {
+                await enrollPushBrowser({
+                    user: this.user,
+                    infos: this.infos,
+                    formatApiUri: this.formatApiUri,
+                });
+                this.user.methods.push.askBrowserActivation = false;
+                await this.getAndSetUser(this.user.uid);
+            } catch (error) {
+                this.user.methods.push.askBrowserActivation = false;
+                this.user.methods.push.askActivation = wasAskingMobileActivation;
+                const devices = this.user.methods.push.devices || [];
+                const hasLegacyDevice = Boolean(this.user.methods.push.device?.gcm_id);
+                if (wasAskingMobileActivation && !devices.length && !hasLegacyDevice) {
+                    this.user.methods.push.active = false;
+                }
+                toast({ message: error.message, className: 'red darken-1' });
+            }
+        },
+        deletePushDevice: async function(device) {
+            if (!window.confirm(this.messages.api.methods.push.confirm_delete)) {
+                return;
+            }
+            try {
+                const stored = await PushStorage.get(this.infos.api_url, this.user.uid);
+                await fetchApi({
+                    method: 'DELETE',
+                    uri: this.formatApiUri('/push/auth/' + encodeURIComponent(device.id)),
+                });
+                if (stored?.tokenSecret && await pushDeviceId(stored.tokenSecret) === device.id) {
+                    await PushStorage.remove(this.infos.api_url, this.user.uid);
+                }
+                await this.getAndSetUser(this.user.uid);
+                toast({ message: this.messages.success.update, className: 'green contrasted' });
+            } catch (error) {
+                toast({ message: error.message || 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
+            }
+        },
         cleanupSocket: function() {
             this.socket?.disconnect?.();
             delete this.socket;
@@ -798,6 +987,9 @@ const UserDashboard = {
                         if (data.code == "Ok") {
                             this.user.methods[method].askActivation = false;
                             this.user.methods[method].active = false;
+                            if (method === 'push') {
+                                PushStorage.remove(this.infos.api_url, this.user.uid);
+                            }
                         } else {
                             console.error(JSON.stringify({ code: data.code }));
                             throw new Error("Erreur interne, veuillez réessayer plus tard.");
@@ -1436,7 +1628,10 @@ Vue.createApp({
         const messagesPromise = this.getMessages();
         this.getMethods();
         await this.getInfos();
-        this.getAndSetUser();
+        await this.getAndSetUser();
+        refreshLocalPushRegistration(this.user, this.infos).catch(error => {
+            console.warn(error.message);
+        });
 
         // wait for the #home button, then click on it
         await messagesPromise;

@@ -8,6 +8,19 @@
     },
     "port": "",
     "api_url": "http://localhost:3000",
+    "push": {
+        "firebaseConfig": {
+            "apiKey": "changeit",
+            "authDomain": "changeit",
+            "databaseURL": "changeit",
+            "projectId": "changeit",
+            "storageBucket": "changeit",
+            "messagingSenderId": "changeit",
+            "appId": "changeit",
+            "measurementId": "changeit"
+        },
+        "vapidKey": "changeit"
+    },
     "api_password":"changeit",
     "session_secret_key": "changeit",
     "admins": ["john"],

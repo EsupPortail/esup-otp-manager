@@ -1,0 +1,24 @@
+doctype html
+html(lang=lang)
+    head
+        title Esup Auth
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', type='text/css', href='/css/materialize.min.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/material-icons.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
+    body
+        main.container
+            section.section.center-align(aria-live='polite')
+                h1.h3 Esup Auth
+                p#web-push-message
+                #web-push-actions
+                    button#web-push-accept.btn.waves-effect.waves-light(type='button')
+                        i.material-icons.left(aria-hidden='true') check
+                        span Accepter
+                    button#web-push-reject.btn-flat.waves-effect(type='button')
+                        i.material-icons.left(aria-hidden='true') close
+                        span Refuser
+                p#web-push-result(role='status')
+        script(type='text/javascript', src='/javascripts/push-storage.js')
+        script(type='text/javascript', src='/javascripts/push-confirm.js')

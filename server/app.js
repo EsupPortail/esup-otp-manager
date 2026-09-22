@@ -44,6 +44,8 @@ app.use('/js/vue.js', express.static(path.join(__dirname + '/..', '/node_modules
 app.use('/js/sweetalert2.all.min.js', express.static(path.join(__dirname + '/..', '/node_modules/sweetalert2/dist/sweetalert2.all.min.js')));
 app.use('/js/chart.js', express.static(path.join(__dirname + '/..', '/node_modules/chart.js/dist/chart.umd.min.js')));
 app.use('/js/chartjs-plugin-datalabels.min.js', express.static(path.join(__dirname + '/..', '/node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js')));
+app.use('/js/firebase-app-compat.js', express.static(path.join(__dirname + '/..', '/node_modules/firebase/firebase-app-compat.js')));
+app.use('/js/firebase-messaging-compat.js', express.static(path.join(__dirname + '/..', '/node_modules/firebase/firebase-messaging-compat.js')));
 
 // uncomment after placing your favicon in /public
 //import favicon from 'serve-favicon';
