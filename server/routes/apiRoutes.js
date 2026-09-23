@@ -14,11 +14,11 @@ function redirect(req, res, status, path) {
 }
 
 function redirectLogin(req, res) {
-    redirect(req, res, 401, '/login');
+    redirect(req, res, 401, 'login');
 }
 
 function redirectForbidden(req, res, status = 401) {
-    redirect(req, res, status, '/forbidden');
+    redirect(req, res, status, 'forbidden');
 }
 
 export function isUser(req, res, next) {

@@ -29,10 +29,10 @@ async function fetchApi({
         if (res.ok) {
             await onSuccess?.(res);
         } else if (res.data?.code === 'REDIRECT') {
-            if(res.data.path == "/login") {
+            if(res.data.path == "login") {
                 window.alert("Session expirée. Veuillez vous reconnecter.")
             }
-            return document.location.replace(res.data.path); // redirect to res.data.path (/login or /forbidden)
+            return document.location.replace(res.data.path); // redirect to res.data.path (login or forbidden)
         } else if (onStatus[res.status]) {
             await onStatus[res.status](res);
         } else {
@@ -143,7 +143,7 @@ const PushMethod = {
             handler(uid, old, onCleanup) {
                 this.cleanupSocket();
 
-                this.socket = io.connect({ reconnect: true, path: "/sockets", query: 'uid=' + uid });
+                this.socket = io.connect({ reconnect: true, path: new URL("sockets", window.location).pathname, query: 'uid=' + uid });
                 this.socket.on('userPushActivate', () => {
                     this.getAndSetUser(uid);
                 });
@@ -732,7 +732,7 @@ const UserDashboard = {
     },
     methods: {
         formatApiUri: function(uri) {
-            return '/api' + uri;
+            return 'api' + uri;
         },
         activate: async function(method) {
             switch (method) {
@@ -927,7 +927,7 @@ const UserView = {
     methods: {
         ...UserDashboard.methods,
         formatApiUri: function(uri) {
-            return '/api/admin/' + this.user.uid + uri;
+            return 'api/admin/' + this.user.uid + uri;
         },
     },
 };
@@ -983,7 +983,7 @@ const ManagerDashboard = {
 
             fetchApi({
                 method: "GET",
-                uri: `/api/admin/users?token=${encodeURIComponent(token)}`,
+                uri: `api/admin/users?token=${encodeURIComponent(token)}`,
                 onSuccess: res => {
                     this.users = res.data.users;
                 }
@@ -1005,13 +1005,13 @@ const ManagerDashboard = {
             }
             return (await fetchApi({
                 method: "GET",
-                uri: `/api/admin/user/${uid}/exists`,
+                uri: `api/admin/user/${uid}/exists`,
             })).data.user_exists;
         },
         getAndSetUser: function(uid) {
             return fetchApi({
                 method: "GET",
-                uri: "/api/admin/user/" + uid,
+                uri: "api/admin/user/" + uid,
                 onSuccess: res => {
                     this.setUser(uid, res.data.user);
                 },
@@ -1044,7 +1044,7 @@ const AdminDashboard = {
             event.target.checked = true;
             return fetchApi({
                 method: "PUT",
-                uri: "/api/admin/" + event.target.name + "/activate",
+                uri: "api/admin/" + event.target.name + "/activate",
                 onSuccess: res => {
                     const data = res.data;
                     if (data.code == "Ok") {
@@ -1063,7 +1063,7 @@ const AdminDashboard = {
             event.target.checked = false;
             return fetchApi({
                 method: "PUT",
-                uri: "/api/admin/" + event.target.name + "/deactivate",
+                uri: "api/admin/" + event.target.name + "/deactivate",
                 onSuccess: res => {
                     const data = res.data;
                     if (data.code == "Ok") {
@@ -1081,7 +1081,7 @@ const AdminDashboard = {
         activateTransport: function(method, transport) {
             return fetchApi({
                 method: "PUT",
-                uri: "/api/admin/" + method + "/transport/" + transport + "/activate",
+                uri: "api/admin/" + method + "/transport/" + transport + "/activate",
                 onSuccess: res => {
                     const data = res.data;
                     if (data.code == "Ok") {
@@ -1097,7 +1097,7 @@ const AdminDashboard = {
         deactivateTransport: function(method, transport) {
             return fetchApi({
                 method: "PUT",
-                uri: "/api/admin/" + method + "/transport/" + transport + "/deactivate",
+                uri: "api/admin/" + method + "/transport/" + transport + "/deactivate",
                 onSuccess: res => {
                     const data = res.data;
                     if (data.code == "Ok") {
@@ -1134,7 +1134,7 @@ const StatsDashboard = {
             this.loading = true;
             fetchApi({
                 method: 'GET',
-                uri: '/api/admin/stats',
+                uri: 'api/admin/stats',
                 onSuccess: async res => {
                     this.data = res.data;
                     this.loading = false;
@@ -1148,8 +1148,8 @@ const StatsDashboard = {
         async renderChart() {
 
 
-            await import ("/js/chart.js");
-            await import ("/js/chartjs-plugin-datalabels.min.js");
+            await import ("../js/chart.js");
+            await import ("../js/chartjs-plugin-datalabels.min.js");
 
             // this.data example :
             // {"totalUsers":32507,"totalMfaUsers":1887,"methods":{"totp":588,"bypass":838,"passcode_grid":38,"push":1072,"esupnfc":195,"webauthn":518},"pushPlatforms":{"iOS":354,"Android":716,"Mac":2}}
@@ -1514,7 +1514,7 @@ Vue.createApp({
         getAndSetUser: function() {
             return fetchApi({
                 method: "GET",
-                uri: "/api/user",
+                uri: "api/user",
                 onSuccess: res => {
                     this.setUser(res.data);
                 },
@@ -1533,12 +1533,12 @@ Vue.createApp({
             try {
                 const methods = (await fetchApi({
                     method: "GET",
-                    uri: "/api/methods",
+                    uri: "api/methods",
                 })).data;
 
                 const users_methods = (await fetchApi({
                     method: "GET",
-                    uri: "/manager/users_methods",
+                    uri: "manager/users_methods",
                 })).data;
 
                 this.users_methods = users_methods;
@@ -1551,7 +1551,7 @@ Vue.createApp({
             try {
                 const infos = await fetchApi({
                     method: "GET",
-                    uri: "/manager/infos",
+                    uri: "manager/infos",
                 });
                 Object.assign(this.infos, infos.data);
             } catch (err) {
@@ -1569,7 +1569,7 @@ Vue.createApp({
             language ||= localStorage.getItem("lang") || '';
             return fetchApi({
                 method: "GET",
-                uri: "/manager/messages/" + language,
+                uri: "manager/messages/" + language,
                 onSuccess: res => {
                     const { lang, messages } = res.data;
                     this.setMessages(messages);

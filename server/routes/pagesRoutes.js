@@ -6,9 +6,12 @@ import { fetch_otp_api } from './apiRoutes.js';
 
 function isUser(req, res, next) {
     if (utils.isAuthenticated(req)) return next();
-    res.redirect('/login'); // can't use 401 because of https://www.rfc-editor.org/rfc/rfc7235#section-3.1 (302 is used by default)
+    res.redirect('login'); // can't use 401 because of https://www.rfc-editor.org/rfc/rfc7235#section-3.1 (302 is used by default)
 }
 
+/**
+ * @param {import('passport')} passport
+ */
 export function routing(router, passport) {
     router.get('/', function(req, res) {
         const reqMessages = utils.getMessagesForRequest(req);
@@ -48,13 +51,19 @@ export function routing(router, passport) {
                 const val = req.query[param]
                 if (val) params.set(param, val)
             }
-            return res.redirect('/preferences' + (params.size ? "?" + params : ""));
+            return res.redirect('preferences' + (params.size ? "?" + params : ""));
         });
     };
 
     if (properties.authentication.name == 'cas') {
         router.all('/login', function(req, res, next) {
-            passport.authenticate('cas', function(err, user, info) {
+            const authenticateOptions = {};
+            if (properties.esup.CAS.serviceBaseURL) {
+                const service = new URL("." + req.originalUrl, properties.esup.CAS.serviceBaseURL);
+                service.searchParams.delete("ticket");
+                authenticateOptions.service = service.href;
+            }
+            passport.authenticate('cas', authenticateOptions, function(err, user, info) {
                 if (err) {
                     logger.error(err);
                     return next(err);
@@ -62,7 +71,7 @@ export function routing(router, passport) {
 
                 if (!user) {
                     logger.info(info?.message);
-                    return res.redirect('/');
+                    return res.redirect('./');
                 }
 
                 return logUser(req, res, next, user);
@@ -99,7 +108,7 @@ export function routing(router, passport) {
                     logger.info(`authentication context ${user.context} insufficient for user ${user.uid}, reauthentication required`);
                     let params = new URLSearchParams();
                     params.set('authnContext', properties.esup.SAML.sp.normalAuthnContext);
-                    return res.redirect('/login' + "?" + params);
+                    return res.redirect('login' + "?" + params);
                 }
             } else {
                 return logUser(req, res, next, user);
@@ -121,7 +130,7 @@ export function routing(router, passport) {
 
                 if (!user) {
                     logger.info(info?.message);
-                    return res.redirect('/');
+                    return res.redirect('./');
                 }
 
                 return logOrReauthUser(req, res, next, user);
@@ -129,7 +138,7 @@ export function routing(router, passport) {
         });
 
         router.get('/logout', function(req, res, next) {
-            if (!req.user) { res.redirect('/') };
+            if (!req.user) { res.redirect('./') };
             logger.debug(`initiating logout for user ${req.user.uid}`);
             return properties.authentication.strategy.logout(req, function(err, url) {
                 return res.redirect(url);
@@ -140,7 +149,7 @@ export function routing(router, passport) {
             logger.debug(`completing logout for user ${req.user.uid}`);
             req.logout(function(err) {
                 if (err) { return next(err); }
-                res.redirect('/');
+                res.redirect('./');
             });
         });
 

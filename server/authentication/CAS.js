@@ -8,8 +8,10 @@ import logger from '../../services/logger.js';
  * @param {String=} casProperties.serviceBaseURL
  */
 export default function authentication(properties) {
-    if (properties.casBaseURL.endsWith('/')) {
-        properties.casBaseURL = properties.casBaseURL.slice(0, -1);
+    for (const property of ["casBaseURL", "serviceBaseURL"]) {
+        if (properties[property]?.endsWith('/')) {
+            properties[property] = properties[property].slice(0, -1);
+        }
     }
 
     const options = {

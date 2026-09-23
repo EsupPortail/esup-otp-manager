@@ -12,7 +12,7 @@
     "start": "node run"
   },
   "dependencies": {
-    "@coursetable/passport-cas": "floriannari/passport-cas#SLO_with_dist",
+    "@coursetable/passport-cas": "floriannari/passport-cas#SLO_and_customService_with_dist",
     "@node-saml/passport-saml": "5.x",
     "body-parser": "2.x",
     "chart.js": "4.x",

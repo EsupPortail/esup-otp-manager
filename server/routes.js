@@ -8,6 +8,7 @@ const isUser = apiRoutes.isUser;
 import * as pagesRoutes from './routes/pagesRoutes.js';
 import logger from '../services/logger.js';
 
+/** @type {import('passport')} */
 let passport;
 
 
