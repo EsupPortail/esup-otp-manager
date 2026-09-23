@@ -8,6 +8,6 @@ block content
           .divider
           p= messages.api.index
           br
-          a.waves-effect.waves-light.btn.teal.darken-1#login(href='/preferences')
+          a.waves-effect.waves-light.btn.teal.darken-1#login(href=`${baseUrl}/preferences`)
             | #{messages.api.action.connection}
             i.material-icons.right(aria-hidden="true") lock_open

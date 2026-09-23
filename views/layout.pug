@@ -3,15 +3,17 @@ html(lang=lang)
     head
         title ESUP OTP Manager
         meta(charset='UTF-8')
-        link(rel='stylesheet', type='text/css', href='/stylesheets/material-icons.css')
-        link(rel='stylesheet', type='text/css', href='/css/materialize.min.css', media='screen,projection')
-        link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
+        link(rel='stylesheet', type='text/css', href=`${baseUrl}/stylesheets/material-icons.css`)
+        link(rel='stylesheet', type='text/css', href=`${baseUrl}/css/materialize.min.css`, media='screen,projection')
+        link(rel='stylesheet', type='text/css', href=`${baseUrl}/stylesheets/style.css`)
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        script.
+          window.baseUrl = '#{baseUrl}';
     body
         block content
-        script(src='/js/sweetalert2.all.min.js')
-        script(src='/js/jquery.min.js')
-        script(src='/js/socket.io.min.js')
-        script(src='/js/materialize.min.js')
-        script(type='text/javascript', src='/js/vue.js')
+        script(src=`${baseUrl}/js/sweetalert2.all.min.js`)
+        script(src=`${baseUrl}/js/jquery.min.js`)
+        script(src=`${baseUrl}/js/socket.io.min.js`)
+        script(src=`${baseUrl}/js/materialize.min.js`)
+        script(type='text/javascript', src=`${baseUrl}/js/vue.js`)
         block script
