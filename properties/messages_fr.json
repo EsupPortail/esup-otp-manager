@@ -175,6 +175,7 @@
       }
     },
     "title": "ESUP OTP Manager",
+    "browser_title": "ESUP OTP Manager",
     "menu": {
       "home": "Accueil",
       "preferences": "Préférences",
