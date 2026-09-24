@@ -1,7 +1,7 @@
 doctype html
 html(lang=lang)
     head
-        title ESUP OTP Manager
+        title= (messages && (messages.api.browser_title || messages.api.title)) || title || 'ESUP OTP Manager'
         meta(charset='UTF-8')
         link(rel='stylesheet', type='text/css', href='/stylesheets/material-icons.css')
         link(rel='stylesheet', type='text/css', href='/css/materialize.min.css', media='screen,projection')
