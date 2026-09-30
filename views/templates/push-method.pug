@@ -73,14 +73,12 @@ script#push-method(type='text/x-template').
             </div>
           </div>
         </div>
-        <div class="row center-align" style="margin-bottom: 0;" v-if="canAddPushMobile">
-          <button type="button" class="waves-effect waves-light btn" @click="addPushMobile">
+        <div class="push-device-actions" v-if="canAddPushMobile || canAddPushBrowser">
+          <button v-if="canAddPushMobile" type="button" class="waves-effect waves-light btn" @click="addPushMobile">
             <i class="material-icons left" aria-hidden="true">smartphone</i>
             {{messages.api.methods.push.add_mobile}}
           </button>
-        </div>
-        <div class="row center-align" style="margin-bottom: 0;" v-if="canAddPushBrowser">
-          <button type="button" class="waves-effect waves-light btn" @click="addPushBrowser">
+          <button v-if="canAddPushBrowser" type="button" class="waves-effect waves-light btn" @click="addPushBrowser">
             <i class="material-icons left" aria-hidden="true">computer</i>
             {{messages.api.methods.push.add_browser}}
           </button>
