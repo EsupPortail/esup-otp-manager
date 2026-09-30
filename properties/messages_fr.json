@@ -109,6 +109,7 @@
           "Puis cliquez sur « Activer »."
         ],
         "browser_activation_instructions": "Autorisez les notifications pour associer ce navigateur.",
+        "add_mobile": "Ajouter un mobile",
         "add_browser": "Ajouter ce navigateur",
         "confirm_delete": "Voulez-vous vraiment supprimer ce terminal ?"
       },

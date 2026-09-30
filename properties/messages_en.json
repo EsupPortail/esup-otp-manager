@@ -109,6 +109,7 @@
           "Then click on '<span lang='fr'>Activer</span>'."
         ],
         "browser_activation_instructions": "Allow notifications to link this browser.",
+        "add_mobile": "Add a mobile device",
         "add_browser": "Add this browser",
         "confirm_delete": "Do you really want to remove this device?"
       },

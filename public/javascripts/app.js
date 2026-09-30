@@ -292,6 +292,11 @@ const PushMethod = {
                 && this.infos.push?.firebaseConfig
                 && this.infos.push?.vapidKey;
         },
+        canAddPushMobile: function() {
+            const devices = this.user.methods.push?.devices || [];
+            const maxDevices = this.user.methods.push?.max_devices || 1;
+            return !this.isManager && devices.length > 0 && devices.length < maxDevices;
+        },
     },
     watch: {
         'user.uid': {
@@ -337,6 +342,9 @@ const PushMethod = {
                 }
                 toast({ message: error.message, className: 'red darken-1' });
             }
+        },
+        addPushMobile: function() {
+            return this.activate('push');
         },
         deletePushDevice: async function(device) {
             if (!window.confirm(this.messages.api.methods.push.confirm_delete)) {
