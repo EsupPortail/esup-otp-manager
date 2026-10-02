@@ -6,6 +6,8 @@
         "casBaseURL": "http://localhost/cas",
         "serviceBaseURL": "http://localhost:4000/"
     },
+    "#howto_baseUrl": "default baseUrl of the manager is empty, for example /mfa-manager",
+    "baseUrl": "",
     "port": "",
     "api_url": "http://localhost:3000",
     "api_password":"changeit",

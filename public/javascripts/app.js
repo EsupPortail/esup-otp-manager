@@ -23,7 +23,7 @@ async function fetchApi({
     onStatus = {}, // {status: (res) => {}}
 }) {
     try {
-        const res = await fetch(uri, { method, headers, body });
+        const res = await fetch(`${window.baseUrl}${uri}`, { method, headers, body });
         res.data = await res.json();
 
         if (res.ok) {
@@ -143,7 +143,7 @@ const PushMethod = {
             handler(uid, old, onCleanup) {
                 this.cleanupSocket();
 
-                this.socket = io.connect({ reconnect: true, path: "/sockets", query: 'uid=' + uid });
+                this.socket = io.connect({ reconnect: true, path: `${window.baseUrl}/sockets`, query: 'uid=' + uid });
                 this.socket.on('userPushActivate', () => {
                     this.getAndSetUser(uid);
                 });
@@ -512,7 +512,7 @@ const WebAuthnMethod = {
                 }
                 else {
                     toast({ message: this.messages.error.webauthn.generic, className: 'red darken-1' });
-                    console.error("/api/webauthn/confirm_activate", e);
+                    console.error(`${window.baseUrl}/api/webauthn/confirm_activate`, e);
                 }
             } finally {
                 this.registrationInProgress = false;
@@ -732,7 +732,7 @@ const UserDashboard = {
     },
     methods: {
         formatApiUri: function(uri) {
-            return '/api' + uri;
+            return `/api${uri}`;
         },
         activate: async function(method) {
             switch (method) {
@@ -1011,7 +1011,7 @@ const ManagerDashboard = {
         getAndSetUser: function(uid) {
             return fetchApi({
                 method: "GET",
-                uri: "/api/admin/user/" + uid,
+                uri: `/api/admin/user/${uid}`,
                 onSuccess: res => {
                     this.setUser(uid, res.data.user);
                 },
@@ -1146,10 +1146,8 @@ const StatsDashboard = {
             });
         },
         async renderChart() {
-
-
-            await import ("/js/chart.js");
-            await import ("/js/chartjs-plugin-datalabels.min.js");
+            await import(`${window.baseUrl}/js/chart.js`);
+            await import(`${window.baseUrl}/js/chartjs-plugin-datalabels.min.js`);
 
             // this.data example :
             // {"totalUsers":32507,"totalMfaUsers":1887,"methods":{"totp":588,"bypass":838,"passcode_grid":38,"push":1072,"esupnfc":195,"webauthn":518},"pushPlatforms":{"iOS":354,"Android":716,"Mac":2}}
