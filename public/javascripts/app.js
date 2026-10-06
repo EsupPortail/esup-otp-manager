@@ -14,6 +14,15 @@ function hide(id) {
     e.classList.add('may-be-hidden');
 }
 
+// on small screens, close the side menu when clicking outside of it
+document.addEventListener('click', (event) => {
+    if (!window.matchMedia('(max-width: 991px)').matches) return;
+    const menu = document.getElementById('slide-out');
+    if (!menu || menu.classList.contains('may-be-hidden')) return;
+    if (menu.contains(event.target) || event.target.closest('#navButton')) return;
+    hide('slide-out');
+});
+
 async function fetchApi({
     uri,
     method = "GET",
@@ -1507,7 +1516,8 @@ Vue.createApp({
             $('a').parent().attr('aria-current', 'false');
             $('#' + event.target.name).parent().addClass('active');
             $('#' + event.target.name).parent().attr('aria-current', 'page');
-            if (document.getElementById("sidenav-overlay")) $('#navButton').click();
+            // on small screens, close the side menu after navigating
+            if (window.matchMedia('(max-width: 991px)').matches) hide('slide-out');
             this.getAndSetUser();
         },
 
