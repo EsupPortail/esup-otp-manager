@@ -1503,7 +1503,7 @@ Vue.createApp({
                 this.currentView = 'preferences';
             }
 
-            document.title = "ESUP OTP Manager - " + this.messages.api.menu[this.currentView];
+            document.title = (this.messages.api.browser_title || this.messages.api.title) + " - " + this.messages.api.menu[this.currentView];
             if(this.currentView == 'preferences') {
                 document.title += " - " + this.messages.api.methods[this.currentMethod].name;
             }
@@ -1581,6 +1581,7 @@ Vue.createApp({
                     $('html').attr('lang', lang);
                     localStorage.setItem("lang", lang);
                     this.infos.lang = lang;
+                    document.title = (this.messages.api.browser_title || this.messages.api.title) + " - " + this.messages.api.menu[this.currentView];
                 },
             }).catch(err => {
                 toast({ message: err, className: 'red darken-1' });
