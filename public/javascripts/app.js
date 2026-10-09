@@ -1503,7 +1503,8 @@ Vue.createApp({
             $('a').parent().attr('aria-current', 'false');
             $('#' + event.target.name).parent().addClass('active');
             $('#' + event.target.name).parent().attr('aria-current', 'page');
-            if (document.getElementById("sidenav-overlay")) $('#navButton').click();
+            // on small screens, close the side menu after navigating
+            this.may_hide_menu = true;
             this.getAndSetUser();
         },
 
