@@ -21,17 +21,17 @@ block content
         header(v-if="messages.api")
             nav(role="header")#target.top-nav
                 .container
-                    button#navButton.button-collapse.top-nav.btn-flat(href='#', data-activates='slide-out', onclick="toggle_visibility('slide-out')", :title="messages.api.action.show_menu")
+                    button#navButton.button-collapse.top-nav.btn-flat(href='#', data-activates='slide-out', @click="may_hide_menu = false", :title="messages.api.action.show_menu")
                         i#target.material-icons menu
                     .nav-wrapper
                         h1.page-title.no-margin(role="heading", aria-level="1") {{messages.api.menu[currentView]}}
-            ul(role="navigation")#slide-out.side-nav.fixed.may-be-hidden
+            ul(role="navigation", :class="{ 'may-be-hidden': may_hide_menu }")#slide-out.side-nav.fixed
                 .no-padding.sidenav-header
                     .flex
                     #hide.flex()
                         i.material-icons.medium(aria-hidden="true") account_circle
                         p {{user.name || user.uid}}
-                        button#closebtn(onclick="hide('slide-out');", class="btn-flat", :title="messages.api.action.hide_menu")
+                        button#closebtn(@click="may_hide_menu = true", class="btn-flat", :title="messages.api.action.hide_menu")
                             i.material-icons(aria-hidden="true") close
                 li.bold
                     a#home(href='#', @click='navigate', name = 'home').collapsible-header {{messages.api.menu.home}}

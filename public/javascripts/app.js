@@ -4,16 +4,6 @@
     }); // end of document ready
 })(jQuery); // end of jQuery name space
 
-function toggle_visibility(id) {
-    const e = document.getElementById(id);
-    e.classList.remove('may-be-hidden');
-}
-
-function hide(id) {
-    const e = document.getElementById(id);
-    e.classList.add('may-be-hidden');
-}
-
 async function fetchApi({
     uri,
     method = "GET",
@@ -1419,6 +1409,7 @@ Vue.createApp({
             EsupAuth: { name: "Esup Auth", android: "https://play.google.com/store/apps/details?id=org.esupportail.esupAuth", ios: "https://apps.apple.com/fr/app/esup-auth/id1563904941" },
         },
         has_window_opener: Boolean(window.opener),
+        may_hide_menu: true,
       };
     },
     watch: {
@@ -1436,7 +1427,7 @@ Vue.createApp({
         },
         has_active_method(val, prev) {
             // on small screens, show the menu which contains closeOtpManager button
-            if (val && prev === false) toggle_visibility('slide-out')
+            if (val && prev === false) this.may_hide_menu = false;
         },
     },
     computed: {
