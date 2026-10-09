@@ -72,7 +72,7 @@ block content
                         a#back-to-app.collapsible-header(:class="{ has_active_method }" v-if="has_window_opener" @click="closeOtpManagerWindow") 
                             i.material-icons exit_to_app 
                             span Retour à l'application
-        main
+        main(@click="may_hide_menu = true")
             .container
                 component(:is='currentView', :methods='methods', :messages='messages', :infos='infos', :currentmethod='currentMethod', :user='user' :get-and-set-user='getAndSetUser')
 
