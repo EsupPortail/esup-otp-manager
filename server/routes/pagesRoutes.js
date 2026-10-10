@@ -6,7 +6,7 @@ import { fetch_otp_api } from './apiRoutes.js';
 
 function isUser(req, res, next) {
     if (utils.isAuthenticated(req)) return next();
-    res.redirect('/login'); // can't use 401 because of https://www.rfc-editor.org/rfc/rfc7235#section-3.1 (302 is used by default)
+    res.redirect(properties.esup.baseUrl + '/login'); // can't use 401 because of https://www.rfc-editor.org/rfc/rfc7235#section-3.1 (302 is used by default)
 }
 
 export function routing(router, passport) {
@@ -48,7 +48,7 @@ export function routing(router, passport) {
                 const val = req.query[param]
                 if (val) params.set(param, val)
             }
-            return res.redirect('/preferences' + (params.size ? "?" + params : ""));
+            return res.redirect(properties.esup.baseUrl + '/preferences' + (params.size ? "?" + params : ""));
         });
     };
 
@@ -62,7 +62,7 @@ export function routing(router, passport) {
 
                 if (!user) {
                     logger.info(info?.message);
-                    return res.redirect('/');
+                    return res.redirect(properties.esup.baseUrl + '/');
                 }
 
                 return logUser(req, res, next, user);
@@ -99,7 +99,7 @@ export function routing(router, passport) {
                     logger.info(`authentication context ${user.context} insufficient for user ${user.uid}, reauthentication required`);
                     let params = new URLSearchParams();
                     params.set('authnContext', properties.esup.SAML.sp.normalAuthnContext);
-                    return res.redirect('/login' + "?" + params);
+                    return res.redirect(properties.esup.baseUrl + '/login' + "?" + params);
                 }
             } else {
                 return logUser(req, res, next, user);
@@ -121,7 +121,7 @@ export function routing(router, passport) {
 
                 if (!user) {
                     logger.info(info?.message);
-                    return res.redirect('/');
+                    return res.redirect(properties.esup.baseUrl + '/');
                 }
 
                 return logOrReauthUser(req, res, next, user);
@@ -129,7 +129,7 @@ export function routing(router, passport) {
         });
 
         router.get('/logout', function(req, res, next) {
-            if (!req.user) { res.redirect('/') };
+            if (!req.user) { res.redirect(properties.esup.baseUrl + '/') };
             logger.debug(`initiating logout for user ${req.user.uid}`);
             return properties.authentication.strategy.logout(req, function(err, url) {
                 return res.redirect(url);
@@ -140,7 +140,7 @@ export function routing(router, passport) {
             logger.debug(`completing logout for user ${req.user.uid}`);
             req.logout(function(err) {
                 if (err) { return next(err); }
-                res.redirect('/');
+                res.redirect(properties.esup.baseUrl + '/');
             });
         });
 
