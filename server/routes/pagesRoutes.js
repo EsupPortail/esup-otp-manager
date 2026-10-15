@@ -13,7 +13,6 @@ export function routing(router, passport) {
     router.get('/', function(req, res) {
         const reqMessages = utils.getMessagesForRequest(req);
         res.render('index', {
-            title: 'ESUP OTP Manager',
             messages: reqMessages.messages,
             lang: reqMessages.lang
         });
@@ -21,14 +20,11 @@ export function routing(router, passport) {
 
     router.get('/forbidden', isUser, function(req, res) {
         res.render('forbidden', {
-            title: 'Esup Otp Manager',
-            user: req.session.passport.user
         });
     });
 
     router.get('/preferences', isUser, function(req, res) {
         res.render('dashboard', {
-            title: 'Esup Otp Manager : Test',
             user: req.session.passport.user,
             right: req.session.passport.user.role,
             isManager: req.session.passport.user.isManager,
