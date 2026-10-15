@@ -146,6 +146,7 @@
       "note": "Dans vos préférences, nous vous conseillons fortement de paramétrer au moins 2 méthodes afin de pouvoir assurer la continuité d’utilisation des services numériques."
     },
     "index": "Interface de gestion de l’authentification renforcée (multifacteur)",
+    "forbidden": "Vous n’avez pas l’autorisation.",
     "action": {
       "connection": "Se connecter",
       "activate": "Activer",

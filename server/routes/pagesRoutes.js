@@ -19,7 +19,10 @@ export function routing(router, passport) {
     });
 
     router.get('/forbidden', isUser, function(req, res) {
+        const reqMessages = utils.getMessagesForRequest(req);
         res.render('forbidden', {
+            messages: reqMessages.messages,
+            lang: reqMessages.lang,
         });
     });
 
