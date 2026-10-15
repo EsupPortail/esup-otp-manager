@@ -1429,6 +1429,9 @@ Vue.createApp({
             // on small screens, show the menu which contains closeOtpManager button
             if (val && prev === false) this.may_hide_menu = false;
         },
+        document_title(title) {
+            document.title = title;
+        },
     },
     computed: {
         has_active_method() {
@@ -1437,7 +1440,17 @@ Vue.createApp({
             return methods
                 .filter(([_key, value]) => value.active && !value.askActivation)
                 .length > 0
-        }
+        },
+        document_title() {
+            if (!this.messages.api) {
+                return document.title;
+            }
+            const title = this.messages.api.browser_title + " - " + this.messages.api.menu[this.currentView];
+            if (this.currentView == 'preferences') {
+                return title + " - " + this.messages.api.methods[this.currentMethod].name;
+            }
+            return title;
+        },
     },
     created: async function() {
         const messagesPromise = this.getMessages();
@@ -1492,11 +1505,6 @@ Vue.createApp({
                 this.pageTitle = "Préférences";
                 this.currentMethod = event.target.name;
                 this.currentView = 'preferences';
-            }
-
-            document.title = this.messages.api.browser_title + " - " + this.messages.api.menu[this.currentView];
-            if(this.currentView == 'preferences') {
-                document.title += " - " + this.messages.api.methods[this.currentMethod].name;
             }
 
             $('a').parent().removeClass('active');
@@ -1573,7 +1581,6 @@ Vue.createApp({
                     $('html').attr('lang', lang);
                     localStorage.setItem("lang", lang);
                     this.infos.lang = lang;
-                    document.title = this.messages.api.browser_title + " - " + this.messages.api.menu[this.currentView];
                 },
             }).catch(err => {
                 toast({ message: err, className: 'red darken-1' });
