@@ -223,6 +223,18 @@ ul.totp-registration-ways>li {
 	height: 260px;
 }
 
+.push-device-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.push-device-actions .btn {
+    margin: 0;
+}
+
 .totp-qrcode>img {
 	width: 164px;
 	height: 164px;

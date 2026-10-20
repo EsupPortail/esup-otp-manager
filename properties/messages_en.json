@@ -108,6 +108,8 @@
           "</ul>",
           "Then click on '<span lang='fr'>Activer</span>'."
         ],
+        "add_mobile": "Add a mobile device",
+        "confirm_delete": "Do you really want to remove this device?",
         "device": {
           "description": "Notifications will be displayed in the Esup Auth app on your <b style='white-space: nowrap;'>%MANUFACTURER% %MODEL%</b>.",
           "reset": "If you switch to a new smartphone or uninstall the app, click"
