@@ -108,6 +108,8 @@
           "</ul>",
           "Puis cliquez sur « Activer »."
         ],
+        "add_mobile": "Ajouter un mobile",
+        "confirm_delete": "Voulez-vous vraiment supprimer ce terminal ?",
         "device": {
           "description": "Les notifications seront affichés sur l’application Esup Auth sur votre <b style='white-space: nowrap;'>%MANUFACTURER% %MODEL%</b>.",
           "reset": "En cas de changement de smartphone ou de désinstallation de l’application, cliquez sur"

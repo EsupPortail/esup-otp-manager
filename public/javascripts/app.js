@@ -122,11 +122,19 @@ const PushMethod = {
         'infos': Object,
         'activate': Function,
         'deactivate': Function,
+        'formatApiUri': Function,
     },
     data() {
         return {
             'socket': Object,
         };
+    },
+    computed: {
+        canAddPushMobile: function() {
+            const devices = this.user.methods.push?.devices || [];
+            const maxDevices = this.user.methods.push?.max_devices || 1;
+            return !this.isManager && devices.length > 0 && devices.length < maxDevices;
+        },
     },
     watch: {
         'user.uid': {
@@ -150,6 +158,28 @@ const PushMethod = {
         },
     },
     methods: {
+        addPushMobile: function() {
+            return this.activate('push');
+        },
+        deletePushDevice: async function(device) {
+            if (!window.confirm(this.messages.api.methods.push.confirm_delete)) {
+                return;
+            }
+            try {
+                const stored = await PushStorage.get(this.infos.api_url, this.user.uid);
+                await fetchApi({
+                    method: 'DELETE',
+                    uri: this.formatApiUri('/push/auth/' + encodeURIComponent(device.id)),
+                });
+                if (stored?.tokenSecret && await pushDeviceId(stored.tokenSecret) === device.id) {
+                    await PushStorage.remove(this.infos.api_url, this.user.uid);
+                }
+                await this.getAndSetUser(this.user.uid);
+                toast({ message: this.messages.success.update, className: 'green contrasted' });
+            } catch (error) {
+                toast({ message: error.message || 'Erreur interne, veuillez réessayer plus tard.', className: 'red darken-1' });
+            }
+        },
         cleanupSocket: function() {
             this.socket?.disconnect?.();
             delete this.socket;
